@@ -1,15 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "Dialogue", menuName = "SO/Dialogue")]
-public class DialogueSO : ScriptableObject
-{
-    public DialogueData dialogueData;
-}
-
-[System.Serializable]
-public class DialogueData
+public class DialogueData : ScriptableObject
 {
     public enum DialogueStartDisplayStyle { direct, fade, zoomIn, translation } //  dialogue display appears style enum
     public DialogueStartDisplayStyle dialogueStartDisplayStyle = new DialogueStartDisplayStyle(); // dialogue display appears style 
@@ -27,7 +23,7 @@ public class DialogueData
     [NonReorderable]
     public List<SentenceData> sentenceDatas = new List<SentenceData>();
     public int nbSentences;
-    public bool withMusic;
+    public bool showDialogueElements;
     public enum TextType { text, dialogue }
     public TextType textType;
 }
@@ -42,7 +38,31 @@ public class SentenceData
     public string sentence;
     [HideInInspector]
     public bool showData; // Level editor reference only !
+    public AudioClipData audioClipData = new AudioClipData();
     public bool showSfxElements;
     public bool withSFX;
     public bool typingIsComplete = true; //for sentence in "Type" style
+    public bool withCustomEvent;
+    public enum StartOfEvent { BeforeSentence, AfterSentence }
+    public StartOfEvent startOfEvent;
+    public DialogueIDWraper eventIDToLaunch;
+}
+
+[System.Serializable]
+public class AudioClipData
+{
+    public AudioClip audioClip;
+    //public enum AudioType { music, sfx } // ambient audio (only one instance on scene) or sound effect
+    //public AudioType audioType = new AudioType();
+    public bool audioLoop; // loop, t/f
+    public enum StartType { immediate, fadeIn } // instant start y/n
+    public StartType startType = new StartType();
+    public float fadeInTime = 0; // fadein duration
+    public float delay = 0; // delay before start playing
+    public enum StopType { immediate, fadeOut } // instant stop y/n
+    public StopType stopType = new StopType();
+    public float fadeOutTime = 0; // fadeout duration
+    public float maxVolume = 100; // audio volume (oh, really?)
+    public bool showaudioClipElements;
+
 }
