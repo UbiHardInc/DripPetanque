@@ -10,12 +10,12 @@ public class EventHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        DialogueManager.eventHandlers[_iD] = this;
+        DialogueManager.EventHandlers[_iD] = this;
     }
 
     private void OnDisable()
     {
-        DialogueManager.eventHandlers.Remove(_iD);
+        DialogueManager.EventHandlers.Remove(_iD);
     }
 
     public void LaunchEvent()
