@@ -21,10 +21,11 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private float m_clickCooldown;
     [SerializeField] private GameObject m_dialogueCanvas;
     [SerializeField] private CanvasGroup m_dialogueMainContainerCanvasGroup;
-    [SerializeField] private GameObject m_nextButtonGFXObj;
+    [SerializeField] private CanvasGroup m_nextButtonCanvasGroup;
     [SerializeField] private TMP_Text m_dialogueText;
     [SerializeField] private GameObject m_dialogueTextContainer;
     //[SerializeField] private Image m_talkerImage;
+    [SerializeField] private CanvasGroup m_talkerNameCanvasGroup;
     [SerializeField] private TMP_Text m_talkerNameText;
     [SerializeField] private AnimationCurve m_fadeCurve;
     [SerializeField] private AnimationCurve m_swipeCurve;
@@ -75,6 +76,21 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(StartDialogueCoroutine(dialogueData));
     }
 
+    private void ToggleDialogueInterfaceElements(bool state)
+    {
+        if (state)
+        {
+            m_talkerNameCanvasGroup.DOFade(1, 0.5f).From(0);
+        }
+        else
+        {
+            m_dialogueText.text = "";
+            m_nextButtonCanvasGroup.alpha = 0;
+        }
+        m_dialogueTextContainer.gameObject.SetActive(state);
+        //m_talkerImage.gameObject.SetActive(state);
+    }
+
     private IEnumerator StartDialogueCoroutine(DialogueData dialogueData)
     {
         m_haveFinishDialogue = false;
@@ -104,7 +120,9 @@ public class DialogueManager : MonoBehaviour
 
     private void ShowDialogue()
     {
-        CheckStartDisplayType();
+        m_currentTransTime = m_currentDialogueData.transitionStartTime;
+        DialogueZoomIn(m_currentTransTime);
+        //CheckStartDisplayType();
     }
 
     private void ComputeSentences()
@@ -134,7 +152,7 @@ public class DialogueManager : MonoBehaviour
         {
             case DialogueData.SentenceDisplayStyle.direct:
                 m_dialogueText.text = currentSentenceData.sentence;
-                m_nextButtonGFXObj.SetActive(true);
+                m_nextButtonCanvasGroup.alpha = 1;
                 break;
 
             case DialogueData.SentenceDisplayStyle.type:
@@ -186,7 +204,7 @@ public class DialogueManager : MonoBehaviour
         currentSentenceData.typingIsComplete = false;
         m_isSkippable = currentSentenceData.isSkippable;
         m_dialogueText.text = "";
-        m_nextButtonGFXObj.SetActive(false);
+        m_nextButtonCanvasGroup.alpha = 0;
         //if (!m_isSkippable)
         //{
         //    m_nextButtonObj.SetActive(false);
@@ -205,7 +223,7 @@ public class DialogueManager : MonoBehaviour
             m_dialogueText.text = currentSentenceData.sentence;
         }
         currentSentenceData.typingIsComplete = true;
-        m_nextButtonGFXObj.SetActive(true);
+        m_nextButtonCanvasGroup.alpha = 1;
         //m_nextButtonObj.SetActive(m_sentenceIndex != m_sentenceDatas.Count - 1);
     }
 
@@ -234,13 +252,6 @@ public class DialogueManager : MonoBehaviour
                 DialogueSwipIn(m_currentTransTime);
                 break;
         }
-    }
-
-    private void ToggleDialogueInterfaceElements(bool state)
-    {
-        m_dialogueTextContainer.gameObject.SetActive(state);
-        //m_talkerImage.gameObject.SetActive(state);
-        m_talkerNameText.gameObject.SetActive(state);
     }
 
     private void DialogueFadeIn(float transitionDuration)
@@ -326,7 +337,7 @@ public class DialogueManager : MonoBehaviour
         {
             case DialogueData.DialogueEndDisplayStyle.direct:
                 m_dialogueCanvas.SetActive(false);
-                m_nextButtonGFXObj.SetActive(false);
+                m_nextButtonCanvasGroup.alpha = 0;
                 m_haveFinishDialogue = true;
                 break;
 
@@ -349,7 +360,7 @@ public class DialogueManager : MonoBehaviour
     {
         Sequence sequence = DOTween.Sequence();
 
-        m_nextButtonGFXObj.SetActive(false);
+        m_nextButtonCanvasGroup.alpha = 0;
         sequence.Append(m_dialogueMainContainerCanvasGroup.DOFade(0, transitionDuration).From(1).SetEase(m_fadeCurve));
         //sequence.Join(m_dialogueText.GetComponent<TMP_Text>().DOFade(0, transitionDuration).SetEase(m_fadeCurve));
         //if (m_textType == DialogueData.TextType.dialogue)
