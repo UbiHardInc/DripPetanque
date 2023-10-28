@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static AudioClipData;
+using static DialogueData;
+using static SentenceData;
 
 [CustomEditor(typeof(DialogueData))]
 public class DialogueDataEditor : CustomEditorBase
 {
     public override void OnInspectorGUI()
     {
-        serializedObject.UpdateIfRequiredOrScript();
+        serializedObject.Update();
 
         EditorGUI.BeginChangeCheck();
         ShowTransitionStartTime();
@@ -37,7 +40,9 @@ public class DialogueDataEditor : CustomEditorBase
 
     private void ShowSentenceDisplayStyle()
     {
-        EnumField("Sentence display style", ref m_dialogueData.sentenceDisplayStyle);
+        SerializedProperty sentenceDisplayStyle = serializedObject.FindProperty("sentenceDisplayStyle");
+        AddPopup(ref sentenceDisplayStyle, "Sentence display style", typeof(SentenceDisplayStyle));
+        //EnumField("Sentence display style", ref m_dialogueData.sentenceDisplayStyle);
 
         if (m_dialogueData.sentenceDisplayStyle == DialogueData.SentenceDisplayStyle.type)
         {
@@ -45,7 +50,9 @@ public class DialogueDataEditor : CustomEditorBase
             GUILayout.Space(5);
         }
 
-        EnumField("Text type : ", ref m_dialogueData.textType);
+        SerializedProperty textType = serializedObject.FindProperty("textType");
+        AddPopup(ref textType, "Text type : ", typeof(TextType));
+        //EnumField("Text type : ", ref m_dialogueData.textType);
         GUILayout.Space(5);
 
         CustomListHeader("Sentences number", "SentencesDataCount", ref m_dialogueData.nbSentences, ref m_dialogueData.sentenceDatas, ref m_dialogueData.showDialogueElements, 120, 20, "Choose sentences number for this text/dialogue", true);
@@ -56,18 +63,48 @@ public class DialogueDataEditor : CustomEditorBase
             {
                 return;
             }
+            SerializedProperty sentenceDataList = serializedObject.FindProperty("sentenceDatas");
             for (int i = 0; i < m_dialogueData.nbSentences; i++)
             {
-                ShowFeedbackSentencesData(m_dialogueData.sentenceDatas[i], m_dialogueData.textType, m_dialogueData.sentenceDatas, i);
+                SerializedProperty sentenceData = serializedObject.FindProperty("sentenceDatas").GetArrayElementAtIndex(i);
+                ShowFeedbackSentencesData(sentenceData, m_dialogueData.textType, sentenceDataList, i);
             }
             GUILayout.Space(5);
         }
     }
 
-    private void ShowFeedbackSentencesData(SentenceData sentenceData, DialogueData.TextType textType, List<SentenceData> sentenceDataList, int i)
+    //private List<T> GetListFromSerializedProperty<T>(SerializedProperty serializedListProperty)
+    //{
+    //    if(!serializedListProperty.isArray)
+    //    {
+    //        return null;
+    //    }
+
+    //    int arrayLength = 0;
+
+    //    serializedListProperty.Next(true);
+    //    serializedListProperty.Next(true);
+
+    //    arrayLength = serializedListProperty.arraySize;
+
+    //    serializedListProperty.Next(true);
+
+    //    List<T> list = new List<T>(arrayLength);
+
+    //    int lastIndex = arrayLength - 1;
+
+    //    for(int i = 0; i < arrayLength; i++)
+    //    {
+    //        list.Add((T)serializedListProperty.GetArrayElementAtIndex(i).objectReferenceValue);
+    //    }
+
+    //    return list;
+    //}
+
+    private void ShowFeedbackSentencesData(SerializedProperty sentenceData, DialogueData.TextType textType, SerializedProperty sentenceDataList, int i)
     {
         GUILayout.BeginHorizontal();
-        if (sentenceData == sentenceDataList[0])
+        if (sentenceData == sentenceDataList.GetArrayElementAtIndex(0))
             EditorGUI.BeginDisabledGroup(true);
 
         if (GUILayout.Button(EditorGUIUtility.IconContent("HoverBar_Up"), EditorStyles.miniButtonMid, GUILayout.MaxWidth(18), GUILayout.MaxHeight(18)))
@@ -75,10 +112,10 @@ public class DialogueDataEditor : CustomEditorBase
             SwapListItems(sentenceDataList, i, i - 1);
             GUI.FocusControl(null);
         }
-        if (sentenceData == sentenceDataList[0])
+        if (sentenceData == sentenceDataList.GetArrayElementAtIndex(0))
             EditorGUI.EndDisabledGroup();
 
-        if (sentenceData == sentenceDataList[sentenceDataList.Count - 1])
+        if (sentenceData == sentenceDataList.GetArrayElementAtIndex(sentenceDataList.arraySize - 1))
             EditorGUI.BeginDisabledGroup(true);
 
         if (GUILayout.Button(EditorGUIUtility.IconContent("d_icon dropdown@2x"), EditorStyles.miniButtonMid, GUILayout.MaxWidth(18), GUILayout.MaxHeight(18)))
@@ -86,69 +123,80 @@ public class DialogueDataEditor : CustomEditorBase
             SwapListItems(sentenceDataList, i, i + 1);
         }
 
-        if (sentenceData == sentenceDataList[sentenceDataList.Count - 1])
+        if (sentenceData == sentenceDataList.GetArrayElementAtIndex(sentenceDataList.arraySize - 1))
             EditorGUI.EndDisabledGroup();
 
+        SerializedProperty sentence = sentenceData.FindPropertyRelative("sentence");
+        SerializedProperty NPCName = sentenceData.FindPropertyRelative("NPCName");
+
         // ObjectField
-        if (sentenceData.sentence != null)
-            sentenceData.sentence = sentenceData.sentence.Trim();
+        if (sentence.stringValue != null)
+            sentence.stringValue = sentence.stringValue.Trim();
 
 
-        TextField(" ", ref sentenceData.sentence, 75, -3, 188, true, EditorStyles.textArea, 55, null, 170);
+        TextField(" ", sentence, 75, -3, 188, true, EditorStyles.textArea, 55, null, 170);
         GUILayout.EndHorizontal();
         GUILayout.Space(2);
 
         if (textType == DialogueData.TextType.dialogue)
         {
-            TextField("NPC name : ", ref sentenceData.NPCName, 75, 70, 115, true, null, 0, null, 50); //Choose PNJ name
+            TextField("NPC name : ", NPCName, 75, 70, 115, true, null, 0, null, 50); //Choose PNJ name
             GUILayout.Space(2);
 
-            SpriteField("NPC sprite : ", ref sentenceData.NPCSprite, 75, null, 70, 115, 0, "Choose the sprite of the speaking character for this dialogue sentence"); //Choose PNJ sprite
+            //SpriteField("NPC sprite : ", ref sentenceData.NPCSprite, 75, null, 70, 115, 0, "Choose the sprite of the speaking character for this dialogue sentence"); //Choose PNJ sprite
             GUILayout.Space(2);
         }
 
-        ToggleField("Skippable : ", ref sentenceData.isSkippable, 75, 70, 15, "On : Player can skipped that dialogue sentence"); //Choose if this text is skippable
+        SerializedProperty isSkippable = sentenceData.FindPropertyRelative("isSkippable");
+        SerializedProperty withSFX = sentenceData.FindPropertyRelative("withSFX");
+        ToggleField("Skippable : ", isSkippable, 75, 70, 15, "On : Player can skipped that dialogue sentence"); //Choose if this text is skippable
 
+        SerializedProperty showSfxElements = sentenceData.FindPropertyRelative("showSfxElements");
         GUILayout.BeginHorizontal();
-        if(sentenceData.withSFX)
+        if(withSFX.boolValue)
         {
             GUILayout.Space(75);
-            sentenceData.showSfxElements = GUILayout.Toggle(sentenceData.showSfxElements, "", EditorStyles.foldout, GUILayout.MaxWidth(10), GUILayout.MaxHeight(20));
-            ToggleField("With SFX", ref sentenceData.withSFX, 0, 70, 15, "On : Player can add sound");
+            showSfxElements.boolValue = GUILayout.Toggle(showSfxElements.boolValue, "", EditorStyles.foldout, GUILayout.MaxWidth(10), GUILayout.MaxHeight(20));
+            ToggleField("With SFX", withSFX, 0, 70, 15, "On : Player can add sound");
         }
         else
         {
-            ToggleField("With SFX", ref sentenceData.withSFX, 75, 70, 15, "On : Player can add sound");
-            sentenceData.showSfxElements = false;
+            ToggleField("With SFX", withSFX, 75, 70, 15, "On : Player can add sound");
+            showSfxElements.boolValue = false;
         }
 
         GUILayout.EndHorizontal();
         GUILayout.Space(5);
 
-        if(sentenceData.showSfxElements)
+        SerializedProperty audioClipData = sentenceData.FindPropertyRelative("audioClipData");
+
+        if (showSfxElements.boolValue)
         {
-            ShowAudioClipData(sentenceData.audioClipData);
+            ShowAudioClipData(audioClipData);
         }
 
+        SerializedProperty withCustomEvent = sentenceData.FindPropertyRelative("withCustomEvent");
 
-        ToggleField("With custom event", ref sentenceData.withCustomEvent, 75, 70, 15);
+        ToggleField("With custom event", withCustomEvent, 75, 70, 15);
 
-        if(sentenceData.withCustomEvent)
+        if(withCustomEvent.boolValue)
         {
             ShowOnSentenceEvent(sentenceData, i);
         }
     }
 
-    private void ShowOnSentenceEvent(SentenceData sentenceData, int i)
+    private void ShowOnSentenceEvent(SerializedProperty sentenceData, int i)
     {
-        EnumField("When to start event", ref sentenceData.startOfEvent);
+        SerializedProperty startOfEvent = sentenceData.FindPropertyRelative("startOfEvent");
+        AddPopup(ref startOfEvent, "When to start event", typeof(StartOfEvent));
+        //EnumField("When to start event", ref sentenceData.startOfEvent);
+        
+        //string eventId = sentenceData.eventIDToLaunch;
 
-        //sentenceData.eventIDToLaunch = GUILayout.TextField("Event Id", GUILayout.MaxWidth(150));
-        string eventId = sentenceData.eventIDToLaunch;
-
-        TextField("Event ID", ref eventId);
-
-        sentenceData.eventIDToLaunch = eventId;
+        SerializedProperty eventIDToLaunch = sentenceData.FindPropertyRelative("eventIDToLaunch");
+        SerializedProperty stringID = eventIDToLaunch.FindPropertyRelative("_iD");
+        TextField("Event ID", stringID);
+        //sentenceData.eventIDToLaunch = eventId;
 
         GUILayout.Space(10);
 
@@ -159,36 +207,46 @@ public class DialogueDataEditor : CustomEditorBase
         //serializedObject.ApplyModifiedProperties();
     }
 
-    void ShowAudioClipData(AudioClipData audioClipData)
+    void ShowAudioClipData(SerializedProperty audioClipData)
     {
+        SerializedProperty audioClip = audioClipData.FindPropertyRelative("audioClip");
         GUILayout.BeginHorizontal();
         GUILayout.Space(75);
-        AudioField("", ref audioClipData.audioClip, 0, null, 75, 110, 0, "");
+        AudioField("", audioClip, 0, null, 75, 110, 0, "");
         GUILayout.EndHorizontal();
 
-        ToggleField("Loop : ", ref audioClipData.audioLoop, 75, 110, 15, "On : Music looping");
+        SerializedProperty audioLoop = audioClipData.FindPropertyRelative("audioLoop");
+        ToggleField("Loop : ", audioLoop, 75, 110, 15, "On : Music looping");
 
-        FloatField("Starting delay (s) : ", ref audioClipData.delay, 75, 110, 50, "Delay before start audio or his transition");
+        SerializedProperty delay = audioClipData.FindPropertyRelative("delay");
+        FloatField("Starting delay (s) : ", serializedObject.FindProperty("transitionEndTime"), 75, 110, 50, "Delay before start audio or his transition");
         GUILayout.Space(5);
 
-        EnumField("Starting type : ", ref audioClipData.startType, 75, 110, 75);
+        SerializedProperty startType = audioClipData.FindPropertyRelative("startType");
+        AddPopup(ref startType, "Starting type : ", typeof(StartType));
+        //EnumField("Starting type : ", ref audioClipData.startType, 75, 110, 75);
         GUILayout.Space(5);
 
-        if (audioClipData.startType == AudioClipData.StartType.fadeIn)
+        if (startType.enumValueIndex == (int)AudioClipData.StartType.fadeIn)
         {
-            FloatField("Fade In time (s) : ", ref audioClipData.fadeInTime, 75, 110, 50, "Time during the volume growing");
+            SerializedProperty fadeInTime = audioClipData.FindPropertyRelative("fadeInTime");
+            FloatField("Fade In time (s) : ", fadeInTime, 75, 110, 50, "Time during the volume growing");
             GUILayout.Space(5);
         }
 
-        FloatField("Maximum volume : ", ref audioClipData.maxVolume, 75, 110, 50, "Volume in percentage");
+        SerializedProperty maxVolume = audioClipData.FindPropertyRelative("maxVolume");
+        FloatField("Maximum volume : ", maxVolume, 75, 110, 50, "Volume in percentage");
         GUILayout.Space(5);
 
-        EnumField("Ending type : ", ref audioClipData.stopType, 75, 110, 75);
+        SerializedProperty stopType = audioClipData.FindPropertyRelative("stopType");
+        AddPopup(ref stopType, "Ending type : ", typeof(StopType));
+        //EnumField("Ending type : ", ref audioClipData.stopType, 75, 110, 75);
         GUILayout.Space(5);
 
-        if (audioClipData.stopType == AudioClipData.StopType.fadeOut)
+        if (stopType.enumValueIndex == (int)AudioClipData.StopType.fadeOut)
         {
-            FloatField("Fade Out time (s) : ", ref audioClipData.fadeOutTime, 75, 110, 50, "Time during the volume reducing");
+            SerializedProperty fadeOutTime = audioClipData.FindPropertyRelative("fadeOutTime");
+            FloatField("Fade Out time (s) : ", fadeOutTime, 75, 110, 50, "Time during the volume reducing");
             GUILayout.Space(5);
         }
     }
