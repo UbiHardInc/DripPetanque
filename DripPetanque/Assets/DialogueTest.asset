@@ -12,54 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15abe0ae04ab1cc4cae44a8012b8d8d6, type: 3}
   m_Name: DialogueTest
   m_EditorClassIdentifier: 
-  dialogueStartDisplayStyle: 0
-  dialogueEndDisplayStyle: 0
-  swipInDirection: 0
-  swipOutDirection: 0
-  sentenceDisplayStyle: 0
-  transitionStartTime: 0
-  transitionEndTime: 0
+  sentenceDisplayStyle: 1
+  transitionStartTime: 9
+  transitionEndTime: 0.5
   typingDelay: 0.02
   sentenceDatas:
   - isSkippable: 0
-    NPCName: 
+    NPCName: dsdq
     NPCSprite: {fileID: 0}
-    sentence: Bonjour
-    showData: 0
-    audioClipData:
-      audioClip: {fileID: 0}
-      audioLoop: 0
-      startType: 0
-      fadeInTime: 0
-      delay: 0
-      stopType: 0
-      fadeOutTime: 0
-      maxVolume: 100
-      showaudioClipElements: 0
-    showSfxElements: 0
-    withSFX: 0
-    typingIsComplete: 0
-    withCustomEvent: 1
-    startOfEvent: 0
-    OnSentence:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11400000, guid: 659210415c8d4c74a90f82685fcb939d, type: 2}
-          m_TargetAssemblyTypeName: CameraEvent, Assembly-CSharp
-          m_MethodName: DoCameraEvent
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - isSkippable: 1
-    NPCName: 
-    NPCSprite: {fileID: 0}
-    sentence: 
+    sentence: zdqdzqdz
     showData: 0
     audioClipData:
       audioClip: {fileID: 0}
@@ -76,9 +37,30 @@ MonoBehaviour:
     typingIsComplete: 1
     withCustomEvent: 1
     startOfEvent: 0
-    OnSentence:
-      m_PersistentCalls:
-        m_Calls: []
+    eventIDToLaunch:
+      _iD: dzq
+  - isSkippable: 1
+    NPCName: 
+    NPCSprite: {fileID: 0}
+    sentence: sd
+    showData: 0
+    audioClipData:
+      audioClip: {fileID: 0}
+      audioLoop: 0
+      startType: 0
+      fadeInTime: 0
+      delay: 0
+      stopType: 0
+      fadeOutTime: 0
+      maxVolume: 100
+      showaudioClipElements: 0
+    showSfxElements: 0
+    withSFX: 0
+    typingIsComplete: 1
+    withCustomEvent: 1
+    startOfEvent: 0
+    eventIDToLaunch:
+      _iD: 
   nbSentences: 2
   showDialogueElements: 1
   textType: 1

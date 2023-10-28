@@ -8,73 +8,57 @@ public class DialogueDataEditor : CustomEditorBase
 {
     public override void OnInspectorGUI()
     {
-        ShowDisplayStartStyle();
-        ShowDisplayEndStyle();
+        serializedObject.UpdateIfRequiredOrScript();
+
+        EditorGUI.BeginChangeCheck();
+        ShowTransitionStartTime();
+        ShowTransitionEndTime();
         ShowSentenceDisplayStyle();
+        
+        if(EditorGUI.EndChangeCheck())
+        {
+            EditorUtility.SetDirty(serializedObject.targetObject);
+        }
+        
+        serializedObject.ApplyModifiedProperties();
     }
 
-    private void ShowDisplayStartStyle()
+    private void ShowTransitionStartTime()
     {
-        EnumField("Dialogue appearance style : ", ref dialogueData.dialogueStartDisplayStyle, 0, 175, 85, "How dialogue appear"); //Choose dialogue style
+        FloatField("Transition's time (s) : ", serializedObject.FindProperty("transitionStartTime"), 15, 175, 50, "Appaerance time (in second)");
         GUILayout.Space(5);
-
-        if (dialogueData.dialogueStartDisplayStyle != DialogueData.DialogueStartDisplayStyle.direct)
-        {
-            FloatField("Transition's time (s) : ", ref dialogueData.transitionStartTime, 15, 175, 50, "Appaerance time (in second)");
-            GUILayout.Space(5);
-        }
-        GUILayout.BeginHorizontal();
-        GUILayout.Space(30);
-        if(dialogueData.dialogueStartDisplayStyle == DialogueData.DialogueStartDisplayStyle.translation)
-        {
-            EnumField("From", ref dialogueData.swipInDirection);
-        }
-        GUILayout.EndHorizontal();
     }
 
-    private void ShowDisplayEndStyle()
+    private void ShowTransitionEndTime()
     {
-        EnumField("Dialogue disappearance style : ", ref dialogueData.dialogueEndDisplayStyle, 0, 175, 85, "How dialogue dissapear"); //Choose dialogue style
+        FloatField("Transition's time (s) : ", serializedObject.FindProperty("transitionEndTime"), 15, 175, 50, "Disappaerance time (in second)");
         GUILayout.Space(5);
-
-        if (dialogueData.dialogueEndDisplayStyle != DialogueData.DialogueEndDisplayStyle.direct)
-        {
-            FloatField("Transition's time (s) : ", ref dialogueData.transitionEndTime, 15, 175, 50, "Disappaerance time (in second)");
-            GUILayout.Space(5);
-        }
-        GUILayout.BeginHorizontal();
-        GUILayout.Space(30);
-        if (dialogueData.dialogueEndDisplayStyle == DialogueData.DialogueEndDisplayStyle.translation)
-        {
-            EnumField("To", ref dialogueData.swipOutDirection);
-        }
-        GUILayout.EndHorizontal();
     }
 
     private void ShowSentenceDisplayStyle()
     {
-        EnumField("Sentence display style", ref dialogueData.sentenceDisplayStyle);
+        EnumField("Sentence display style", ref m_dialogueData.sentenceDisplayStyle);
 
-        if (dialogueData.sentenceDisplayStyle == DialogueData.SentenceDisplayStyle.type)
+        if (m_dialogueData.sentenceDisplayStyle == DialogueData.SentenceDisplayStyle.type)
         {
-            FloatField("Typing delay (s) : ", ref dialogueData.typingDelay, 15, 175, 50, "Time (in second) between typing");
+            FloatField("Typing delay (s) : ", serializedObject.FindProperty("typingDelay"), 15, 175, 50, "Time (in second) between typing");
             GUILayout.Space(5);
         }
 
-        EnumField("Text type : ", ref dialogueData.textType);
+        EnumField("Text type : ", ref m_dialogueData.textType);
         GUILayout.Space(5);
 
-        CustomListHeader("Sentences number", "SentencesDataCount", ref dialogueData.nbSentences, ref dialogueData.sentenceDatas, ref dialogueData.showDialogueElements, 120, 20, "Choose sentences number for this text/dialogue", true);
+        CustomListHeader("Sentences number", "SentencesDataCount", ref m_dialogueData.nbSentences, ref m_dialogueData.sentenceDatas, ref m_dialogueData.showDialogueElements, 120, 20, "Choose sentences number for this text/dialogue", true);
 
-        if (dialogueData.showDialogueElements)
+        if (m_dialogueData.showDialogueElements)
         {
-            if (dialogueData.sentenceDatas.Count == 0)
+            if (m_dialogueData.sentenceDatas.Count == 0)
             {
                 return;
             }
-            for (int i = 0; i < dialogueData.nbSentences; i++)
+            for (int i = 0; i < m_dialogueData.nbSentences; i++)
             {
-                ShowFeedbackSentencesData(dialogueData.sentenceDatas[i], dialogueData.textType, dialogueData.sentenceDatas, i);
+                ShowFeedbackSentencesData(m_dialogueData.sentenceDatas[i], m_dialogueData.textType, m_dialogueData.sentenceDatas, i);
             }
             GUILayout.Space(5);
         }

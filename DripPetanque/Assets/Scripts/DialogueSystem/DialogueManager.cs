@@ -35,24 +35,6 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Vector2 _maxAnchorAnimZoomStart;
     [SerializeField] private Vector2 _minAnchorAnimZoomEnd;
     [SerializeField] private Vector2 _maxAnchorAnimZoomEnd;
-
-    [Header("DoTween Swipe from down Sequence Reference")]
-    [SerializeField] private Vector2 _minAnchorAnimSwipeDownStart;
-    [SerializeField] private Vector2 _maxAnchorAnimSwipeDownStart;
-    [SerializeField] private Vector2 _minAnchorAnimSwipeDownEnd;
-    [SerializeField] private Vector2 _maxAnchorAnimSwipeDownEnd;
-
-    [Header("DoTween Swipe from left Sequence Reference")]
-    [SerializeField] private Vector2 _minAnchorAnimSwipeLeftStart;
-    [SerializeField] private Vector2 _maxAnchorAnimSwipeLeftStart;
-    [SerializeField] private Vector2 _minAnchorAnimSwipeLeftEnd;
-    [SerializeField] private Vector2 _maxAnchorAnimSwipeLeftEnd;
-
-    [Header("DoTween Swipe from right Sequence Reference")]
-    [SerializeField] private Vector2 _minAnchorAnimSwipeRightStart;
-    [SerializeField] private Vector2 _maxAnchorAnimSwipeRightStart;
-    [SerializeField] private Vector2 _minAnchorAnimSwipeRightEnd;
-    [SerializeField] private Vector2 _maxAnchorAnimSwipeRightEnd;
     #endregion
 
     //----------------------------------------------------------
@@ -195,7 +177,8 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
-        CheckEndDisplayType();
+        m_currentTransTime = m_currentDialogueData.transitionEndTime;
+        DialogueZoomOut(m_currentTransTime);
         m_haveFinishDialogue = true;
     }
 
@@ -228,31 +211,6 @@ public class DialogueManager : MonoBehaviour
     }
 
     #region Dialogue Transition in
-    private void CheckStartDisplayType()
-    {
-        DialogueData.DialogueStartDisplayStyle textBoxDisplayStyle = m_currentDialogueData.dialogueStartDisplayStyle;
-        m_currentTransTime = m_currentDialogueData.transitionStartTime;
-        switch (textBoxDisplayStyle)
-        {
-            case DialogueData.DialogueStartDisplayStyle.direct:
-                m_dialogueCanvas.SetActive(true);
-                ComputeSentences();
-                //m_nextButtonObj.SetActive(m_sentenceIndex != m_sentenceDatas.Count - 1);
-                break;
-
-            case DialogueData.DialogueStartDisplayStyle.fade:
-                DialogueFadeIn(m_currentTransTime);
-                break;
-
-            case DialogueData.DialogueStartDisplayStyle.zoomIn:
-                DialogueZoomIn(m_currentTransTime);
-                break;
-
-            case DialogueData.DialogueStartDisplayStyle.translation:
-                DialogueSwipIn(m_currentTransTime);
-                break;
-        }
-    }
 
     private void DialogueFadeIn(float transitionDuration)
     {
@@ -284,77 +242,10 @@ public class DialogueManager : MonoBehaviour
         _openDroplistSequence.Play();
     }
 
-    private void DialogueSwipIn(float transitionDuration)
-    {
-        DialogueData.SwipInDirection swipInDirection = m_currentDialogueData.swipInDirection;
-        m_dialogueCanvas.SetActive(true);
-
-        RectTransform dialogueContainerRectTransform = m_dialogueMainContainerCanvasGroup.GetComponent<RectTransform>();
-
-        Vector2 originPos;
-        originPos.y = dialogueContainerRectTransform.localPosition.y;
-        originPos.x = dialogueContainerRectTransform.localPosition.x;
-        Vector2 tempPos = originPos;
-
-        switch (swipInDirection)
-        {
-            case DialogueData.SwipInDirection.fromDown:
-                tempPos.y -= (Screen.height / 2) + tempPos.y / 2;
-                break;
-
-            case DialogueData.SwipInDirection.fromLeft:
-                tempPos.x -= Screen.width;
-                break;
-
-            case DialogueData.SwipInDirection.fromRight:
-                tempPos.x += Screen.width;
-                break;
-        }
-        dialogueContainerRectTransform.localPosition = tempPos;
-        Sequence sequence = DOTween.Sequence();
-        if (/*swipInDirection == DialogueData.SwipInDirection.fromUp || */ swipInDirection == DialogueData.SwipInDirection.fromDown)
-        {
-            sequence.Append(dialogueContainerRectTransform.DOMoveY(originPos.y, transitionDuration).SetEase(m_swipeCurve));
-        }
-        else if (swipInDirection == DialogueData.SwipInDirection.fromLeft || swipInDirection == DialogueData.SwipInDirection.fromRight)
-        {
-            sequence.Append(dialogueContainerRectTransform.DOMoveX(originPos.x, transitionDuration).SetEase(m_swipeCurve));
-        }
-        sequence.OnComplete(() =>
-        {
-            ComputeSentences();
-        });
-        sequence.Play();
-    }
+    
     #endregion
 
     #region Dialogue Transition out
-    private void CheckEndDisplayType()
-    {
-        DialogueData.DialogueEndDisplayStyle textBoxDisplayStyle = m_currentDialogueData.dialogueEndDisplayStyle;
-        m_currentTransTime = m_currentDialogueData.transitionEndTime;
-        switch (textBoxDisplayStyle)
-        {
-            case DialogueData.DialogueEndDisplayStyle.direct:
-                m_dialogueCanvas.SetActive(false);
-                m_nextButtonCanvasGroup.alpha = 0;
-                m_haveFinishDialogue = true;
-                break;
-
-            case DialogueData.DialogueEndDisplayStyle.fade:
-                DialogueFadeOut(m_currentTransTime);
-                break;
-
-            case DialogueData.DialogueEndDisplayStyle.zoomOut:
-                DialogueZoomOut(m_currentTransTime);
-                break;
-
-            case DialogueData.DialogueEndDisplayStyle.translation:
-                DialogueSwipOut(m_currentTransTime);
-                break;
-
-        }
-    }
 
     private void DialogueFadeOut(float transitionDuration)
     {
@@ -402,58 +293,6 @@ public class DialogueManager : MonoBehaviour
             m_haveFinishDialogue = true;
         });
         sequence.Play();
-    }
-
-    private void DialogueSwipOut(float transitionDuration)
-    {
-        DialogueData.SwipOutDirection swipOutDirection = m_currentDialogueData.swipOutDirection;
-        Vector2 originPos;
-        Vector2 targetPos;
-
-        originPos.y = m_dialogueCanvas.transform.position.y;
-        originPos.x = m_dialogueCanvas.transform.position.x;
-        targetPos = originPos;
-
-        switch (swipOutDirection)
-        {
-            /*
-            case DialogueData.SwipOutDirection.toUp:
-                targetPos.y += Screen.height;
-                break;
-            */
-
-            case DialogueData.SwipOutDirection.toDown:
-                targetPos.y -= (Screen.height / 2) + targetPos.y / 2;
-                break;
-
-
-            case DialogueData.SwipOutDirection.toLeft:
-                targetPos.x -= Screen.width;
-                break;
-
-
-            case DialogueData.SwipOutDirection.toRight:
-                targetPos.x += Screen.width;
-                break;
-        }
-        if (swipOutDirection == DialogueData.SwipOutDirection.toDown)
-        {
-            m_dialogueCanvas.transform.DOMoveY(targetPos.y, transitionDuration).SetEase(m_swipeCurve).OnComplete(() =>
-            {
-                m_dialogueCanvas.transform.position = originPos;
-                m_dialogueCanvas.SetActive(false);
-                m_haveFinishDialogue = true;
-            });
-        }
-        else if (swipOutDirection == DialogueData.SwipOutDirection.toLeft || swipOutDirection == DialogueData.SwipOutDirection.toRight)
-        {
-            m_dialogueCanvas.transform.DOMoveX(targetPos.x, transitionDuration).SetEase(m_swipeCurve).OnComplete(() =>
-            {
-                m_dialogueCanvas.transform.position = originPos;
-                m_dialogueCanvas.SetActive(false);
-                m_haveFinishDialogue = true;
-            });
-        }
     }
     #endregion
 

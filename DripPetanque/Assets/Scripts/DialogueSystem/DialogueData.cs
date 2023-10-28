@@ -7,14 +7,6 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "Dialogue", menuName = "SO/Dialogue")]
 public class DialogueData : ScriptableObject
 {
-    public enum DialogueStartDisplayStyle { direct, fade, zoomIn, translation } //  dialogue display appears style enum
-    public DialogueStartDisplayStyle dialogueStartDisplayStyle = new DialogueStartDisplayStyle(); // dialogue display appears style 
-    public enum DialogueEndDisplayStyle { direct, fade, zoomOut, translation } // dialogue display disappears style enum
-    public DialogueEndDisplayStyle dialogueEndDisplayStyle = new DialogueEndDisplayStyle(); // dialogue display disappears style 
-    public enum SwipInDirection { fromDown, fromLeft, fromRight }  //  direction on arriving translation transition enum
-    public SwipInDirection swipInDirection = new SwipInDirection(); //  direction  on arriving translation transition
-    public enum SwipOutDirection { toDown, toLeft, toRight }  //  direction on arriving translation transition enum
-    public SwipOutDirection swipOutDirection = new SwipOutDirection(); //  direction  on arriving translation transition
     public enum SentenceDisplayStyle { direct, type } // sentences display style enum
     public SentenceDisplayStyle sentenceDisplayStyle = new SentenceDisplayStyle(); // sentences display style
     public float transitionStartTime;

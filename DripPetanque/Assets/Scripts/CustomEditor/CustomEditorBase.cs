@@ -6,12 +6,13 @@ using UnityEngine.UI;
 
 public class CustomEditorBase : Editor
 {
-	protected DialogueData dialogueData;
+	protected DialogueData m_dialogueData;
 	protected SerializedProperty m_SPsentenceDataList;
+	protected SerializedProperty m_SPTransitionStartTime;
 
     private void OnEnable()
     {
-		dialogueData = (DialogueData)target;
+		m_dialogueData = (DialogueData)target;
         //m_SPsentenceDataList = serializedObject.FindProperty("sentenceDatas");
     }
 
@@ -65,7 +66,7 @@ public class CustomEditorBase : Editor
         {
 			if(typeof(T) == typeof(SentenceData))
 			{
-				AddSentenceData(dialogueData.sentenceDatas);
+				AddSentenceData(m_dialogueData.sentenceDatas);
 			}
         }
 
@@ -73,7 +74,7 @@ public class CustomEditorBase : Editor
         {
 			if (typeof(T) == typeof(SentenceData))
 			{
-				RemoveSentenceData(dialogueData.sentenceDatas);
+				RemoveSentenceData(m_dialogueData.sentenceDatas);
 			}
         }
     }
@@ -135,13 +136,13 @@ public class CustomEditorBase : Editor
 		GUILayout.EndHorizontal();
 	}
 
-	protected void FloatField(string labelString, ref float fieldFloat, int padding = 0, int maxLabelWidth = 135, int maxFloatFieldWidth = 150, string tooltip = null)
+	protected void FloatField(string labelString, SerializedProperty propertyToEdit, int padding = 0, int maxLabelWidth = 135, int maxFloatFieldWidth = 150, string tooltip = null)
 	{
 		GUILayout.BeginHorizontal();
 		GUILayout.Space(padding);
 		GUILayout.Label(new GUIContent(labelString, tooltip), GUILayout.MaxWidth(maxLabelWidth));
 
-		fieldFloat = EditorGUILayout.FloatField(fieldFloat, GUILayout.MaxWidth(maxFloatFieldWidth));
+        propertyToEdit.floatValue = EditorGUILayout.FloatField(propertyToEdit.floatValue, GUILayout.MaxWidth(maxFloatFieldWidth));
 		GUILayout.EndHorizontal();
 	}
 
