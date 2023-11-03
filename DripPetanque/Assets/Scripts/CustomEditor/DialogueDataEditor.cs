@@ -54,17 +54,17 @@ public class DialogueDataEditor : CustomEditorBase
         AddPopup(ref textType, "Text type : ", typeof(TextType));
         //EnumField("Text type : ", ref m_dialogueData.textType);
         GUILayout.Space(5);
+        SerializedProperty sentenceDataList = serializedObject.FindProperty("sentenceDatas");
 
-        CustomListHeader("Sentences number", "SentencesDataCount", ref m_dialogueData.nbSentences, ref m_dialogueData.sentenceDatas, ref m_dialogueData.showDialogueElements, 120, 20, "Choose sentences number for this text/dialogue", true);
+        SerializedProperty nbSentences = serializedObject.FindProperty("nbSentences");
+        CustomListHeader("Sentences number", "SentencesDataCount", nbSentences, sentenceDataList, ref m_dialogueData.showDialogueElements, 120, 20, "Choose sentences number for this text/dialogue", true);
 
         if (m_dialogueData.showDialogueElements)
         {
-            if (m_dialogueData.sentenceDatas.Count == 0)
+            if (sentenceDataList.arraySize == 0)
             {
                 return;
             }
-            SerializedProperty sentenceDataList = serializedObject.FindProperty("sentenceDatas");
-            SerializedProperty nbSentences = serializedObject.FindProperty("nbSentences");
             for (int i = 0; i < nbSentences.intValue; i++)
             {
                 SerializedProperty sentenceData = serializedObject.FindProperty("sentenceDatas").GetArrayElementAtIndex(i);

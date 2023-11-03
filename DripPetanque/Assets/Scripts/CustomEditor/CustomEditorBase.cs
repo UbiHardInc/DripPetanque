@@ -16,7 +16,7 @@ public class CustomEditorBase : Editor
         //m_SPsentenceDataList = serializedObject.FindProperty("sentenceDatas");
     }
 
-    protected void CustomListHeader<T>(string name, string controlName, ref int desiredCount, ref List<T> listToPopulate, ref bool showListElements, int maxWidth = 110, int maxHeight = 20,
+    protected void CustomListHeader(string name, string controlName, SerializedProperty desiredCount, SerializedProperty listToPopulate, ref bool showListElements, int maxWidth = 110, int maxHeight = 20,
 		   string tooltip = null, bool withToggle = true, bool desiredCountCanBeZero = false)
 	{
 		GUILayout.BeginHorizontal();
@@ -32,21 +32,21 @@ public class CustomEditorBase : Editor
 
 
 		GUI.SetNextControlName(controlName);
-		IntField("", ref desiredCount, 0, 0, 30, null);
+		IntField("", desiredCount, 0, 0, 30, null);
 
-		if (desiredCount < 0)
-			desiredCount = 0;
+		if (desiredCount.intValue < 0)
+			desiredCount.intValue = 0;
 		//Add an element
-		if (desiredCount <= 0)
+		if (desiredCount.intValue <= 0)
 		{
 			EditorGUI.BeginDisabledGroup(true);
 		}
 		if (GUILayout.Button(EditorGUIUtility.IconContent("Toolbar Minus@2x"), EditorStyles.miniButtonMid, GUILayout.MaxWidth(18), GUILayout.MaxHeight(18)))
 		{
-			desiredCount--;
+			desiredCount.intValue--;
 			PopulateList(listToPopulate, desiredCount);
 		}
-		if (desiredCount <= 0)
+		if (desiredCount.intValue <= 0)
 		{
 			EditorGUI.EndDisabledGroup();
 		}
@@ -54,42 +54,44 @@ public class CustomEditorBase : Editor
 		GUILayout.Space(1);
 		if (GUILayout.Button(EditorGUIUtility.IconContent("d_Toolbar Plus@2x"), EditorStyles.miniButtonMid, GUILayout.MaxWidth(18), GUILayout.MaxHeight(18)))
 		{
-			desiredCount++;
+			desiredCount.intValue++;
 			PopulateList(listToPopulate, desiredCount);
 		}
 		GUILayout.EndHorizontal();
 	}
 
-	public void PopulateList<T>(List<T> list, int editorListCount)
+	public void PopulateList(SerializedProperty list, SerializedProperty editorListCount)
     {
-		while(list.Count < editorListCount)
+		while(list.arraySize < editorListCount.intValue)
         {
-			if(typeof(T) == typeof(SentenceData))
-			{
-				AddSentenceData(m_dialogueData.sentenceDatas);
+			if(list.arrayElementType == "SentenceData")
+
+            {
+				AddSentenceData(list);
 			}
         }
 
-		while(list.Count > editorListCount)
+		while(list.arraySize > editorListCount.intValue)
         {
-			if (typeof(T) == typeof(SentenceData))
+			if (list.arrayElementType == "SentenceData")
 			{
-				RemoveSentenceData(m_dialogueData.sentenceDatas);
+				RemoveSentenceData(list);
 			}
         }
     }
 
-	private void AddSentenceData(List<SentenceData> list)
+	private void AddSentenceData(SerializedProperty list)
     {
-		SentenceData sentenceData = new SentenceData();
-		list.Add(sentenceData);
+		list.arraySize++;
+        serializedObject.ApplyModifiedProperties();
     }
 
-	private void RemoveSentenceData(List<SentenceData> list)
+	private void RemoveSentenceData(SerializedProperty list)
     {
-		int lastIndex = list.Count - 1;
+		int lastIndex = list.arraySize - 1;
 
-		list.Remove(list[lastIndex]);
+		list.DeleteArrayElementAtIndex(lastIndex);
+		list.arraySize--;
     }
 
 	protected void SwapListItems(SerializedProperty list, int currentIndex, int swapIndex)
@@ -155,14 +157,14 @@ public class CustomEditorBase : Editor
 		GUILayout.EndHorizontal();
 	}
 
-	protected void IntField(string labelString, ref int fieldInt, int padding = 0, int maxLabelWidth = 135, int maxFloatFieldWidth = 150, string tooltip = null)
+	protected void IntField(string labelString, SerializedProperty fieldInt, int padding = 0, int maxLabelWidth = 135, int maxFloatFieldWidth = 150, string tooltip = null)
 	{
 		if (labelString != "")
 			GUILayout.BeginHorizontal();
 		GUILayout.Space(padding);
 		GUILayout.Label(new GUIContent(labelString, tooltip), GUILayout.MaxWidth(maxLabelWidth));
 
-		fieldInt = EditorGUILayout.IntField(fieldInt, GUILayout.MaxWidth(maxFloatFieldWidth));
+		fieldInt.intValue = EditorGUILayout.IntField(fieldInt.intValue, GUILayout.MaxWidth(maxFloatFieldWidth));
 		if (labelString != "")
 			GUILayout.EndHorizontal();
 	}

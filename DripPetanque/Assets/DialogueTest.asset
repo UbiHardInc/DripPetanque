@@ -42,7 +42,7 @@ MonoBehaviour:
   - isSkippable: 1
     NPCName: 
     NPCSprite: {fileID: 0}
-    sentence: dqzdzqsdssssss
+    sentence: dqzqdzqd
     showData: 0
     audioClipData:
       audioClip: {fileID: 0}
@@ -64,7 +64,7 @@ MonoBehaviour:
   - isSkippable: 1
     NPCName: 
     NPCSprite: {fileID: 0}
-    sentence: 
+    sentence: dqzqdzqd
     showData: 0
     audioClipData:
       audioClip: {fileID: 0}
@@ -83,28 +83,6 @@ MonoBehaviour:
     startOfEvent: 0
     eventIDToLaunch:
       _iD: 
-  - isSkippable: 1
-    NPCName: 
-    NPCSprite: {fileID: 0}
-    sentence: 
-    showData: 0
-    audioClipData:
-      audioClip: {fileID: 0}
-      audioLoop: 0
-      startType: 0
-      fadeInTime: 0
-      delay: 0
-      stopType: 0
-      fadeOutTime: 0
-      maxVolume: 100
-      showaudioClipElements: 0
-    showSfxElements: 0
-    withSFX: 0
-    typingIsComplete: 1
-    withCustomEvent: 0
-    startOfEvent: 0
-    eventIDToLaunch:
-      _iD: 
-  nbSentences: 4
+  nbSentences: 3
   showDialogueElements: 1
   textType: 1
