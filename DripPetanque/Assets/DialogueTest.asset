@@ -32,10 +32,10 @@ MonoBehaviour:
       fadeOutTime: 0
       maxVolume: 100
       showaudioClipElements: 0
-    showSfxElements: 1
+    showSfxElements: 0
     withSFX: 1
     typingIsComplete: 1
-    withCustomEvent: 0
+    withCustomEvent: 1
     startOfEvent: 0
     eventIDToLaunch:
       _iD: 

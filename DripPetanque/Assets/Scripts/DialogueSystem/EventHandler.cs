@@ -7,7 +7,9 @@ using UnityEngine.Events;
 public class EventHandler : MonoBehaviour
 {
     [SerializeField] private string _iD;
-    [SerializeField] UnityEvent _eventToLaunch;
+    [SerializeField] UnityEvent m_beforeSentenceEvent;
+    [SerializeField] UnityEvent m_duringSentenceEvent;
+    [SerializeField] UnityEvent m_afterSentenceEvent;
 
     private void OnEnable()
     {
@@ -19,8 +21,18 @@ public class EventHandler : MonoBehaviour
         DialogueManager.EventHandlers.Remove(_iD);
     }
 
-    public void LaunchEvent()
+    public void LaunchBeforeSentenceEvent()
     {
-        _eventToLaunch?.Invoke();
+        m_beforeSentenceEvent?.Invoke();
+    }
+
+    public void LaunchDuringSentenceEvent()
+    {
+        m_duringSentenceEvent?.Invoke();
+    }
+
+    public void LaunchAfterSentenceEvent()
+    {
+        m_afterSentenceEvent?.Invoke();
     }
 }

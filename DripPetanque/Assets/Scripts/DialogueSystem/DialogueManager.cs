@@ -120,6 +120,7 @@ public class DialogueManager : MonoBehaviour
 
         if(currentSentenceData.withCustomEvent && currentSentenceData.startOfEvent == SentenceData.StartOfEvent.DuringSentenceTyping)
         {
+            EventHandlers[currentSentenceData.eventIDToLaunch].LaunchDuringSentenceEvent();
             StartEvent(currentSentenceData);
         }
 
@@ -159,7 +160,6 @@ public class DialogueManager : MonoBehaviour
 
     private void StartEvent(SentenceData currentSentenceData)
     {
-        EventHandlers[currentSentenceData.eventIDToLaunch].LaunchEvent();
     }
 
     public void DisplayNextDialogue()
