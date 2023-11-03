@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: DialogueTest
   m_EditorClassIdentifier: 
   sentenceDisplayStyle: 1
-  transitionStartTime: 8
+  transitionStartTime: 0.5
   transitionEndTime: 0.5
   typingDelay: 0.02
   sentenceDatas:
-  - isSkippable: 0
-    NPCName: Bernard
+  - isSkippable: 1
+    NPCName: 
     NPCSprite: {fileID: 0}
-    sentence: Kikou
+    sentence: dqzqdzqd
     showData: 0
     audioClipData:
       audioClip: {fileID: 0}
@@ -35,14 +35,14 @@ MonoBehaviour:
     showSfxElements: 0
     withSFX: 0
     typingIsComplete: 1
-    withCustomEvent: 1
+    withCustomEvent: 0
     startOfEvent: 0
     eventIDToLaunch:
       _iD: 
   - isSkippable: 1
-    NPCName: Brod
+    NPCName: 
     NPCSprite: {fileID: 0}
-    sentence: WOOOOOOT
+    sentence: dqzdzqsdssssss
     showData: 0
     audioClipData:
       audioClip: {fileID: 0}
@@ -57,10 +57,54 @@ MonoBehaviour:
     showSfxElements: 0
     withSFX: 0
     typingIsComplete: 1
-    withCustomEvent: 1
+    withCustomEvent: 0
     startOfEvent: 0
     eventIDToLaunch:
-      _iD: PanCam
-  nbSentences: 2
+      _iD: 
+  - isSkippable: 1
+    NPCName: 
+    NPCSprite: {fileID: 0}
+    sentence: 
+    showData: 0
+    audioClipData:
+      audioClip: {fileID: 0}
+      audioLoop: 0
+      startType: 0
+      fadeInTime: 0
+      delay: 0
+      stopType: 0
+      fadeOutTime: 0
+      maxVolume: 100
+      showaudioClipElements: 0
+    showSfxElements: 0
+    withSFX: 0
+    typingIsComplete: 1
+    withCustomEvent: 0
+    startOfEvent: 0
+    eventIDToLaunch:
+      _iD: 
+  - isSkippable: 1
+    NPCName: 
+    NPCSprite: {fileID: 0}
+    sentence: 
+    showData: 0
+    audioClipData:
+      audioClip: {fileID: 0}
+      audioLoop: 0
+      startType: 0
+      fadeInTime: 0
+      delay: 0
+      stopType: 0
+      fadeOutTime: 0
+      maxVolume: 100
+      showaudioClipElements: 0
+    showSfxElements: 0
+    withSFX: 0
+    typingIsComplete: 1
+    withCustomEvent: 0
+    startOfEvent: 0
+    eventIDToLaunch:
+      _iD: 
+  nbSentences: 4
   showDialogueElements: 1
   textType: 1

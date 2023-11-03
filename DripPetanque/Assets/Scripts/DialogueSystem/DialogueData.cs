@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "Dialogue", menuName = "SO/Dialogue")]
 public class DialogueData : ScriptableObject
 {
-    public enum SentenceDisplayStyle { direct, type } // sentences display style enum
+    public enum SentenceDisplayStyle { Direct, Type } // sentences display style enum
     public SentenceDisplayStyle sentenceDisplayStyle = new SentenceDisplayStyle(); // sentences display style
     public float transitionStartTime;
     public float transitionEndTime;
@@ -16,7 +16,7 @@ public class DialogueData : ScriptableObject
     public List<SentenceData> sentenceDatas = new List<SentenceData>();
     public int nbSentences;
     public bool showDialogueElements;
-    public enum TextType { text, dialogue }
+    public enum TextType { Text, Dialogue }
     public TextType textType;
 }
 
@@ -47,11 +47,11 @@ public class AudioClipData
     //public enum AudioType { music, sfx } // ambient audio (only one instance on scene) or sound effect
     //public AudioType audioType = new AudioType();
     public bool audioLoop; // loop, t/f
-    public enum StartType { immediate, fadeIn } // instant start y/n
+    public enum StartType { Immediate, FadeIn } // instant start y/n
     public StartType startType = new StartType();
     public float fadeInTime = 0; // fadein duration
     public float delay = 0; // delay before start playing
-    public enum StopType { immediate, fadeOut } // instant stop y/n
+    public enum StopType { Immediate, FadeOut } // instant stop y/n
     public StopType stopType = new StopType();
     public float fadeOutTime = 0; // fadeout duration
     public float maxVolume = 100; // audio volume (oh, really?)

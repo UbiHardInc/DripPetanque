@@ -88,7 +88,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         //Set up dialogue UI element at first start, then update at each ComputeSentences()
-        if (m_textType == DialogueData.TextType.dialogue)
+        if (m_textType == DialogueData.TextType.Dialogue)
         {
             //m_talkerImage.gameObject.SetActive(true);
             m_talkerNameText.gameObject.SetActive(true);
@@ -115,14 +115,14 @@ public class DialogueManager : MonoBehaviour
 
         //m_nextButtonObj.SetActive(m_sentenceIndex != m_sentenceDatas.Count - 1);
 
-        if (m_textType == DialogueData.TextType.dialogue)
+        if (m_textType == DialogueData.TextType.Dialogue)
         {
             //m_talkerImage.gameObject.SetActive(true);
             m_talkerNameText.gameObject.SetActive(true);
             //m_talkerImage.sprite = currentSentenceData.NPCSprite;
             m_talkerNameText.text = currentSentenceData.NPCName;
         }
-        else if (m_textType == DialogueData.TextType.text)
+        else if (m_textType == DialogueData.TextType.Text)
         {
             //m_talkerImage.gameObject.SetActive(false);
             m_talkerNameText.gameObject.SetActive(false);
@@ -132,12 +132,12 @@ public class DialogueManager : MonoBehaviour
 
         switch (m_currentDialogueData.sentenceDisplayStyle)
         {
-            case DialogueData.SentenceDisplayStyle.direct:
+            case DialogueData.SentenceDisplayStyle.Direct:
                 m_dialogueText.text = currentSentenceData.sentence;
                 m_nextButtonCanvasGroup.alpha = 1;
                 break;
 
-            case DialogueData.SentenceDisplayStyle.type:
+            case DialogueData.SentenceDisplayStyle.Type:
                 StartCoroutine(TypeSentence(currentSentenceData));
                 break;
 
@@ -298,7 +298,7 @@ public class DialogueManager : MonoBehaviour
 
     private void showNPCImage(bool isShown)
     {
-        if (m_textType == DialogueData.TextType.dialogue)
+        if (m_textType == DialogueData.TextType.Dialogue)
         {
             //m_talkerImage.gameObject.SetActive(isShown);
             //npcNameGO.SetActive(isShown);
