@@ -18,12 +18,12 @@ MonoBehaviour:
   typingDelay: 0.02
   sentenceDatas:
   - isSkippable: 1
-    NPCName: 
+    NPCName: Jordan
     NPCSprite: {fileID: 0}
-    sentence: dqzqdzqd
+    sentence: DIALOGUE 1
     showData: 0
     audioClipData:
-      audioClip: {fileID: 0}
+      audioClip: {fileID: 8300000, guid: 14101bfc541c0994fae8aca9be4e2082, type: 3}
       audioLoop: 0
       startType: 0
       fadeInTime: 0
@@ -32,17 +32,17 @@ MonoBehaviour:
       fadeOutTime: 0
       maxVolume: 100
       showaudioClipElements: 0
-    showSfxElements: 0
-    withSFX: 0
+    showSfxElements: 1
+    withSFX: 1
     typingIsComplete: 1
     withCustomEvent: 0
     startOfEvent: 0
     eventIDToLaunch:
       _iD: 
   - isSkippable: 1
-    NPCName: 
+    NPCName: Jacottin
     NPCSprite: {fileID: 0}
-    sentence: dqzqdzqd
+    sentence: DIALOGUE 2
     showData: 0
     audioClipData:
       audioClip: {fileID: 0}
@@ -57,14 +57,14 @@ MonoBehaviour:
     showSfxElements: 0
     withSFX: 0
     typingIsComplete: 1
-    withCustomEvent: 0
+    withCustomEvent: 1
     startOfEvent: 0
     eventIDToLaunch:
-      _iD: 
+      _iD: ToJacottin
   - isSkippable: 1
-    NPCName: 
+    NPCName: Yannis
     NPCSprite: {fileID: 0}
-    sentence: dqzqdzqd
+    sentence: "On est vachement mal mod\xE9lis\xE9 quand m\xEAme non ?"
     showData: 0
     audioClipData:
       audioClip: {fileID: 0}
@@ -79,10 +79,10 @@ MonoBehaviour:
     showSfxElements: 0
     withSFX: 0
     typingIsComplete: 1
-    withCustomEvent: 0
+    withCustomEvent: 1
     startOfEvent: 0
     eventIDToLaunch:
-      _iD: 
+      _iD: ToYannis
   nbSentences: 3
   showDialogueElements: 1
   textType: 1

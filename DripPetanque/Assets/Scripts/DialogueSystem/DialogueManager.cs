@@ -42,6 +42,7 @@ public class DialogueManager : MonoBehaviour
     //----------------------------------------------------------
     private DialogueData m_currentDialogueData;
     private List<SentenceData> m_sentenceDatas = new List<SentenceData>();
+    private AudioSource m_audioSource;
     private int m_sentenceIndex;
     private float m_currentTransTime;
     private bool m_haveFinishDialogue;
@@ -52,6 +53,10 @@ public class DialogueManager : MonoBehaviour
     private Sequence _openDroplistSequence;
     #endregion
 
+    private void Awake()
+    {
+        m_audioSource = GetComponent<AudioSource>();
+    }
 
     public void StartDialogue(DialogueData dialogueData)
     {
@@ -113,6 +118,11 @@ public class DialogueManager : MonoBehaviour
         SentenceData currentSentenceData = m_sentenceDatas[m_sentenceIndex];
         m_dialogueText.text = currentSentenceData.sentence;
 
+        if(currentSentenceData.withCustomEvent && currentSentenceData.startOfEvent == SentenceData.StartOfEvent.DuringSentenceTyping)
+        {
+            StartEvent(currentSentenceData);
+        }
+
         //m_nextButtonObj.SetActive(m_sentenceIndex != m_sentenceDatas.Count - 1);
 
         if (m_textType == DialogueData.TextType.Dialogue)
@@ -145,6 +155,11 @@ public class DialogueManager : MonoBehaviour
                 Debug.LogError("Error !");
                 break;
         }
+    }
+
+    private void StartEvent(SentenceData currentSentenceData)
+    {
+        EventHandlers[currentSentenceData.eventIDToLaunch].LaunchEvent();
     }
 
     public void DisplayNextDialogue()
@@ -205,6 +220,12 @@ public class DialogueManager : MonoBehaviour
         {
             m_dialogueText.text = currentSentenceData.sentence;
         }
+
+        if (currentSentenceData.withCustomEvent && currentSentenceData.startOfEvent == SentenceData.StartOfEvent.AfterSentenceTyping)
+        {
+            StartEvent(currentSentenceData);
+        }
+
         currentSentenceData.typingIsComplete = true;
         m_nextButtonCanvasGroup.alpha = 1;
         //m_nextButtonObj.SetActive(m_sentenceIndex != m_sentenceDatas.Count - 1);

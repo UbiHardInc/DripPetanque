@@ -35,7 +35,7 @@ public class SentenceData
     public bool withSFX;
     public bool typingIsComplete = true; //for sentence in "Type" style
     public bool withCustomEvent;
-    public enum StartOfEvent { BeforeSentence, AfterSentence }
+    public enum StartOfEvent { BeforeSentenceTyping, DuringSentenceTyping, AfterSentenceTyping }
     public StartOfEvent startOfEvent;
     public DialogueIDWraper eventIDToLaunch;
 }

@@ -91,7 +91,6 @@ public class CustomEditorBase : Editor
 		int lastIndex = list.arraySize - 1;
 
 		list.DeleteArrayElementAtIndex(lastIndex);
-		list.arraySize--;
     }
 
 	protected void SwapListItems(SerializedProperty list, int currentIndex, int swapIndex)

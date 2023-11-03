@@ -1058,6 +1058,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2419316033333047031}
   - component: {fileID: 3216075682127163463}
+  - component: {fileID: 950071115247580741}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -1093,6 +1094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b75aa1f3680b74fa232b7597047174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_dialogueEvents: {fileID: 0}
   m_clickCooldown: 0.2
   m_dialogueCanvas: {fileID: 2541565038628220902}
   m_dialogueMainContainerCanvasGroup: {fileID: 5042442631934582920}
@@ -1153,18 +1155,102 @@ MonoBehaviour:
   _maxAnchorAnimZoomStart: {x: 0.5, y: 0.15}
   _minAnchorAnimZoomEnd: {x: 0, y: 0}
   _maxAnchorAnimZoomEnd: {x: 1, y: 0.32}
-  _minAnchorAnimSwipeDownStart: {x: 0, y: 0}
-  _maxAnchorAnimSwipeDownStart: {x: 1, y: 0}
-  _minAnchorAnimSwipeDownEnd: {x: 0, y: 0}
-  _maxAnchorAnimSwipeDownEnd: {x: 1, y: 0.32}
-  _minAnchorAnimSwipeLeftStart: {x: 0, y: 0}
-  _maxAnchorAnimSwipeLeftStart: {x: 0, y: 0}
-  _minAnchorAnimSwipeLeftEnd: {x: 0, y: 0}
-  _maxAnchorAnimSwipeLeftEnd: {x: 0, y: 0}
-  _minAnchorAnimSwipeRightStart: {x: 0, y: 0}
-  _maxAnchorAnimSwipeRightStart: {x: 0, y: 0}
-  _minAnchorAnimSwipeRightEnd: {x: 0, y: 0}
-  _maxAnchorAnimSwipeRightEnd: {x: 0, y: 0}
+--- !u!82 &950071115247580741
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282022164106358406}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8034436364105959996
 GameObject:
   m_ObjectHideFlags: 0
