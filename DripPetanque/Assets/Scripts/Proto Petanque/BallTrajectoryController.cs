@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
-using UnityUtility.Pools;
 
 public class BallTrajectoryController : MonoBehaviour
 {
@@ -16,7 +15,6 @@ public class BallTrajectoryController : MonoBehaviour
     [SerializeField, Range(0.0f, 1.0f)] private float m_releaseBallProgress = 0.95f;
     [SerializeField] private float m_releaseForce = 10.0f;
 
-    [NonSerialized] private PooledObject<Rigidbody> m_currentBallPO;
     [NonSerialized] private Rigidbody m_currentBall = null;
 
     [NonSerialized] private bool m_ballOnSpline = false;
