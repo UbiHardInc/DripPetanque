@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityUtility.Singletons;
 using Random = UnityEngine.Random;
 
-public class SpriteRandom : MonoBehaviour
+public class SpriteRandom : MonoBehaviourSingleton<SpriteRandom>
 {
     [SerializeField]
     private List<Image> spriteList;
@@ -16,11 +17,6 @@ public class SpriteRandom : MonoBehaviour
     
     private Sprite m_lastSprite;
     private float m_spriteNumber;
-
-    private void Awake()
-    {
-        throw new NotImplementedException();
-    }
 
     // Start is called before the first frame update
     void Start()
