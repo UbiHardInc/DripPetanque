@@ -6,9 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="224fca1d-320b-473e-8169-f3740708b339" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DripPetanque/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DripPetanque/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/BumpMaterial.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/BumpMaterial.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/InteractiveObjectsScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/InteractiveObjectsScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/Bumper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/Bumper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +21,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/Bumper.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/SpriteRandom.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@14.0.8/Shaders/Lit.shader" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
@@ -97,7 +99,7 @@
       <option name="presentableId" value="Default" />
       <updated>1708937739773</updated>
       <workItem from="1708937741077" duration="2107000" />
-      <workItem from="1708943965786" duration="4250000" />
+      <workItem from="1708943965786" duration="6751000" />
     </task>
     <servers />
   </component>
@@ -108,24 +110,5 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/Bumper.cs</url>
-          <line>33</line>
-          <properties documentPath="D:\DripPetanque\DripPetanque\Assets\Scripts\InteractivesObjects\Bumper.cs" initialLine="33" containingFunctionPresentation="Method 'changeOnBump'">
-            <startOffsets>
-              <option value="945" />
-            </startOffsets>
-            <endOffsets>
-              <option value="961" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
