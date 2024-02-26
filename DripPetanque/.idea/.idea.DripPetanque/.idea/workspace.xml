@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="224fca1d-320b-473e-8169-f3740708b339" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/DOTweenSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/DOTweenSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/URPSettings/URP-Balanced.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/URPSettings/URP-Balanced.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/URPSettings/URP-Performant.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/URPSettings/URP-Performant.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DripPetanque/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DripPetanque/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/InteractiveObjectsScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/InteractiveObjectsScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/Bumper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/Bumper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,10 +77,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="9252">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="9252" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -97,7 +97,7 @@
       <option name="presentableId" value="Default" />
       <updated>1708937739773</updated>
       <workItem from="1708937741077" duration="2107000" />
-      <workItem from="1708943965786" duration="1151000" />
+      <workItem from="1708943965786" duration="4250000" />
     </task>
     <servers />
   </component>
@@ -108,5 +108,24 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/Bumper.cs</url>
+          <line>33</line>
+          <properties documentPath="D:\DripPetanque\DripPetanque\Assets\Scripts\InteractivesObjects\Bumper.cs" initialLine="33" containingFunctionPresentation="Method 'changeOnBump'">
+            <startOffsets>
+              <option value="945" />
+            </startOffsets>
+            <endOffsets>
+              <option value="961" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
