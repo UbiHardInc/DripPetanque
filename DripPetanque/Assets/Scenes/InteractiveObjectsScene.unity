@@ -984,6 +984,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bumperForce: 2000
   bumpColor: {r: 1, g: 0.062460773, b: 0, a: 0}
+  spriteRandom: {fileID: 108391886}
 --- !u!136 &561678129
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1526,6 +1527,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bumperForce: 2000
   bumpColor: {r: 1, g: 0, b: 0, a: 0}
+  spriteRandom: {fileID: 108391886}
 --- !u!1 &909528198
 GameObject:
   m_ObjectHideFlags: 0
