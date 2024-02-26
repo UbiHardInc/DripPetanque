@@ -10,6 +10,7 @@ public class Bumper : MonoBehaviour
     private GameObject m_ball;
 
     public Color bumpColor;
+    public ForceMode forceMode;
 
     void Start ()
     {
@@ -18,8 +19,10 @@ public class Bumper : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject == m_ball) {
-            m_ball.GetComponent<Rigidbody>().AddExplosionForce(bumperForce, collision.contacts[0].point, 5);
+        if (collision.gameObject == m_ball)
+        {
+            Rigidbody ballRigidBody = m_ball.GetComponent<Rigidbody>();
+            ballRigidBody.AddExplosionForce(bumperForce, collision.GetContact(0).point, 5,0,forceMode);
             StartCoroutine(changeOnBump());
             SpriteRandom.Instance.FlashSprite();
             Debug.Log("Bumped!");
