@@ -43,6 +43,19 @@ public class DistanceDissolveTarget : MonoBehaviour
 
     private void Update()
     {
-        
+        if(ObjectToTrack != null)
+        {
+            Material.SetVector("_Position", ObjectToTrack.position);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        m_renderer = null;
+        if(m_materialRef != null)
+        {
+            Destroy(m_materialRef);
+        }
+        m_materialRef = null;
     }
 }
