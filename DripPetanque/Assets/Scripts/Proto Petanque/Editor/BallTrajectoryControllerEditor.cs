@@ -16,7 +16,7 @@ public class BallTrajectoryControllerEditor : Editor
         if (Application.isPlaying && GUILayout.Button("Clear All Balls"))
         {
             BallTrajectoryController castedTarget = target as BallTrajectoryController;
-            castedTarget.StartCoroutine(castedTarget.ClearAllBalls());
+            castedTarget.ClearAllBalls();
         }
         base.OnInspectorGUI();
     }
