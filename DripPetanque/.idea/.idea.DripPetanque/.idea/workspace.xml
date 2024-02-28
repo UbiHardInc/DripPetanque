@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="224fca1d-320b-473e-8169-f3740708b339" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DripPetanque/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DripPetanque/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/InteractiveObjectsScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/InteractiveObjectsScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/BumpMaterial.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/BumpMaterial.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/Bumper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/Bumper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +21,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2ed3dae649e648f7a159faaaa24538931fe00/a6/9bd7fb98/ForceMode.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2ed3dae649e648f7a159faaaa24538931fe00/ae/09fd708b/Rigidbody.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/BumpManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/Bumper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/SpriteRandom.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.pluneau.unityutility@51fdb5b66a/Runtime/Singletons/MonoBehaviourSingleton.cs" root0="SKIP_HIGHLIGHTING" />
@@ -80,10 +82,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="9252">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="9252" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -100,7 +102,8 @@
       <option name="presentableId" value="Default" />
       <updated>1708937739773</updated>
       <workItem from="1708937741077" duration="2107000" />
-      <workItem from="1708943965786" duration="10576000" />
+      <workItem from="1708943965786" duration="11146000" />
+      <workItem from="1709132574962" duration="963000" />
     </task>
     <servers />
   </component>
