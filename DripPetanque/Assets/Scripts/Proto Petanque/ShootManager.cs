@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+using UnityUtility.CustomAttributes;
+
 public class ShootManager : MonoBehaviour
 {
     private enum ShootState
@@ -12,9 +14,19 @@ public class ShootManager : MonoBehaviour
         Finished = 3,
     }
 
+    [Separator]
+
+    [Label(bold: true)]
     [SerializeField] private ShootStep m_leftRightStep;
+    [Separator]
+
+    [Label(bold: true)]
     [SerializeField] private ShootStep m_forceStep;
+    [Separator]
+
+    [Label(bold: true)]
     [SerializeField] private ShootStep m_upDownStep;
+    [Separator]
 
     [SerializeField] private Transform m_arrow;
     [SerializeField] private Transform m_arrowPivot;
