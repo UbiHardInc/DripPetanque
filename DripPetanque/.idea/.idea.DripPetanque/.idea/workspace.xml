@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="224fca1d-320b-473e-8169-f3740708b339" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DripPetanque/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DripPetanque/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/BumpMaterial.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/BumpMaterial.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/PinTanque.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/PinTanque.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/Bumper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/InteractivesObjects/Bumper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,6 +103,7 @@
       <workItem from="1708937741077" duration="2107000" />
       <workItem from="1708943965786" duration="11146000" />
       <workItem from="1709132574962" duration="963000" />
+      <workItem from="1709198410130" duration="1080000" />
     </task>
     <servers />
   </component>

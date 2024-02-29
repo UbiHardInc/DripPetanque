@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Bumper : MonoBehaviour
 {
-    private BumpManager.BumpersStrenght bumperForce;
+    public BumpManager.BumpersStrenght bumperForce;
     private GameObject m_ball;
 
     public Color bumpColor;
