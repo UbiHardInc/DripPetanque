@@ -6,7 +6,7 @@ using UnityUtility.SerializedDictionary;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private SerializedDictionary<GameState, ISubGameManager> m_subGameManagers;
+    [SerializeField] private SerializedDictionary<GameState, SubGameManager> m_subGameManagers;
     [SerializeField] private GameState m_startState;
 
     [NonSerialized] private ISubGameManager m_currentSubGameManager;
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        foreach (KeyValuePair<GameState, ISubGameManager> manager in m_subGameManagers)
+        foreach (KeyValuePair<GameState, SubGameManager> manager in m_subGameManagers)
         {
             manager.Value.Init();
         }
