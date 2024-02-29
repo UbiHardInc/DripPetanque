@@ -2,6 +2,45 @@
     "name": "DripPetanque",
     "maps": [
         {
+            "name": "Common",
+            "id": "ee7c94a1-ae9c-4e34-a8df-894152a5b708",
+            "actions": [
+                {
+                    "name": "OpenMenu",
+                    "type": "Button",
+                    "id": "a81d2708-3ae6-416b-bc38-9e99940c170e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8b89102b-5587-4974-bcde-b946a98ae9d6",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox",
+                    "action": "OpenMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d19fa8ea-853f-4bfa-baa0-a24e9fb264ab",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard",
+                    "action": "OpenMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "Petanque",
             "id": "5258ead4-cddf-4821-8fb9-c7a4b7f7bee8",
             "actions": [
@@ -18,6 +57,24 @@
                     "name": "StartShoot",
                     "type": "Button",
                     "id": "41695a04-d118-4e4f-a581-4635b12c4889",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveBall",
+                    "type": "Value",
+                    "id": "2541275e-7d16-4c4f-8d51-0feb8f182e49",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "JumpBall",
+                    "type": "Button",
+                    "id": "5e5dd9ba-9cc8-44ef-825a-be57edaedfed",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -42,7 +99,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "MouseKeyboard",
                     "action": "Validate",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -61,11 +118,183 @@
                 {
                     "name": "",
                     "id": "81520088-dc59-49ee-a780-12fb2be30692",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox",
+                    "action": "StartShoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5a73bef-1ea5-4add-8d75-841abe60858f",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox",
+                    "action": "MoveBall",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Arrows",
+                    "id": "d76a2534-c562-49f4-b283-2d755a98d15e",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveBall",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "314f0785-330b-4e8e-85fc-ef5cea7a33b7",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard",
+                    "action": "MoveBall",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "4c2a10cf-6604-4bf2-9b39-40396f96db92",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard",
+                    "action": "MoveBall",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "0326dad4-9c1e-477f-9816-9923a82bb9cc",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard",
+                    "action": "MoveBall",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "6dd6f070-5c68-4b58-b9bf-35af4c2f1c9b",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard",
+                    "action": "MoveBall",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "299a4ada-5ea5-4396-ac7c-82d610053014",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox",
+                    "action": "JumpBall",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d4d448d8-f33b-42ca-8de1-da291a19ff85",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard",
+                    "action": "JumpBall",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Exploration",
+            "id": "a6da7b08-2926-41ab-9b3b-02911224e97d",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "6ef2b41c-83cc-421b-b159-72967e74b768",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "43b31302-4ae1-4d47-8422-c5fcd5d2456b",
                     "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "StartShoot",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dialogue",
+            "id": "b3e2e91c-412e-451b-9b93-6f7a32b7b466",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "b976264c-e9c6-4775-9b1b-0b8bc3faf268",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "aa46e596-7d9d-449c-bc79-e71cdbaf5574",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Cinematics",
+            "id": "afc4c90f-7cf5-4dcb-8f01-7adc66774143",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "4cc665ed-4def-4a3a-ac9d-19503cfffbe1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "000926aa-82d9-4074-9038-4d441c487324",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -304,6 +304,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39cfe4440846c4645a622ddb6f7fd8bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_specificActionMapNames:
+  - Cinematics
 --- !u!1 &407542113
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,7 +490,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_SoftShadowQuality: 1
 --- !u!1 &774617909
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +519,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282f033a908d7324db9ea34e0ce03d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_specificActionMapNames:
+  - Exploration
 --- !u!4 &774617911
 Transform:
   m_ObjectHideFlags: 0
@@ -577,6 +580,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6005174bc8e5af04c8fe89b254c56ed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_specificActionMapNames:
+  - Petanque
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,7 +671,10 @@ MonoBehaviour:
     - Key: 4
       Value: {fileID: 774617910}
     m_keyValuePairsCount: 0
-  m_startState: 0
+  m_startState: 2
+  m_actionAsset: {fileID: -944628639613478452, guid: 462a9b2de1b64484aa61d3a207013de5,
+    type: 3}
+  m_commonActionMapName: Common
 --- !u!4 &918439476
 Transform:
   m_ObjectHideFlags: 0
@@ -727,6 +735,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2e86c5c10fde146bdb1ee748ed1cb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_specificActionMapNames:
+  - Dialogue
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -735,3 +745,4 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 918439476}
+  - {fileID: 485485786}
