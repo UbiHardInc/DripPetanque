@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.pluneau.unityutility": {
-      "version": "https://github.com/paulluneaug/UnityUtility.git?path=/UnityUtility/Assets/Public#v1.8.1",
+      "version": "https://github.com/paulluneaug/UnityUtility.git?path=/UnityUtility/Assets/Public#v1.8.2",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "51fdb5b66a625eb208d924e352fc7b39958c79ed"
+      "hash": "74c491d535f8a1a0c1a9525d81c17aae1c110281"
     },
     "com.unity.burst": {
       "version": "1.8.8",
