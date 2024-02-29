@@ -1,7 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityUtility.CustomAttributes;
 using UnityUtility.SerializedDictionary;
 
 public class GameManager : MonoBehaviour
@@ -9,15 +10,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SerializedDictionary<GameState, SubGameManager> m_subGameManagers;
     [SerializeField] private GameState m_startState;
 
-    [NonSerialized] private ISubGameManager m_currentSubGameManager;
+    [Title("Inputs")]
+    [SerializeField] private InputActionAsset m_actionAsset;
+    [SerializeField] private string m_commonActionMapName = "Common";
+
+    [NonSerialized] private SubGameManager m_currentSubGameManager;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
         foreach (KeyValuePair<GameState, SubGameManager> manager in m_subGameManagers)
         {
-            manager.Value.Init();
+            manager.Value.Init(m_actionAsset);
         }
+
+        m_actionAsset.FindActionMap(m_commonActionMapName).Enable();
 
         m_currentSubGameManager = m_subGameManagers[m_startState];
         m_currentSubGameManager.BeginState(GameState.None);
