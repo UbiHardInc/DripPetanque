@@ -21,7 +21,11 @@
     ],
     "m_Keywords": [],
     "m_Dropdowns": [],
-    "m_CategoryData": [],
+    "m_CategoryData": [
+        {
+            "m_Id": "f09713ff521143818f91f5d2864fa4fa"
+        }
+    ],
     "m_Nodes": [
         {
             "m_Id": "caa5716f4671458d8f6b7392b02cc977"
@@ -373,10 +377,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 150.5001220703125,
-            "y": -409.25006103515627,
-            "width": 0.0,
-            "height": 0.0
+            "x": 325.0,
+            "y": -337.0,
+            "width": 105.0,
+            "height": 34.0
         }
     },
     "m_Slots": [
@@ -666,8 +670,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 300.5001220703125,
-            "y": -468.25006103515627,
+            "x": 479.0,
+            "y": -337.0,
             "width": 126.0,
             "height": 118.0
         }
@@ -1137,7 +1141,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "9d2c775bf842479baf2a57f76e9f17a9",
     "m_Id": 0,
-    "m_DisplayName": "Vector1",
+    "m_DisplayName": "Noise",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1630,10 +1634,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 907.5000610351563,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
+            "x": 864.0,
+            "y": -219.0,
+            "width": 117.0,
+            "height": 77.0
         }
     },
     "m_Slots": [
@@ -1829,8 +1833,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 644.5001220703125,
-            "y": -468.25006103515627,
+            "x": 659.0,
+            "y": -219.0,
             "width": 126.0,
             "height": 118.0
         }
@@ -1929,6 +1933,30 @@
         "x": 0.0,
         "y": 1.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
+    "m_ObjectId": "f09713ff521143818f91f5d2864fa4fa",
+    "m_Name": "",
+    "m_ChildObjectList": [
+        {
+            "m_Id": "ecb0e6f2f14e4d79876b1429567765be"
+        },
+        {
+            "m_Id": "c3ca13db528d45a19624207e3748fe0c"
+        },
+        {
+            "m_Id": "e8d5114b656343e3b52be215c813dbf9"
+        },
+        {
+            "m_Id": "f9cc8a1813eb4d9695d8c889afda4148"
+        },
+        {
+            "m_Id": "fedc2377ae854109831b9a46082808f9"
+        }
+    ]
 }
 
 {
@@ -2065,10 +2093,10 @@
     "m_Guid": {
         "m_GuidSerialized": "46b1ba57-b7a9-44d1-85fd-6aa7b21f1de5"
     },
-    "m_Name": "Vector1",
+    "m_Name": "Noise",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Vector1",
-    "m_DefaultReferenceName": "_Vector1",
+    "m_RefNameGeneratedByDisplayName": "Noise",
+    "m_DefaultReferenceName": "_Noise",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
