@@ -1059,6 +1059,7 @@ GameObject:
   - component: {fileID: 2419316033333047031}
   - component: {fileID: 3216075682127163463}
   - component: {fileID: 950071115247580741}
+  - component: {fileID: 5584034515159403740}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -1094,7 +1095,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b75aa1f3680b74fa232b7597047174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_dialogueEvents: {fileID: 0}
   m_clickCooldown: 0.2
   m_dialogueCanvas: {fileID: 2541565038628220902}
   m_dialogueMainContainerCanvasGroup: {fileID: 5042442631934582920}
@@ -1251,6 +1251,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5584034515159403740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282022164106358406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals: []
+    m_Events: []
 --- !u!1 &8034436364105959996
 GameObject:
   m_ObjectHideFlags: 0
