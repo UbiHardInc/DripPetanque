@@ -3,7 +3,72 @@ guid: 31fc713ae02f5af48ac1801a4faf2930
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glove_01
+    second: {fileID: 2100000, guid: d638470b85120dc438450d54d910f270, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glove_02
+    second: {fileID: 2100000, guid: bfce304232473d045bc236e761972c4a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mask_Deer_01
+    second: {fileID: 2100000, guid: e717a90036436b04f87ad159db4379ae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mask_Deer_02
+    second: {fileID: 2100000, guid: 099203b7acb72c34a879c133357d5a58, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mask_Deer_Eyes
+    second: {fileID: 2100000, guid: 04ddf1cf75b3950469583fdebce0b0af, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pants_01
+    second: {fileID: 2100000, guid: a2a1cf734011bb64e92d710d52efdc06, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pants_02
+    second: {fileID: 2100000, guid: c61bf2178434b3a4b90c100a3dfcc1ee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rollerskate_01
+    second: {fileID: 2100000, guid: 766d31cd1bc945a478907e6715644f33, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rollerskate_02
+    second: {fileID: 2100000, guid: 076149e32ef5d594b9689192f4906527, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rollerskate_03
+    second: {fileID: 2100000, guid: f796effd598cde44faade5ab0b86830b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rollerskate_04
+    second: {fileID: 2100000, guid: 45b3a5951d5f2d34f97d497b8b873639, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Skin_01
+    second: {fileID: 2100000, guid: 727e8f49983daa645a0fdb13fd1dca56, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sweat_01
+    second: {fileID: 2100000, guid: 392052250048f9c4ba3984dde2375c1c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
