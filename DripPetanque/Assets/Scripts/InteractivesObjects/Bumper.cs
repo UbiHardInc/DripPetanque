@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class Bumper : MonoBehaviour
 {
-    private BumpManager.BumpersStrenght bumperForce;
+    public int bumperForce = 800;
     private GameObject m_ball;
 
     public Color bumpColor;
-    public ForceMode forceMode = ForceMode.VelocityChange;
+    public ForceMode forceMode;
 
     void Start ()
     {
@@ -22,7 +22,7 @@ public class Bumper : MonoBehaviour
         if (collision.gameObject == m_ball)
         {
             Rigidbody ballRigidBody = m_ball.GetComponent<Rigidbody>();
-            ballRigidBody.AddExplosionForce(BumpManager.Instance.GetBumperStrenght(bumperForce), collision.GetContact(0).point, 5,0,forceMode);
+            ballRigidBody.AddExplosionForce(bumperForce, collision.GetContact(0).point, 5,0,forceMode);
             StartCoroutine(changeOnBump());
             SpriteRandom.Instance.FlashSprite();
             Debug.Log("Bumped!");
