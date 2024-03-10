@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4757299927169096749}
   - component: {fileID: 3210854752982234865}
   - component: {fileID: 4040857010285356945}
+  - component: {fileID: 5392843223402118641}
   m_Layer: 0
   m_Name: BallPrefab
   m_TagString: Untagged
@@ -133,3 +134,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &5392843223402118641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2612240799023585203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc2e2868acb683e49ad35b6ea7d90f64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_groundLayer: 6
+  m_speedToStop: 0.01
+  m_timerToStop:
+    m_duration: 2
+  m_ballDirectionInput: {fileID: 4547984145589096452, guid: 462a9b2de1b64484aa61d3a207013de5,
+    type: 3}
+  m_jumpInput: {fileID: -1517193691251892182, guid: 462a9b2de1b64484aa61d3a207013de5,
+    type: 3}
+  m_globalMovementFactor: 1
+  m_lateralMovementFactor: 1
+  m_forwardMovementFactor: 1
+  m_backwardMovementFactor: 1
+  m_jumpsCount: 1

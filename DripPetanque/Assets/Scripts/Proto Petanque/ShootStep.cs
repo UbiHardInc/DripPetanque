@@ -55,11 +55,13 @@ public class ShootStep
         m_currentState = StepState.NotStarted;
         m_arrow = arrow;
         m_camera = camera;
+        VirtualCamerasManager.RegisterCamera(m_cameraPosition);
     }
 
     public void Start()
     {
         m_currentState = StepState.MovingCamera;
+        VirtualCamerasManager.SwitchToCamera(m_cameraPosition, m_camTransitionTime);
         m_startScaleOrRotation = m_scaleOrRotation == ScaleOrRotation.Scale ? m_arrow.localScale : m_arrow.localRotation.eulerAngles;
         m_camStartPosition = m_camera.transform.position;
         m_camStartRotation = m_camera.transform.rotation;
@@ -86,14 +88,32 @@ public class ShootStep
         }
     }
 
+    public bool IsFinished()
+    {
+        return m_currentState == StepState.Finished;
+    }
+
+    public void ResetArrow()
+    {
+        switch (m_scaleOrRotation)
+        {
+            case ScaleOrRotation.Scale:
+                m_arrow.localScale = m_startScaleOrRotation;
+                break;
+            case ScaleOrRotation.Rotation:
+                m_arrow.localRotation = Quaternion.Euler(m_startScaleOrRotation);
+                break;
+        }
+    }
+
     private void MoveCamera(float deltaTime)
     {
-        if (m_camTransitionTimer < m_camTransitionTime)
-        {
-            float lerpFactor = Mathf.SmoothStep(0, 1, m_camTransitionTimer / m_camTransitionTime);
-            m_camera.transform.position = Vector3.Lerp(m_camStartPosition, m_cameraPosition.transform.position, lerpFactor);
-            m_camera.transform.rotation = Quaternion.Lerp(m_camStartRotation, m_cameraPosition.transform.rotation, lerpFactor);
-            m_camTransitionTimer += deltaTime;
+        if (VirtualCamerasManager.IsBrainBlending())
+        {            
+            //float lerpFactor = Mathf.SmoothStep(0, 1, m_camTransitionTimer / m_camTransitionTime);
+            //m_camera.transform.position = Vector3.Lerp(m_camStartPosition, m_cameraPosition.transform.position, lerpFactor);
+            //m_camera.transform.rotation = Quaternion.Lerp(m_camStartRotation, m_cameraPosition.transform.rotation, lerpFactor);
+            //m_camTransitionTimer += deltaTime;
         }
         else
         {
@@ -135,10 +155,5 @@ public class ShootStep
             m_gauge.gameObject.SetActive(false);
             m_currentState = StepState.Finished;
         }
-    }
-
-    public bool IsFinished()
-    {
-        return m_currentState == StepState.Finished;
     }
 }

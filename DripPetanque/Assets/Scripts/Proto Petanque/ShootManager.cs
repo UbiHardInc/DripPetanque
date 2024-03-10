@@ -1,8 +1,11 @@
+using Cinemachine;
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 using UnityUtility.CustomAttributes;
+using UnityUtility.Pools;
 
 public class ShootManager : MonoBehaviour
 {
@@ -13,6 +16,8 @@ public class ShootManager : MonoBehaviour
         LaunchBall = 2,
         Finished = 3,
     }
+
+    public event Action<PooledObject<BallController>> OnBallSpawned;
 
     [Separator]
 
@@ -34,6 +39,10 @@ public class ShootManager : MonoBehaviour
     [SerializeField] private InputActionReference m_startShootInput;
 
     [SerializeField] private CustomSplineController m_splineController;
+    [SerializeField] private BallTrajectoryController m_trajectoryController;
+    [SerializeField] private CinemachineBrain m_cinemachineCamera;
+
+    [SerializeField] private BallPool m_ballsPool;
 
     [NonSerialized] private ShootStep[] m_allSteps;
     [NonSerialized] private int m_currentStep = 0;
@@ -54,10 +63,15 @@ public class ShootManager : MonoBehaviour
         m_forceStep.Init(m_arrow, m_camera);
         m_upDownStep.Init(m_arrowPivot, m_camera);
 
-        m_startShootInput.action.performed += StartShoot;
+        //m_startShootInput.action.performed += StartShoot;
     }
 
-    private void StartShoot(InputAction.CallbackContext context)
+    public void StartShoot(InputAction.CallbackContext _)
+    {
+        StartShoot();
+    }
+
+    public void StartShoot()
     {
         StartSteps();
     }
@@ -80,9 +94,12 @@ public class ShootManager : MonoBehaviour
 
     private void StartSteps()
     {
+
         m_currentState = ShootState.Steps;
         m_currentStep = 0;
         m_allSteps[m_currentStep].Start();
+
+        m_arrow.gameObject.SetActive(true);
     }
 
     private void UpdateSteps(float deltaTime)
@@ -105,8 +122,21 @@ public class ShootManager : MonoBehaviour
     {
         m_currentState = ShootState.LaunchBall;
 
+        for (int i = m_allSteps.Length - 1; i >= 0; i--)
+        {
+            m_allSteps[i].ResetArrow();
+        }
+
         Debug.LogWarning($"Left-Right : {m_leftRightStep.StepOutputValue}");
         Debug.LogWarning($"Force : {m_forceStep.StepOutputValue}");
         Debug.LogWarning($"Up-Down : {m_upDownStep.StepOutputValue}");
+        m_splineController.SetSplineParameters(m_leftRightStep.StepOutputValue, m_upDownStep.StepOutputValue, m_forceStep.StepOutputValue);
+
+        m_arrow.gameObject.SetActive(false);
+
+        PooledObject<BallController> requestedBall = m_ballsPool.Request();
+        OnBallSpawned?.Invoke(requestedBall);
+
+        m_trajectoryController.StartNewBall(requestedBall.Object);
     }
 }

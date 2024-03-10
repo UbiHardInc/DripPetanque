@@ -1,5 +1,7 @@
+using Cinemachine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityUtility.CustomAttributes;
@@ -9,6 +11,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private SerializedDictionary<GameState, SubGameManager> m_subGameManagers;
     [SerializeField] private GameState m_startState;
+
+    [SerializeField] private CinemachineBrain m_mainCamera;
 
     [Title("Inputs")]
     [SerializeField] private InputActionAsset m_actionAsset;
@@ -28,6 +32,8 @@ public class GameManager : MonoBehaviour
 
         m_currentSubGameManager = m_subGameManagers[m_startState];
         m_currentSubGameManager.BeginState(GameState.None);
+
+        VirtualCamerasManager.RegisterBrain(m_mainCamera);
     }
 
     private void Update()
@@ -38,7 +44,7 @@ public class GameManager : MonoBehaviour
             if (nextState != m_currentSubGameManager.CorrespondingState)
             {
                 m_currentSubGameManager.EndState(nextState);
-                m_currentSubGameManager = m_subGameManagers[m_startState];
+                m_currentSubGameManager = m_subGameManagers[nextState];
                 m_currentSubGameManager.BeginState(nextState);
             }
         }

@@ -1,14 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
-using UnityUtility.Pools;
 
 public class BallTrajectoryController : MonoBehaviour
 {
-    [SerializeField] private RigidbodyPool m_ballPool;
-    [SerializeField] private Rigidbody m_ball;
     [SerializeField] private GameObject m_floor;
     [SerializeField] private SplineContainer m_spline;
 
@@ -17,18 +12,14 @@ public class BallTrajectoryController : MonoBehaviour
     [SerializeField, Range(0.0f, 1.0f)] private float m_releaseBallProgress = 0.95f;
     [SerializeField] private float m_releaseForce = 10.0f;
 
-    [NonSerialized] private Rigidbody m_currentBall = default;
-    [NonSerialized] private List<PooledObject<Rigidbody>> m_allBalls = new List<PooledObject<Rigidbody>>();
+    [NonSerialized] private BallController m_currentBall = default;
 
     [NonSerialized] private bool m_ballOnSpline = false;
     [NonSerialized] private float m_ballProgress = 0.0f;
 
-    [NonSerialized] private float m_currentSpeed = 0.0f;
-
     private void Start()
     {
         m_ballOnSpline = false;
-
     }
 
     private void FixedUpdate()
@@ -46,7 +37,7 @@ public class BallTrajectoryController : MonoBehaviour
         }
     }
 
-    public void StartNewBall()
+    public void StartNewBall(BallController ball)
     {
         if (m_ballOnSpline)
         {
@@ -56,24 +47,11 @@ public class BallTrajectoryController : MonoBehaviour
         m_ballOnSpline = true;
         m_ballProgress = 0.0f;
 
-        PooledObject<Rigidbody> requestedBall = m_ballPool.Request();
-        m_allBalls.Add(requestedBall);
-        m_currentBall = requestedBall.Object;
+        ball.transform.position = m_spline.EvaluatePosition(0);
+        ball.Rigidbody.isKinematic = true;
+        ball.gameObject.SetActive(true);
 
-        m_currentBall.transform.position = m_spline.EvaluatePosition(0);
-
-
-        m_currentBall.isKinematic = true;
-        m_currentBall.gameObject.SetActive(true);
-    }
-
-    public void ClearAllBalls()
-    {
-        foreach (PooledObject<Rigidbody> requestedBall in m_allBalls)
-        {
-            requestedBall.Release();
-        }
-        m_allBalls.Clear();
+        m_currentBall = ball;
     }
 
     private void ReleaseBall()
@@ -83,7 +61,7 @@ public class BallTrajectoryController : MonoBehaviour
         Vector3 ballForward = ((Vector3)m_spline.EvaluateTangent(m_ballProgress)).normalized;
         float ballSpeed = m_speedAlongTheSpline.Evaluate(m_ballProgress);
 
-        m_currentBall.isKinematic = false;
-        m_currentBall.velocity = ballSpeed * m_releaseForce * ballForward * m_speedFactor;
+        m_currentBall.Rigidbody.isKinematic = false;
+        m_currentBall.Rigidbody.velocity = ballSpeed * m_releaseForce * ballForward * m_speedFactor;
     }
 }
