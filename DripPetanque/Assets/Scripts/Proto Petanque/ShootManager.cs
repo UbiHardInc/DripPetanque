@@ -1,6 +1,5 @@
 using Cinemachine;
 using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,7 +16,7 @@ public class ShootManager : MonoBehaviour
         Finished = 3,
     }
 
-    public event Action<PooledObject<BallController>> OnBallSpawned;
+    public event Action<PooledObject<ControllableBall>> OnBallSpawned;
 
     [Separator]
 
@@ -134,7 +133,8 @@ public class ShootManager : MonoBehaviour
 
         m_arrow.gameObject.SetActive(false);
 
-        PooledObject<BallController> requestedBall = m_ballsPool.Request();
+        PooledObject<ControllableBall> requestedBall = m_ballsPool.Request();
+        requestedBall.Object.BallOwner = PetanqueSubGameManager.PetanquePlayers.Human;
         OnBallSpawned?.Invoke(requestedBall);
 
         m_trajectoryController.StartNewBall(requestedBall.Object);

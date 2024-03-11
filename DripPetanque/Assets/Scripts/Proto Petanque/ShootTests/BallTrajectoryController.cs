@@ -12,7 +12,7 @@ public class BallTrajectoryController : MonoBehaviour
     [SerializeField, Range(0.0f, 1.0f)] private float m_releaseBallProgress = 0.95f;
     [SerializeField] private float m_releaseForce = 10.0f;
 
-    [NonSerialized] private BallController m_currentBall = default;
+    [NonSerialized] private ControllableBall m_currentBall = default;
 
     [NonSerialized] private bool m_ballOnSpline = false;
     [NonSerialized] private float m_ballProgress = 0.0f;
@@ -37,7 +37,7 @@ public class BallTrajectoryController : MonoBehaviour
         }
     }
 
-    public void StartNewBall(BallController ball)
+    public void StartNewBall(ControllableBall ball)
     {
         if (m_ballOnSpline)
         {
