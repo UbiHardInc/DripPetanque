@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+
+        VirtualCamerasManager.RegisterBrain(m_mainCamera);
         foreach (KeyValuePair<GameState, SubGameManager> manager in m_subGameManagers)
         {
             manager.Value.Init(m_actionAsset);
@@ -31,8 +33,6 @@ public class GameManager : MonoBehaviour
 
         m_currentSubGameManager = m_subGameManagers[m_startState];
         m_currentSubGameManager.BeginState(GameState.None);
-
-        VirtualCamerasManager.RegisterBrain(m_mainCamera);
     }
 
     private void Update()
