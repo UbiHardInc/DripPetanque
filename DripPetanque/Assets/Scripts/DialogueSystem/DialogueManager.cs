@@ -1,15 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using DG.Tweening;
 using TMPro;
-using DG.Tweening.Core.Easing;
 using static DialogueData;
-using UnityEditor.Rendering;
-using static AudioClipData;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {

@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "Dialogue", menuName = "SO/Dialogue")]
 public class DialogueData : ScriptableObject
