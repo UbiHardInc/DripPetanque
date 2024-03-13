@@ -3,9 +3,10 @@ using System;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityUtility.Utils;
+using static ShootStepData;
 
 [Serializable]
-public class ShootStep
+public class ShootStep : BaseShootStep
 {
     private static readonly Vector2 s_gaugeRange = new Vector2(0, 1);
 
@@ -17,24 +18,10 @@ public class ShootStep
         Finished = 3,
     }
 
-    private enum ScaleOrRotation
-    {
-        Scale = 0,
-        Rotation = 1,
-    }
-
-    public float StepOutputValue => m_stepOutputValue;
-
     [SerializeField] private SlidingGauge m_gauge;
-    [SerializeField] private SlidingGauge.FillingBehaviourEnum m_fillingBehaviour;
-    [SerializeField] private float m_gaugeSpeed;
 
     [SerializeField] private CinemachineVirtualCamera m_cameraPosition;
     [SerializeField] private float m_camTransitionTime;
-
-    [SerializeField] private Axis m_axis;
-    [SerializeField] private ScaleOrRotation m_scaleOrRotation;
-    [SerializeField] private Vector2 m_range;
 
     [SerializeField] private InputActionReference m_validateInput;
 
@@ -48,8 +35,6 @@ public class ShootStep
     [NonSerialized] private Quaternion m_camStartRotation;
     [NonSerialized] private float m_camTransitionTimer;
 
-    [NonSerialized] private float m_stepOutputValue;
-
     public void Init(Transform arrow, Camera camera)
     {
         m_currentState = StepState.NotStarted;
@@ -58,18 +43,18 @@ public class ShootStep
         VirtualCamerasManager.RegisterCamera(m_cameraPosition);
     }
 
-    public void Start()
+    public override void Start()
     {
         m_currentState = StepState.MovingCamera;
         VirtualCamerasManager.SwitchToCamera(m_cameraPosition, m_camTransitionTime);
-        m_startScaleOrRotation = m_scaleOrRotation == ScaleOrRotation.Scale ? m_arrow.localScale : m_arrow.localRotation.eulerAngles;
+        m_startScaleOrRotation = m_data.ScaleOrRotation == ScaleOrRotationEnum.Scale ? m_arrow.localScale : m_arrow.localRotation.eulerAngles;
         m_camStartPosition = m_camera.transform.position;
         m_camStartRotation = m_camera.transform.rotation;
         m_camTransitionTimer = 0.0f;
         m_stepOutputValue = 0.0f;
     }
 
-    public void Update(float deltaTime)
+    public override void Update(float deltaTime)
     {
         switch (m_currentState)
         {
@@ -88,19 +73,19 @@ public class ShootStep
         }
     }
 
-    public bool IsFinished()
+    public override bool IsFinished()
     {
         return m_currentState == StepState.Finished;
     }
 
     public void ResetArrow()
     {
-        switch (m_scaleOrRotation)
+        switch (m_data.ScaleOrRotation)
         {
-            case ScaleOrRotation.Scale:
+            case ScaleOrRotationEnum.Scale:
                 m_arrow.localScale = m_startScaleOrRotation;
                 break;
-            case ScaleOrRotation.Rotation:
+            case ScaleOrRotationEnum.Rotation:
                 m_arrow.localRotation = Quaternion.Euler(m_startScaleOrRotation);
                 break;
         }
@@ -124,36 +109,39 @@ public class ShootStep
     private void StartGauge()
     {
         m_currentState = StepState.Gauge;
-        m_gauge.FillingSpeed = m_gaugeSpeed;
-        m_gauge.FillingBehaviour = m_fillingBehaviour;
+        m_gauge.FillingSpeed = m_data.GaugeSpeed;
+        m_gauge.FillingBehaviour = m_data.FillingBehaviour;
 
         m_gauge.gameObject.SetActive(true);
+
+        m_validateInput.action.performed += OnValidateInput;
+    }
+
+    private void OnValidateInput(InputAction.CallbackContext context)
+    {
+        m_validateInput.action.performed -= OnValidateInput;
+        m_gauge.gameObject.SetActive(false);
+        m_currentState = StepState.Finished;
     }
 
     private void UpdateGauge(float deltaTime)
     {
         m_gauge.UpdateGauge(deltaTime);
-        float gaugeValue = m_gauge.CurrentFilling.Remap(s_gaugeRange, m_range);
+        float gaugeValue = m_gauge.CurrentFilling.Remap(s_gaugeRange, m_data.Range);
 
-        switch (m_scaleOrRotation)
+        switch (m_data.ScaleOrRotation)
         {
-            case ScaleOrRotation.Scale:
-                Vector3 newScale = Vector3.Scale(m_startScaleOrRotation, m_axis.ToVector() * gaugeValue) + Vector3.Scale(m_startScaleOrRotation, (~m_axis).ToVector());
+            case ScaleOrRotationEnum.Scale:
+                Vector3 newScale = Vector3.Scale(m_startScaleOrRotation, m_data.Axis.ToVector() * gaugeValue) + Vector3.Scale(m_startScaleOrRotation, (~m_data.Axis).ToVector());
                 m_arrow.localScale = newScale;
                 break;
-            case ScaleOrRotation.Rotation:
-                Vector3 axisVal = m_axis.ToVector() * gaugeValue;
+            case ScaleOrRotationEnum.Rotation:
+                Vector3 axisVal = m_data.Axis.ToVector() * gaugeValue;
                 Vector3 newRotation = m_startScaleOrRotation + axisVal;
                 m_arrow.localRotation = Quaternion.Euler(newRotation);
                 break;
         }
 
         m_stepOutputValue = gaugeValue;
-
-        if (m_validateInput.action.IsPressed())
-        {
-            m_gauge.gameObject.SetActive(false);
-            m_currentState = StepState.Finished;
-        }
     }
 }

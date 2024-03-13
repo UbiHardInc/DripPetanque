@@ -1,14 +1,13 @@
-using Cinemachine;
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 using UnityUtility.CustomAttributes;
 using UnityUtility.Pools;
 
-public class ShootManager : MonoBehaviour
+public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
+    where TShootStep : BaseShootStep
+    where TBall : Ball
 {
-    private enum ShootState
+    protected enum ShootState
     {
         NotStarted = 0,
         Steps = 1,
@@ -16,66 +15,55 @@ public class ShootManager : MonoBehaviour
         Finished = 3,
     }
 
-    public event Action<PooledObject<ControllableBall>> OnBallSpawned;
+    protected abstract PetanqueSubGameManager.PetanquePlayers Owner {  get; } 
 
+    public event Action<PooledObject<TBall>> OnBallSpawned;
+
+    [Title("Shoot Steps")]
+    [SerializeField] protected TShootStep m_leftRightStep;
     [Separator]
 
     [Label(bold: true)]
-    [SerializeField] private ShootStep m_leftRightStep;
+    [SerializeField] protected TShootStep m_forceStep;
     [Separator]
 
     [Label(bold: true)]
-    [SerializeField] private ShootStep m_forceStep;
+    [SerializeField] protected TShootStep m_upDownStep;
     [Separator]
-
-    [Label(bold: true)]
-    [SerializeField] private ShootStep m_upDownStep;
-    [Separator]
-
-    [SerializeField] private Transform m_arrow;
-    [SerializeField] private Transform m_arrowPivot;
-    [SerializeField] private Camera m_camera;
-    [SerializeField] private InputActionReference m_startShootInput;
 
     [SerializeField] private CustomSplineController m_splineController;
     [SerializeField] private BallTrajectoryController m_trajectoryController;
-    [SerializeField] private CinemachineBrain m_cinemachineCamera;
 
-    [SerializeField] private BallPool m_ballsPool;
+    [SerializeField] private CallbackRecieverComponentPool<TBall> m_ballsPool;
 
-    [NonSerialized] private ShootStep[] m_allSteps;
-    [NonSerialized] private int m_currentStep = 0;
+    [NonSerialized] protected ShootState m_currentState;
 
-    [NonSerialized] private Vector3 m_currentDirection;
-    [NonSerialized] private ShootState m_currentState;
+    [NonSerialized] protected TShootStep[] m_allSteps;
 
-    private void Awake()
+    [NonSerialized] protected int m_currentStep = 0;
+
+    [NonSerialized] protected bool m_init = false;
+
+    protected void InitIfNeeded()
     {
-        m_allSteps = new ShootStep[]
+        if (!m_init)
+        {
+            Init();
+            m_init = true;
+        }
+    }
+
+    protected virtual void Init()
+    {
+        m_allSteps = new TShootStep[]
         {
             m_leftRightStep,
             m_upDownStep,
             m_forceStep,
         };
-
-        m_leftRightStep.Init(m_arrowPivot, m_camera);
-        m_forceStep.Init(m_arrow, m_camera);
-        m_upDownStep.Init(m_arrowPivot, m_camera);
-
-        //m_startShootInput.action.performed += StartShoot;
     }
 
-    public void StartShoot(InputAction.CallbackContext _)
-    {
-        StartShoot();
-    }
-
-    public void StartShoot()
-    {
-        StartSteps();
-    }
-
-    private void Update()
+    protected virtual void Update()
     {
         switch (m_currentState)
         {
@@ -91,14 +79,17 @@ public class ShootManager : MonoBehaviour
         }
     }
 
-    private void StartSteps()
+    public void StartShoot()
     {
+        StartSteps();
+    }
 
-        m_currentState = ShootState.Steps;
+    protected virtual void StartSteps()
+    {
+        InitIfNeeded();
         m_currentStep = 0;
         m_allSteps[m_currentStep].Start();
-
-        m_arrow.gameObject.SetActive(true);
+        m_currentState = ShootState.Steps;
     }
 
     private void UpdateSteps(float deltaTime)
@@ -111,32 +102,34 @@ public class ShootManager : MonoBehaviour
                 LaunchBall();
                 return;
             }
+            Debug.Log($"{Owner} starts step {m_currentStep} at frame {Time.frameCount}");
             m_allSteps[m_currentStep].Start();
         }
         m_allSteps[m_currentStep].Update(deltaTime);
         m_splineController.SetSplineParameters(m_leftRightStep.StepOutputValue, m_upDownStep.StepOutputValue, m_forceStep.StepOutputValue);
     }
 
-    private void LaunchBall()
+    protected virtual void LaunchBall()
     {
         m_currentState = ShootState.LaunchBall;
 
-        for (int i = m_allSteps.Length - 1; i >= 0; i--)
-        {
-            m_allSteps[i].ResetArrow();
-        }
 
         Debug.LogWarning($"Left-Right : {m_leftRightStep.StepOutputValue}");
         Debug.LogWarning($"Force : {m_forceStep.StepOutputValue}");
         Debug.LogWarning($"Up-Down : {m_upDownStep.StepOutputValue}");
         m_splineController.SetSplineParameters(m_leftRightStep.StepOutputValue, m_upDownStep.StepOutputValue, m_forceStep.StepOutputValue);
 
-        m_arrow.gameObject.SetActive(false);
-
-        PooledObject<ControllableBall> requestedBall = m_ballsPool.Request();
-        requestedBall.Object.BallOwner = PetanqueSubGameManager.PetanquePlayers.Human;
+        PooledObject<TBall> requestedBall = m_ballsPool.Request();
+        requestedBall.Object.BallOwner = Owner;
+        requestedBall.Object.OnBallStopped += OnBallStopped;
         OnBallSpawned?.Invoke(requestedBall);
 
         m_trajectoryController.StartNewBall(requestedBall.Object);
+    }
+
+    private void OnBallStopped(Ball ball)
+    {
+        ball.OnBallStopped -= OnBallStopped;
+        m_currentState = ShootState.Finished;
     }
 }
