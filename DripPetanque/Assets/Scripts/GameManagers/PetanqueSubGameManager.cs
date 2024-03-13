@@ -17,6 +17,7 @@ public class PetanqueSubGameManager : SubGameManager
 
     [SerializeField] private PetanqueGameSettings m_gameSettings;
     [SerializeField] private ShootManager m_playerShootManager;
+    [SerializeField] private ComputerShootManager m_computerShootManager;
     [SerializeField] private PetanqueField m_field;
 
     [SerializeField] private Transform m_jack;
@@ -38,7 +39,8 @@ public class PetanqueSubGameManager : SubGameManager
     private void StartPetanque(PetanqueField field)
     {
         ResetPetanque();
-        m_playerShootManager.OnBallSpawned += OnBallSpawned;
+        m_playerShootManager.OnBallSpawned += OnHumanBallSpawned;
+        m_computerShootManager.OnBallSpawned += OnComputerBallSpawned;
         m_jack.position = field.JackPosition.position;
         m_shootTurn = PetanquePlayers.Human;
         NextTurn();
@@ -46,7 +48,12 @@ public class PetanqueSubGameManager : SubGameManager
 
     private void EndPetanque()
     {
-        m_playerShootManager.OnBallSpawned -= OnBallSpawned;
+        m_playerShootManager.OnBallSpawned -= OnHumanBallSpawned;
+        m_computerShootManager.OnBallSpawned -= OnComputerBallSpawned;
+
+        (List<Ball> closestBalls, PetanquePlayers ballsOwner) = GetClosestBallsFromJack();
+
+        Debug.LogError($"{ballsOwner} won the game with {closestBalls.Count} points");
     }
 
     private void ResetPetanque()
@@ -62,9 +69,18 @@ public class PetanqueSubGameManager : SubGameManager
         m_allBalls.Clear();
     }
 
-    private void OnBallSpawned(PooledObject<ControllableBall> spawnedBall)
+    private void OnHumanBallSpawned(PooledObject<ControllableBall> spawnedBall)
     {
         m_playerBalls.Add(spawnedBall);
+        m_playerThrownBalls++;
+        spawnedBall.Object.OnBallStopped += OnBallStopped;
+        m_allBalls.Add(spawnedBall.Object);
+    }
+
+    private void OnComputerBallSpawned(PooledObject<Ball> spawnedBall)
+    {
+        m_computerBalls.Add(spawnedBall);
+        m_computerThrownBalls++;
         spawnedBall.Object.OnBallStopped += OnBallStopped;
         m_allBalls.Add(spawnedBall.Object);
     }
@@ -77,6 +93,11 @@ public class PetanqueSubGameManager : SubGameManager
 
     private void NextTurn()
     {
+        if (m_computerThrownBalls + m_playerThrownBalls == 2 * m_gameSettings.BallsPerGame)
+        {
+            EndPetanque();
+            return;
+        }
         PetanquePlayers nextTurn = ComputeNextTurn();
         m_shootTurn = nextTurn == PetanquePlayers.None ? m_shootTurn : nextTurn;
 
@@ -102,16 +123,16 @@ public class PetanqueSubGameManager : SubGameManager
 
     private void ComputerShoot()
     {
-
+        m_computerShootManager.StartShoot();
     }
 
     private PetanquePlayers ComputeNextTurn()
     {
-        if (m_gameSettings.BallsPerGame >= m_computerThrownBalls)
+        if (m_gameSettings.BallsPerGame <= m_computerThrownBalls)
         {
             return PetanquePlayers.Human;
         }
-        if (m_gameSettings.BallsPerGame >= m_playerThrownBalls)
+        if (m_gameSettings.BallsPerGame <= m_playerThrownBalls)
         {
             return PetanquePlayers.Computer;
         }
@@ -123,6 +144,7 @@ public class PetanqueSubGameManager : SubGameManager
             PetanquePlayers.None => PetanquePlayers.None,
             PetanquePlayers.Human => PetanquePlayers.Computer,
             PetanquePlayers.Computer => PetanquePlayers.Human,
+            _ => throw new NotImplementedException(),
         };
     }
 
@@ -141,7 +163,7 @@ public class PetanqueSubGameManager : SubGameManager
         int ballIndex = 0;
         while (ballIndex < ballsCount && m_allBalls[ballIndex].BallOwner == ballsOwner)
         {
-            closestBalls.Add(m_allBalls[ballIndex]);
+            closestBalls.Add(m_allBalls[ballIndex++]);
         }
 
         return (closestBalls, ballsOwner);
