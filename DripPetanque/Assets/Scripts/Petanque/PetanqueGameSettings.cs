@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(PetanqueGameSettings), menuName = "Scriptables/" + nameof(PetanqueGameSettings))]
+[CreateAssetMenu(fileName = nameof(PetanqueGameSettings), menuName = "Scriptables/Petanque/" + nameof(PetanqueGameSettings))]
 public class PetanqueGameSettings : ScriptableObject
 {
     public int BallsPerGame => m_ballsPerGame;
