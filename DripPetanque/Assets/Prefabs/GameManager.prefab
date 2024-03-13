@@ -173,6 +173,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_specificActionMapNames:
   - Petanque
+  m_gameSettings: {fileID: 11400000, guid: 43a5056ccb4b29044821e1fa3015a879, type: 2}
+  m_playerShootManager: {fileID: 0}
+  m_computerShootManager: {fileID: 0}
+  m_field: {fileID: 0}
+  m_jack: {fileID: 0}
 --- !u!1 &8155881177754814361
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,7 +188,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2652974313168896836}
   - component: {fileID: 7141695721998518174}
-  - component: {fileID: 6967303990847096335}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -231,40 +235,10 @@ MonoBehaviour:
       Value: {fileID: 8531854692067118445}
     m_keyValuePairsCount: 0
   m_startState: 2
+  m_mainCamera: {fileID: 0}
   m_actionAsset: {fileID: -944628639613478452, guid: 462a9b2de1b64484aa61d3a207013de5,
     type: 3}
   m_commonActionMapName: Common
---- !u!114 &6967303990847096335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8155881177754814361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 462a9b2de1b64484aa61d3a207013de5,
-    type: 3}
-  m_NotificationBehavior: 3
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: MouseKeyboard
-  m_DefaultActionMap: Common
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &8393962218478839252
 GameObject:
   m_ObjectHideFlags: 0
