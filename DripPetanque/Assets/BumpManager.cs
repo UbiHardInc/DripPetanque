@@ -2,7 +2,7 @@ using UnityUtility.Singletons;
 
 public class BumpManager : MonoBehaviourSingleton<BumpManager>
 {
-    public enum BumpersStrenght
+    public enum BumpersStrength
     {
         Soft,
         Medium,
@@ -13,13 +13,13 @@ public class BumpManager : MonoBehaviourSingleton<BumpManager>
     public int mediumBumper = 80;
     public int hardBumper = 110;
     
-    public int GetBumperStrenght(BumpersStrenght bumperStrenght)
+    public int GetBumperStrength(BumpersStrength bumperStrength)
     {
-        return bumperStrenght switch
+        return bumperStrength switch
         {
-            BumpersStrenght.Soft => softBumper,
-            BumpersStrenght.Medium => mediumBumper,
-            BumpersStrenght.Hard => hardBumper,
+            BumpersStrength.Soft => softBumper,
+            BumpersStrength.Medium => mediumBumper,
+            BumpersStrength.Hard => hardBumper,
             _ => mediumBumper,
         };
     }
