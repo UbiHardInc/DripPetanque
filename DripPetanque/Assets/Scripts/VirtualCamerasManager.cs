@@ -17,27 +17,27 @@ public class VirtualCamerasManager : MonoBehaviourSingleton<VirtualCamerasManage
         public event Action OnCameraSwitchOver;
     }
 
-    private static List<CinemachineVirtualCamera> m_allVirtualCameras = new List<CinemachineVirtualCamera>();
-    private static CinemachineBrain m_brain = null;
-    private static CinemachineBlendDefinition m_defaultBlend = default;
+    private static List<CinemachineVirtualCamera> s_allVirtualCameras = new List<CinemachineVirtualCamera>();
+    private static CinemachineBrain s_brain = null;
+    private static CinemachineBlendDefinition s_defaultBlend = default;
 
     public static void RegisterBrain(CinemachineBrain brain)
     {
-        if (m_brain != null)
+        if (s_brain != null)
         {
-            throw new System.Exception($"There sould not be 2 {nameof(CinemachineBrain)} registered in the {nameof(VirtualCamerasManager)}");
+            throw new Exception($"There sould not be 2 {nameof(CinemachineBrain)} registered in the {nameof(VirtualCamerasManager)}");
         }
-        m_brain = brain;
-        m_defaultBlend = m_brain.m_DefaultBlend;
+        s_brain = brain;
+        s_defaultBlend = s_brain.m_DefaultBlend;
     }
 
     public static void UnregisterBrain()
     {
-        if (m_brain == null)
+        if (s_brain == null)
         {
             Debug.LogError($"No {nameof(CinemachineBrain)} were previously registered");
         }
-        m_brain = null;
+        s_brain = null;
     }
 
     private void Update()
@@ -47,32 +47,32 @@ public class VirtualCamerasManager : MonoBehaviourSingleton<VirtualCamerasManage
 
     public static bool IsBrainBlending()
     {
-        if (m_brain == null)
+        if (s_brain == null)
         {
             Debug.LogError($"No {nameof(CinemachineBrain)} registered");
             return false;
         }
-        return m_brain.IsBlending;
+        return s_brain.IsBlending;
     }
 
     public static void SwitchToCamera(CinemachineVirtualCamera virtualCamera)
     {
-        m_brain.m_DefaultBlend = m_defaultBlend;
+        s_brain.m_DefaultBlend = s_defaultBlend;
         SwitchToCamera_Impl(virtualCamera);
     }
 
     public static void SwitchToCamera(CinemachineVirtualCamera virtualCamera, float blendTime)
     {
-        CinemachineBlendDefinition newDefiniton = m_defaultBlend;
+        CinemachineBlendDefinition newDefiniton = s_defaultBlend;
         newDefiniton.m_Time = blendTime;
-        m_brain.m_DefaultBlend = newDefiniton;
+        s_brain.m_DefaultBlend = newDefiniton;
         SwitchToCamera(virtualCamera);
     }
 
     private static void SwitchToCamera_Impl(CinemachineVirtualCamera virtualCamera)
     {
-        m_allVirtualCameras.ForEach(cam => cam.gameObject.SetActive(false));
-        foreach (CinemachineVirtualCamera cam in m_allVirtualCameras)
+        s_allVirtualCameras.ForEach(cam => cam.gameObject.SetActive(false));
+        foreach (CinemachineVirtualCamera cam in s_allVirtualCameras)
         {
             cam.gameObject.SetActive(false);
         }
@@ -82,15 +82,15 @@ public class VirtualCamerasManager : MonoBehaviourSingleton<VirtualCamerasManage
     public static void RegisterCamera(CinemachineVirtualCamera virtualCamera)
     {
         virtualCamera.gameObject.SetActive(false);
-        if (m_allVirtualCameras.Contains(virtualCamera))
+        if (s_allVirtualCameras.Contains(virtualCamera))
         {
             return;
         }
-        m_allVirtualCameras.Add(virtualCamera);
+        s_allVirtualCameras.Add(virtualCamera);
     }
 
     public static void UnRegisterCamera(CinemachineVirtualCamera virtualCamera)
     {
-        _ = m_allVirtualCameras.Remove(virtualCamera);
+        _ = s_allVirtualCameras.Remove(virtualCamera);
     }
 }

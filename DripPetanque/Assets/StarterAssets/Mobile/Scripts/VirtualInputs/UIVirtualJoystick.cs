@@ -20,7 +20,7 @@ public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandle
     [Header("Output")]
     public Event joystickOutputEvent;
 
-    void Start()
+    private void Start()
     {
         SetupHandle();
     }
@@ -41,7 +41,7 @@ public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandle
     public void OnDrag(PointerEventData eventData)
     {
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(containerRect, eventData.position, eventData.pressEventCamera, out Vector2 position);
+        _ = RectTransformUtility.ScreenPointToLocalPointInRectangle(containerRect, eventData.position, eventData.pressEventCamera, out Vector2 position);
         
         position = ApplySizeDelta(position);
         
@@ -78,19 +78,19 @@ public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandle
         handleRect.anchoredPosition = newPosition;
     }
 
-    Vector2 ApplySizeDelta(Vector2 position)
+    private Vector2 ApplySizeDelta(Vector2 position)
     {
         float x = (position.x/containerRect.sizeDelta.x) * 2.5f;
         float y = (position.y/containerRect.sizeDelta.y) * 2.5f;
         return new Vector2(x, y);
     }
 
-    Vector2 ClampValuesToMagnitude(Vector2 position)
+    private Vector2 ClampValuesToMagnitude(Vector2 position)
     {
         return Vector2.ClampMagnitude(position, 1);
     }
 
-    Vector2 ApplyInversionFilter(Vector2 position)
+    private Vector2 ApplyInversionFilter(Vector2 position)
     {
         if(invertXOutputValue)
         {
@@ -105,7 +105,7 @@ public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandle
         return position;
     }
 
-    float InvertValue(float value)
+    private float InvertValue(float value)
     {
         return -value;
     }

@@ -4,8 +4,9 @@ using UnityEngine.InputSystem;
 public class EntryPoint : MonoBehaviour
 {
     [SerializeField] private InputActionAsset m_asset;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         m_asset.Enable();
 
@@ -13,7 +14,7 @@ public class EntryPoint : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
     }

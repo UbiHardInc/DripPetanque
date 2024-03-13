@@ -3,15 +3,17 @@ using UnityEngine;
 [System.Serializable]
 public struct DialogueIDWraper
 {
-    [SerializeField] private string _iD;
-    DialogueIDWraper(string iD)
+    [UnityEngine.Serialization.FormerlySerializedAs("_iD")]
+    [SerializeField] private string m_iD;
+
+    private DialogueIDWraper(string iD)
     {
-        _iD = iD;
+        m_iD = iD;
     }
 
     public static implicit operator string (DialogueIDWraper dialogueEventId)
     {
-        return dialogueEventId._iD;
+        return dialogueEventId.m_iD;
     }
 
     public static implicit operator DialogueIDWraper(string iD)

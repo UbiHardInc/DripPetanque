@@ -4,26 +4,23 @@ public class BumpManager : MonoBehaviourSingleton<BumpManager>
 {
     public enum BumpersStrenght
     {
-        soft,
-        medium,
-        hard
+        Soft,
+        Medium,
+        Hard
     }
     
     public int softBumper = 50;
     public int mediumBumper = 80;
     public int hardBumper = 110;
     
-    public int GetBumperStrenght(BumpersStrenght bumperStrenght){
-        switch (bumperStrenght)
+    public int GetBumperStrenght(BumpersStrenght bumperStrenght)
+    {
+        return bumperStrenght switch
         {
-            case BumpersStrenght.soft:
-                return softBumper;
-            case BumpersStrenght.medium:
-                return mediumBumper;
-            case BumpersStrenght.hard:
-                return hardBumper;
-            default:
-                return mediumBumper;
-        }
+            BumpersStrenght.Soft => softBumper,
+            BumpersStrenght.Medium => mediumBumper,
+            BumpersStrenght.Hard => hardBumper,
+            _ => mediumBumper,
+        };
     }
 }
