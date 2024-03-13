@@ -30,8 +30,6 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
 
     private void Awake()
     {
-        m_rigidbody = GetComponent<Rigidbody>();
-        m_rigidbody.maxAngularVelocity = 100000;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -49,19 +47,25 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
             return;
         }
 
-
-        // Checks if the ball is slow enough for enough time
-        if (m_rigidbody.velocity.sqrMagnitude < m_speedToStop * m_speedToStop)
+        if (m_touchedGround)
         {
-            if (m_timerToStop.Update(Time.fixedDeltaTime))
+            // Checks if the ball is slow enough for enough time
+            if (m_rigidbody.velocity.sqrMagnitude < m_speedToStop * m_speedToStop)
+            {
+                if (!m_timerToStop.IsRunning)
+                {
+                    m_timerToStop.Start();
+                }
+                if (m_timerToStop.Update(Time.fixedDeltaTime))
+                {
+                    m_timerToStop.Stop();
+                    StopBall();
+                }
+            }
+            else
             {
                 m_timerToStop.Stop();
-                StopBall();
             }
-        }
-        else
-        {
-            m_timerToStop.Stop();
         }
     }
 
@@ -99,6 +103,8 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     public void OnObjectRequested()
     {
         ResetBall();
+        m_rigidbody ??= GetComponent<Rigidbody>();
+        m_rigidbody.maxAngularVelocity = 100000;
     }
     #endregion
 }
