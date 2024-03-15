@@ -70,3 +70,4 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /DripPetanque/[Aa]ssets/[Ss]treamingAssets/aa.meta
 /DripPetanque/[Aa]ssets/[Ss]treamingAssets/aa/*
+/DripPetanque/ProjectSettings/Packages/com.unity.probuilder/Settings.json
