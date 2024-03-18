@@ -76,6 +76,8 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
                 break;
             case ShootState.Finished:
                 break;
+            default:
+                break;
         }
     }
 

@@ -33,9 +33,11 @@ public class CustomEditorBase : Editor
 		IntField("", desiredCount, 0, 0, 30, null);
 
 		if (desiredCount.intValue < 0)
-			desiredCount.intValue = 0;
-		//Add an element
-		if (desiredCount.intValue <= 0)
+        {
+            desiredCount.intValue = 0;
+        }
+        //Add an element
+        if (desiredCount.intValue <= 0)
 		{
 			EditorGUI.BeginDisabledGroup(true);
 		}
@@ -81,7 +83,7 @@ public class CustomEditorBase : Editor
 	private void AddSentenceData(SerializedProperty list)
     {
 		list.arraySize++;
-        serializedObject.ApplyModifiedProperties();
+        _ = serializedObject.ApplyModifiedProperties();
     }
 
 	private void RemoveSentenceData(SerializedProperty list)
@@ -97,13 +99,22 @@ public class CustomEditorBase : Editor
 		//list[swapIndex] = list[currentIndex];
 		//list[currentIndex] = tempIp;
 
-        if (currentIndex == swapIndex) return;
+        if (currentIndex == swapIndex)
+        {
+            return;
+        }
 
-        if (currentIndex > swapIndex) (currentIndex, swapIndex) = (swapIndex, currentIndex);
+        if (currentIndex > swapIndex)
+        {
+            (currentIndex, swapIndex) = (swapIndex, currentIndex);
+        }
 
-        list.MoveArrayElement(currentIndex, swapIndex);
+        _ = list.MoveArrayElement(currentIndex, swapIndex);
 
-        if (swapIndex - currentIndex != 0) list.MoveArrayElement(swapIndex - 1, currentIndex);
+        if (swapIndex - currentIndex != 0)
+        {
+            _ = list.MoveArrayElement(swapIndex - 1, currentIndex);
+        }
     }
 
 	protected void SpriteField(string labelString, ref Sprite fieldSprite, int padding = 0, Image imageSpriteToReplace = null, int maxLabelWidth = 135, int maxSpriteFieldWidth = 150,
@@ -111,19 +122,27 @@ public class CustomEditorBase : Editor
 	{
 
 		if (labelString != "")
-			GUILayout.BeginHorizontal();
+        {
+            GUILayout.BeginHorizontal();
+        }
 
-		GUILayout.Space(padding);
+        GUILayout.Space(padding);
 
 		if (labelString != "")
-			GUILayout.Label(new GUIContent(labelString, tooltip), GUILayout.MaxWidth(maxLabelWidth));
+        {
+            GUILayout.Label(new GUIContent(labelString, tooltip), GUILayout.MaxWidth(maxLabelWidth));
+        }
 
-		if (maxSpriteFieldHeight > 0)
-			fieldSprite = EditorGUILayout.ObjectField(fieldSprite, typeof(Sprite), false, GUILayout.MaxWidth(maxSpriteFieldWidth), GUILayout.MaxHeight(maxSpriteFieldHeight)) as Sprite;
-		else
-			fieldSprite = EditorGUILayout.ObjectField(fieldSprite, typeof(Sprite), false, GUILayout.MaxWidth(maxSpriteFieldWidth)) as Sprite;
+        if (maxSpriteFieldHeight > 0)
+        {
+            fieldSprite = EditorGUILayout.ObjectField(fieldSprite, typeof(Sprite), false, GUILayout.MaxWidth(maxSpriteFieldWidth), GUILayout.MaxHeight(maxSpriteFieldHeight)) as Sprite;
+        }
+        else
+        {
+            fieldSprite = EditorGUILayout.ObjectField(fieldSprite, typeof(Sprite), false, GUILayout.MaxWidth(maxSpriteFieldWidth)) as Sprite;
+        }
 
-		if (imageSpriteToReplace != null)
+        if (imageSpriteToReplace != null)
 		{
 			if (imageSpriteToReplace.sprite != fieldSprite)
 			{
@@ -132,8 +151,10 @@ public class CustomEditorBase : Editor
 			}
 		}
 		if (labelString != "")
-			GUILayout.EndHorizontal();
-	}
+        {
+            GUILayout.EndHorizontal();
+        }
+    }
 
 	protected void ToggleField(string labelString, SerializedProperty propertyToEdit, int padding = 0, int maxLabelWidth = 135, int maxFloatFieldWidth = 150, string tooltip = null)
 	{
@@ -157,14 +178,19 @@ public class CustomEditorBase : Editor
 	protected void IntField(string labelString, SerializedProperty fieldInt, int padding = 0, int maxLabelWidth = 135, int maxFloatFieldWidth = 150, string tooltip = null)
 	{
 		if (labelString != "")
-			GUILayout.BeginHorizontal();
-		GUILayout.Space(padding);
+        {
+            GUILayout.BeginHorizontal();
+        }
+
+        GUILayout.Space(padding);
 		GUILayout.Label(new GUIContent(labelString, tooltip), GUILayout.MaxWidth(maxLabelWidth));
 
 		fieldInt.intValue = EditorGUILayout.IntField(fieldInt.intValue, GUILayout.MaxWidth(maxFloatFieldWidth));
 		if (labelString != "")
-			GUILayout.EndHorizontal();
-	}
+        {
+            GUILayout.EndHorizontal();
+        }
+    }
 
 	protected void Label(string labelString, int padding = 0, int maxLabelWidth = 135)
 	{
@@ -187,13 +213,11 @@ public class CustomEditorBase : Editor
     protected void AddPopup(ref SerializedProperty ourSerializedProperty, string nameOfLabel, Type typeOfEnum)
     {
         Rect ourRect = EditorGUILayout.BeginHorizontal();
-        EditorGUI.BeginProperty(ourRect, GUIContent.none, ourSerializedProperty);
+        _ = EditorGUI.BeginProperty(ourRect, GUIContent.none, ourSerializedProperty);
         EditorGUI.BeginChangeCheck();
-
-        int actualSelected = 1;
         int selectionFromInspector = ourSerializedProperty.intValue;
-        string[] enumNamesList = System.Enum.GetNames(typeOfEnum);
-        actualSelected = EditorGUILayout.Popup(nameOfLabel, selectionFromInspector, enumNamesList);
+        string[] enumNamesList = Enum.GetNames(typeOfEnum);
+        int actualSelected = EditorGUILayout.Popup(nameOfLabel, selectionFromInspector, enumNamesList);
         ourSerializedProperty.intValue = actualSelected;
 
         EditorGUI.EndProperty();
@@ -205,14 +229,24 @@ public class CustomEditorBase : Editor
     {
 
         if (labelString != "")
+        {
             GUILayout.BeginHorizontal();
+        }
+
         GUILayout.Space(padding);
         if (labelString != "")
+        {
             GUILayout.Label(new GUIContent(labelString, tooltip), GUILayout.MaxWidth(maxLabelWidth));
+        }
+
         if (maxClipFieldHeight > 0)
+        {
             audioFieldToEdit.objectReferenceValue = EditorGUILayout.ObjectField(audioFieldToEdit.objectReferenceValue, typeof(AudioClip), false, GUILayout.MaxWidth(maxClipFieldWidth), GUILayout.MaxHeight(maxClipFieldHeight)) as AudioClip;
+        }
         else
+        {
             audioFieldToEdit.objectReferenceValue = EditorGUILayout.ObjectField(audioFieldToEdit.objectReferenceValue, typeof(AudioClip), false, GUILayout.MaxWidth(maxClipFieldWidth)) as AudioClip;
+        }
 
         if (clipToReplace != null)
         {
@@ -223,7 +257,9 @@ public class CustomEditorBase : Editor
             }
         }
         if (labelString != "")
+        {
             GUILayout.EndHorizontal();
+        }
     }
 
     protected void TextField(string labelString, SerializedProperty propertyToEdit, int padding = 0, int maxLabelWidth = 135, int maxTextFieldWidth = 150,
@@ -231,23 +267,34 @@ public class CustomEditorBase : Editor
 	{
 
 		if (style == null)
-			style = new GUIStyle("textArea");
-		GUILayout.BeginHorizontal();
+        {
+            style = new GUIStyle("textArea");
+        }
+
+        GUILayout.BeginHorizontal();
 		GUILayout.Space(padding);
 		if (labelString != "")
-			GUILayout.Label(new GUIContent(labelString, tooltip), GUILayout.MaxWidth(maxLabelWidth));
+        {
+            GUILayout.Label(new GUIContent(labelString, tooltip), GUILayout.MaxWidth(maxLabelWidth));
+        }
 
-		if (textArea)
+        if (textArea)
 		{
 			if (minTextFieldHeight == 0)
-				propertyToEdit.stringValue = EditorGUILayout.TextArea(propertyToEdit.stringValue, style, GUILayout.MaxWidth(maxTextFieldWidth));
-			else
-				propertyToEdit.stringValue = EditorGUILayout.TextArea(propertyToEdit.stringValue, style, GUILayout.MaxWidth(maxTextFieldWidth), GUILayout.MinHeight(minTextFieldHeight));
-		}
+            {
+                propertyToEdit.stringValue = EditorGUILayout.TextArea(propertyToEdit.stringValue, style, GUILayout.MaxWidth(maxTextFieldWidth));
+            }
+            else
+            {
+                propertyToEdit.stringValue = EditorGUILayout.TextArea(propertyToEdit.stringValue, style, GUILayout.MaxWidth(maxTextFieldWidth), GUILayout.MinHeight(minTextFieldHeight));
+            }
+        }
 		else
-			propertyToEdit.stringValue = EditorGUILayout.TextField(propertyToEdit.stringValue, GUILayout.MaxWidth(maxTextFieldWidth));
+        {
+            propertyToEdit.stringValue = EditorGUILayout.TextField(propertyToEdit.stringValue, GUILayout.MaxWidth(maxTextFieldWidth));
+        }
 
-		if (propertyToEdit.stringValue != null)
+        if (propertyToEdit.stringValue != null)
 		{
 			GUILayout.Label(propertyToEdit.stringValue.Length.ToString() + " / " + maxChar.ToString());
 		}

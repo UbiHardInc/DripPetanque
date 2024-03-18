@@ -70,6 +70,8 @@ public class ShootStep : BaseShootStep
             case StepState.Finished:
                 Debug.LogWarning($"{nameof(Update)} should no longer be called on a {nameof(ShootStep)} that already finished");
                 break;
+            default:
+                break;
         }
     }
 

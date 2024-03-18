@@ -39,12 +39,12 @@ public class SplineTests : MonoBehaviour
         };
     }
 
-    float Smoothstep(float w)
+    private float Smoothstep(float w)
     {
         return w * w * (3.0f - 2.0f * w);
     }
 
-    float Smootherstep(float w)
+    private float Smootherstep(float w)
     {
         return ((w * (w * 6.0f - 15.0f) + 10.0f) * w * w * w);
     }
