@@ -28,10 +28,6 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
 
     [NonSerialized] private PetanquePlayers m_ballOwner;
 
-    private void Awake()
-    {
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == m_groundLayer)
@@ -68,13 +64,6 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
             }
         }
     }
-
-    private void Update()
-    {
-
-    }
-
-
 
     protected virtual void OnGroundTouched()
     {
