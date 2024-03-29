@@ -426,12 +426,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_sceneToTransitionTo:
-    m_sceneAsset: {fileID: 102900000, guid: 7d1304c8e8df3c3428c1b5e37a9771c3, type: 3}
-    m_scenePath: Assets/Scenes/HeavyScene.unity
+    m_sceneAsset: {fileID: 102900000, guid: 4c25d6d82d2aedf4c8a040f74e974697, type: 3}
+    m_scenePath: Assets/Scenes/DissloveMask.unity
   m_cache: {fileID: 283564589}
   m_fadeTimer:
     m_duration: 1
     m_repeat: 0
+  m_transitionAction: 0
 --- !u!4 &1685722808
 Transform:
   m_ObjectHideFlags: 0
