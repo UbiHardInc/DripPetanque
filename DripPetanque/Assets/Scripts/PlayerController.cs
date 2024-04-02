@@ -1,18 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private InputActionReference m_interactionAction;
+    [SerializeField] private InteractableObjectDetector m_interactableObjectDetector;
+    [SerializeField] private TMP_Text m_text;
+
+    private void Awake()
     {
-        
+        m_interactionAction.action.performed += OnInteractionButtonPressed;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnInteractionButtonPressed(InputAction.CallbackContext context)
     {
-        
+        if (m_interactableObjectDetector.GetClosestInteractableObject(out InteractableObject obj))
+        {
+            obj.Interact(this);
+        }
+    }
+
+    private void Update()
+    {
+        if (m_interactableObjectDetector.GetClosestInteractableObject(out InteractableObject obj))
+        {
+            m_text.text = obj.GetInteractionMessage();
+        }
     }
 }
