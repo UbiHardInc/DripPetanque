@@ -221,7 +221,7 @@
             "id": "a6da7b08-2926-41ab-9b3b-02911224e97d",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "6ef2b41c-83cc-421b-b159-72967e74b768",
                     "expectedControlType": "Button",
@@ -234,11 +234,11 @@
                 {
                     "name": "",
                     "id": "43b31302-4ae1-4d47-8422-c5fcd5d2456b",
-                    "path": "",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "New action",
+                    "groups": "Xbox",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

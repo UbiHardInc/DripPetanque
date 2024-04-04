@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        m_interactionAction.action.actionMap.Enable();
         m_interactionAction.action.performed += OnInteractionButtonPressed;
     }
 
@@ -28,7 +29,12 @@ public class PlayerController : MonoBehaviour
     {
         if (m_interactableObjectDetector.GetClosestInteractableObject(out InteractableObject obj))
         {
+            m_text.gameObject.SetActive(true);
             m_text.text = obj.GetInteractionMessage();
+        }
+        else
+        {
+            m_text.gameObject.SetActive(false);
         }
     }
 }

@@ -18,20 +18,27 @@ public class InteractableObjectDetector : MonoBehaviour
 
     public bool GetClosestInteractableObject(out InteractableObject interactableObject)
     {
-        if (m_interactableObjectsInRange.Count == 0)
+        switch (m_interactableObjectsInRange.Count)
         {
-            interactableObject = null;
-            return false;
+            case 1:
+                interactableObject = m_interactableObjectsInRange[0];
+                return true;
+
+            case > 1:
+                m_interactableObjectsInRange.Sort(InteractableObjectComparison);
+                interactableObject = m_interactableObjectsInRange[0];
+                return true;
+
+            case 0:
+            default:
+                interactableObject = null;
+                return false;
         }
-
-        m_interactableObjectsInRange.Sort(InteractableObjectComparison);
-
-        interactableObject = m_interactableObjectsInRange[0];
-        return true;
     }
 
     /// <summary>
-    /// Method used to sort the <see cref="InteractableObject"/> based on the angle between the detector forward and the vector from the detector position to the interatable object position
+    /// Method used to sort the <see cref="InteractableObject"/> based on the angle between the detector forward and
+    /// the vector from the detector position to the interactable object position
     /// </summary>
     private int InteractableObjectComparison(InteractableObject objectA, InteractableObject objectB)
     {
@@ -42,10 +49,15 @@ public class InteractableObjectDetector : MonoBehaviour
         Vector2 objAPosition = objectA.transform.position.XZ();
         Vector2 objBPosition = objectB.transform.position.XZ();
 
-        float objADot = Vector2.Dot(detectorForward, objAPosition - detectorPosition);
-        float objBDot = Vector2.Dot(detectorForward, objBPosition - detectorPosition);
+        float objAAngleish = Angleish(detectorForward, objAPosition - detectorPosition);
+        float objBAngleish = Angleish(detectorForward, objBPosition - detectorPosition);
 
-        return objBDot.CompareTo(objADot);
+        return objBAngleish.CompareTo(objAAngleish);
+    }
+
+    private float Angleish(Vector2 from, Vector2 to)
+    {
+        return Vector2.Dot(from, to) / (from.sqrMagnitude * to.sqrMagnitude);
     }
 
 
