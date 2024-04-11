@@ -142,6 +142,8 @@ namespace StarterAssets
             // reset our timeouts on start
             m_jumpTimeoutDelta = m_jumpTimeout;
             m_fallTimeoutDelta = m_fallTimeout;
+
+            m_input.Init();
         }
 
         private void Update()
