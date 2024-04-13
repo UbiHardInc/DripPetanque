@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Pools;
@@ -27,6 +28,8 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     [NonSerialized] protected Rigidbody m_rigidbody;
 
     [NonSerialized] private PetanquePlayers m_ballOwner;
+
+    private List<BonusBase> m_bonusBases = new List<BonusBase>();
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -69,12 +72,28 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     {
         m_grounded = true;
         m_touchedGround = true;
+
+        if (m_bonusBases.Count > 0)
+        {
+            foreach (BonusBase bonus in m_bonusBases)
+            {
+                bonus.OnTounchGround();
+            }
+        }
     }
 
     private void StopBall()
     {
         m_ballStopped = true;
         OnBallStopped?.Invoke(this);
+
+        if(m_bonusBases.Count > 0)
+        {
+            foreach(BonusBase bonus in m_bonusBases)
+            {
+                bonus.OnBallStop();
+            }
+        }
     }
 
     public virtual void ResetBall()
