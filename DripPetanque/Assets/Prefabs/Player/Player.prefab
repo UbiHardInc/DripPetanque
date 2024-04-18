@@ -1671,6 +1671,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6879439039923850130}
   - component: {fileID: 691444994550026728}
+  - component: {fileID: 1027404734095973705}
   m_Layer: 0
   m_Name: PlayerArmature
   m_TagString: Player
@@ -1717,6 +1718,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1027404734095973705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6067331623851774248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346bc66c52972a041bc5eeed55d8d0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6142713678685850619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2764,6 +2777,7 @@ MonoBehaviour:
     m_cursorLocked: 1
     m_cursorInputForLook: 1
   m_animator: {fileID: 691444994550026728}
+  m_animationEventReciever: {fileID: 1027404734095973705}
 --- !u!114 &2366014161942513899
 MonoBehaviour:
   m_ObjectHideFlags: 0
