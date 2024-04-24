@@ -7,15 +7,15 @@ public class DialogueSubGameManager : SubGameManager
 
     [SerializeField] private DialogueManager m_dialogueManager;
 
-    [NonSerialized] private DialogueData m_dialogueToStart;
+    [NonSerialized] private DialogueData m_currentDialogue;
 
 
     public override void BeginState(GameState previousState)
     {
         base.BeginState(previousState);
 
-        m_dialogueToStart = m_sharedDatas.NextDialogueToStart;
-        if (m_dialogueToStart == null)
+        m_currentDialogue = m_sharedDatas.NextDialogueToStart;
+        if (m_currentDialogue == null)
         {
             Debug.LogError($"No {nameof(DialogueData)} in the shared datas : Exiting the Dialogue state");
             m_requestedGameState = previousState;
@@ -24,20 +24,20 @@ public class DialogueSubGameManager : SubGameManager
         m_sharedDatas.NextDialogueToStart = null;
 
         m_dialogueManager.OnDialogueEnded += OnDialogueEnded;
-        m_dialogueManager.StartDialogue(m_dialogueToStart);
+        m_dialogueManager.StartDialogue(m_currentDialogue);
     }
 
     private void OnDialogueEnded()
     {
         m_dialogueManager.OnDialogueEnded -= OnDialogueEnded;
 
-        if (m_dialogueToStart.NextGameState == GameState.None)
+        if (m_currentDialogue.NextGameState == GameState.None)
         {
-            Debug.LogError($"The next game state of the current dialogue ({m_dialogueToStart.name}) is equals to {GameState.None}\nCan't exit the current game state");
+            Debug.LogError($"The next game state of the current dialogue ({m_currentDialogue.name}) is equals to {GameState.None}\nCan't exit the current game state");
             return;
         }
 
-        m_requestedGameState = m_dialogueToStart.NextGameState;
-        m_dialogueToStart = null;
+        m_requestedGameState = m_currentDialogue.NextGameState;
+        m_currentDialogue = null;
     }
 }
