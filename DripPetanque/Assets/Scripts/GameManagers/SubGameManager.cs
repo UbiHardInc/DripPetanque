@@ -12,15 +12,17 @@ public abstract class SubGameManager : MonoBehaviour
 
     #region Cache
     [NonSerialized] protected GameState m_requestedGameState = GameState.None;
+    [NonSerialized] protected GameManagersSharedDatas m_sharedDatas;
 
     // Inputs
     [NonSerialized] protected InputActionAsset m_actionAsset = null;
     [NonSerialized] private IEnumerable<InputActionMap> m_specificActionMaps;
     #endregion
 
-    public virtual void Init(InputActionAsset actionAsset)
+    public virtual void Initialize(InputActionAsset actionAsset, GameManagersSharedDatas sharedDatas)
     {
         m_actionAsset = actionAsset;
+        m_sharedDatas = sharedDatas;
         m_specificActionMaps = m_specificActionMapNames.Select(name => m_actionAsset.FindActionMap(name));
     }
 
