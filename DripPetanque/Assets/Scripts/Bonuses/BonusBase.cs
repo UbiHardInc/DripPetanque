@@ -2,6 +2,11 @@ using UnityEngine;
 
 public abstract class BonusBase : MonoBehaviour
 {
+    [SerializeField] private Sprite m_bonusSprite;
+
+    public Sprite BonusSprite => m_bonusSprite;
+
+
     public virtual void OnTounchGround()
     {
 
