@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.pluneau.unityutility": {
+      "version": "https://github.com/paulluneaug/UnityUtility.git?path=/UnityUtility/Assets/Public#v1.8.7.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "04ac1100b4a6fe9b178e63e44ce92a23ed37a29d"
+    },
     "com.unity.burst": {
       "version": "1.8.8",
       "depth": 1,
@@ -71,6 +78,15 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.postprocessing": {
+      "version": "3.2.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.physics": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.probuilder": {
@@ -179,6 +195,15 @@
       "dependencies": {
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
+      }
+    },
+    "com.unity.visualeffectgraph": {
+      "version": "14.0.8",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.shadergraph": "14.0.8",
+        "com.unity.render-pipelines.core": "14.0.8"
       }
     },
     "com.unity.visualscripting": {

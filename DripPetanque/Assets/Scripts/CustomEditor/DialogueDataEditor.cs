@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using static AudioClipData;
@@ -22,8 +20,8 @@ public class DialogueDataEditor : CustomEditorBase
         {
             EditorUtility.SetDirty(serializedObject.targetObject);
         }
-        
-        serializedObject.ApplyModifiedProperties();
+
+        _ = serializedObject.ApplyModifiedProperties();
     }
 
     private void ShowTransitionStartTime()
@@ -44,7 +42,7 @@ public class DialogueDataEditor : CustomEditorBase
         AddPopup(ref sentenceDisplayStyle, "Sentence display style", typeof(SentenceDisplayStyle));
         //EnumField("Sentence display style", ref m_dialogueData.sentenceDisplayStyle);
 
-        if (m_dialogueData.sentenceDisplayStyle == DialogueData.SentenceDisplayStyle.Type)
+        if (m_dialogueData.sentenceDisplayStyle == SentenceDisplayStyle.Type)
         {
             FloatField("Typing delay (s) : ", serializedObject.FindProperty("typingDelay"), 15, 175, 50, "Time (in second) between typing");
             GUILayout.Space(5);
@@ -103,11 +101,13 @@ public class DialogueDataEditor : CustomEditorBase
     //    return list;
     //}
 
-    private void ShowFeedbackSentencesData(SerializedProperty sentenceData, DialogueData.TextType textType, SerializedProperty sentenceDataList, int i)
+    private void ShowFeedbackSentencesData(SerializedProperty sentenceData, TextType textType, SerializedProperty sentenceDataList, int i)
     {
         GUILayout.BeginHorizontal();
         if (SerializedProperty.EqualContents(sentenceData, sentenceDataList.GetArrayElementAtIndex(0)))
+        {
             EditorGUI.BeginDisabledGroup(true);
+        }
 
         if (GUILayout.Button(EditorGUIUtility.IconContent("HoverBar_Up"), EditorStyles.miniButtonMid, GUILayout.MaxWidth(18), GUILayout.MaxHeight(18)))
         {
@@ -115,10 +115,14 @@ public class DialogueDataEditor : CustomEditorBase
             GUI.FocusControl(null);
         }
         if (SerializedProperty.EqualContents(sentenceData, sentenceDataList.GetArrayElementAtIndex(0)))
+        {
             EditorGUI.EndDisabledGroup();
+        }
 
         if (SerializedProperty.EqualContents(sentenceData, sentenceDataList.GetArrayElementAtIndex(sentenceDataList.arraySize - 1)))
+        {
             EditorGUI.BeginDisabledGroup(true);
+        }
 
         if (GUILayout.Button(EditorGUIUtility.IconContent("d_icon dropdown@2x"), EditorStyles.miniButtonMid, GUILayout.MaxWidth(18), GUILayout.MaxHeight(18)))
         {
@@ -126,21 +130,24 @@ public class DialogueDataEditor : CustomEditorBase
         }
 
         if (SerializedProperty.EqualContents(sentenceData, sentenceDataList.GetArrayElementAtIndex(sentenceDataList.arraySize - 1)))
+        {
             EditorGUI.EndDisabledGroup();
+        }
 
         SerializedProperty sentence = sentenceData.FindPropertyRelative("sentence");
         SerializedProperty NPCName = sentenceData.FindPropertyRelative("NPCName");
 
         // ObjectField
         if (sentence.stringValue != null)
+        {
             sentence.stringValue = sentence.stringValue.Trim();
-
+        }
 
         TextField(" ", sentence, 75, -3, 188, true, EditorStyles.textArea, 55, null, 170);
         GUILayout.EndHorizontal();
         GUILayout.Space(2);
 
-        if (textType == DialogueData.TextType.Dialogue)
+        if (textType == TextType.Dialogue)
         {
             TextField("NPC name : ", NPCName, 75, 70, 115, true, null, 0, null, 50); //Choose PNJ name
             GUILayout.Space(2);
@@ -209,7 +216,7 @@ public class DialogueDataEditor : CustomEditorBase
         //serializedObject.ApplyModifiedProperties();
     }
 
-    void ShowAudioClipData(SerializedProperty audioClipData)
+    private void ShowAudioClipData(SerializedProperty audioClipData)
     {
         SerializedProperty audioClip = audioClipData.FindPropertyRelative("audioClip");
         GUILayout.BeginHorizontal();
@@ -229,7 +236,7 @@ public class DialogueDataEditor : CustomEditorBase
         //EnumField("Starting type : ", ref audioClipData.startType, 75, 110, 75);
         GUILayout.Space(5);
 
-        if (startType.enumValueIndex == (int)AudioClipData.StartType.FadeIn)
+        if (startType.enumValueIndex == (int)StartType.FadeIn)
         {
             SerializedProperty fadeInTime = audioClipData.FindPropertyRelative("fadeInTime");
             FloatField("Fade In time (s) : ", fadeInTime, 75, 110, 50, "Time during the volume growing");
@@ -245,7 +252,7 @@ public class DialogueDataEditor : CustomEditorBase
         //EnumField("Ending type : ", ref audioClipData.stopType, 75, 110, 75);
         GUILayout.Space(5);
 
-        if (stopType.enumValueIndex == (int)AudioClipData.StopType.FadeOut)
+        if (stopType.enumValueIndex == (int)StopType.FadeOut)
         {
             SerializedProperty fadeOutTime = audioClipData.FindPropertyRelative("fadeOutTime");
             FloatField("Fade Out time (s) : ", fadeOutTime, 75, 110, 50, "Time during the volume reducing");
