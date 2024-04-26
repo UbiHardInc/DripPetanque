@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public ExplorationSubGameManager ExplorationSubGameManager => m_explorationSubGameManager;
     public PetanqueSubGameManager PetanqueSubGameManager => m_petanqueSubGameManager;
 
+    public GameManagersSharedDatas SharedDatas => m_sharedDatas;
+
     [Title(nameof(SubGameManager) + "s")]
     [SerializeField] private CinematicsSubGameManager m_cinematicsSubGameManager;
     [SerializeField] private DialogueSubGameManager m_dialogueSubGameManager;
