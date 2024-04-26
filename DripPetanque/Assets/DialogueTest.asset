@@ -35,12 +35,12 @@ MonoBehaviour:
     showSfxElements: 0
     withSFX: 1
     typingIsComplete: 1
-    withCustomEvent: 1
+    withCustomEvent: 0
     startOfEvent: 0
     eventIDToLaunch:
-      _iD: 
+      m_iD: 
   - isSkippable: 1
-    NPCName: Jacottin
+    NPCName: Jordan
     NPCSprite: {fileID: 0}
     sentence: DIALOGUE 2
     showData: 0
@@ -57,12 +57,12 @@ MonoBehaviour:
     showSfxElements: 0
     withSFX: 0
     typingIsComplete: 1
-    withCustomEvent: 1
+    withCustomEvent: 0
     startOfEvent: 0
     eventIDToLaunch:
-      _iD: ToJacottin
+      m_iD: ToJacottin
   - isSkippable: 1
-    NPCName: Yannis
+    NPCName: Jordan
     NPCSprite: {fileID: 0}
     sentence: "On est vachement mal mod\xE9lis\xE9 quand m\xEAme non ?"
     showData: 0
@@ -79,10 +79,11 @@ MonoBehaviour:
     showSfxElements: 0
     withSFX: 0
     typingIsComplete: 1
-    withCustomEvent: 1
+    withCustomEvent: 0
     startOfEvent: 0
     eventIDToLaunch:
-      _iD: ToYannis
+      m_iD: ToYannis
   nbSentences: 3
   showDialogueElements: 1
   textType: 1
+  NextGameState: 4

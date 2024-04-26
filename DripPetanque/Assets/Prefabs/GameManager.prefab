@@ -206,8 +206,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6521977095962087902}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1989899, y: 0.2609929, z: -0.055074077, w: 0.9430019}
-  m_LocalPosition: {x: -4.45, y: 3.3, z: 0.79}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.20000005, y: 1.458, z: -4.021}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -244,11 +244,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60.000004
+  near clip plane: 0.2
+  far clip plane: 500
+  field of view: 40
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -400,7 +400,7 @@ MonoBehaviour:
   m_dialogueSubGameManager: {fileID: 4359634221030858744}
   m_explorationSubGameManager: {fileID: 8531854692067118445}
   m_petanqueSubGameManager: {fileID: 3573455257882393289}
-  m_startState: 2
+  m_startState: 4
   m_mainCamera: {fileID: 7564619528680852679}
   m_actionAsset: {fileID: -944628639613478452, guid: 462a9b2de1b64484aa61d3a207013de5,
     type: 3}

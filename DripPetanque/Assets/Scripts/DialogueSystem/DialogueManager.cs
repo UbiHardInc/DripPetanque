@@ -5,12 +5,16 @@ using DG.Tweening;
 using TMPro;
 using static DialogueData;
 using System;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
+    [SerializeField] private InputActionReference m_inputActionRef;
+
     public static Dictionary<DialogueIDWraper, EventHandler> EventHandlers = new Dictionary<DialogueIDWraper, EventHandler>();
 
     public event Action OnDialogueEnded;
+
 
     //----------------------------------------------------------
     #region Serialized Fields
@@ -51,7 +55,8 @@ public class DialogueManager : MonoBehaviour
     private bool m_isClickedOnce;
     private bool m_canClickAgain;
     private TextType m_textType;
-    private Sequence m_openDroplistSequence;
+    private Sequence m_openDialogueSequence;
+    private Sequence m_closeDialogueSequence;
     #endregion
 
     private void Awake()
@@ -72,6 +77,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
+            m_talkerNameCanvasGroup.alpha = 0f;
             m_dialogueText.text = "";
             m_nextButtonCanvasGroup.alpha = 0;
         }
@@ -163,7 +169,7 @@ public class DialogueManager : MonoBehaviour
     {
     }
 
-    public void DisplayNextDialogue()
+    public void DisplayNextDialogue(InputAction.CallbackContext context)
     {
         if (m_currentDialogueData.sentenceDatas[m_sentenceIndex].typingIsComplete)
         {
@@ -197,6 +203,7 @@ public class DialogueManager : MonoBehaviour
         DialogueZoomOut(m_currentTransTime);
         m_haveFinishDialogue = true;
 
+        m_inputActionRef.action.performed -= DisplayNextDialogue;
         OnDialogueEnded?.Invoke();
     }
 
@@ -239,31 +246,36 @@ public class DialogueManager : MonoBehaviour
     private void DialogueFadeIn(float transitionDuration)
     {
         m_dialogueCanvas.SetActive(true);
-        m_openDroplistSequence = DOTween.Sequence();
-        _ = m_openDroplistSequence.Append(m_dialogueMainContainerCanvasGroup.DOFade(1, transitionDuration).From(0).SetEase(m_fadeCurve));
+        m_openDialogueSequence = DOTween.Sequence();
+        _ = m_openDialogueSequence.Append(m_dialogueMainContainerCanvasGroup.DOFade(1, transitionDuration).From(0).SetEase(m_fadeCurve));
 
-        _ = m_openDroplistSequence.OnComplete(() =>
+        _ = m_openDialogueSequence.OnComplete(() =>
         {
             ComputeSentences();
         });
-        _ = m_openDroplistSequence.Play();
+        _ = m_openDialogueSequence.Play();
     }
 
     private void DialogueZoomIn(float transitionDuration)
     {
         m_dialogueCanvas.SetActive(true);
+        m_openDialogueSequence = DOTween.Sequence();
 
-        m_openDroplistSequence = DOTween.Sequence();
-        _ = m_openDroplistSequence.Insert(0f, m_dialogueMainContainerCanvasGroup.GetComponent<RectTransform>().DOAnchorMin(m_minAnchorAnimZoomEnd, transitionDuration).From(m_minAnchorAnimZoomStart).SetEase(Ease.OutQuart));
-        _ = m_openDroplistSequence.Insert(0f, m_dialogueMainContainerCanvasGroup.GetComponent<RectTransform>().DOAnchorMax(m_maxAnchorAnimZoomEnd, transitionDuration).From(m_maxAnchorAnimZoomStart).SetEase(Ease.OutQuart));
+        RectTransform dialogueMainContainerRectTransform = m_dialogueMainContainerCanvasGroup.GetComponent<RectTransform>();
 
-        _ = m_openDroplistSequence.OnComplete(() =>
+        m_closeDialogueSequence.Kill();
+
+        _ = m_openDialogueSequence.Insert(0f, dialogueMainContainerRectTransform.DOAnchorMin(m_minAnchorAnimZoomEnd, transitionDuration).From(m_minAnchorAnimZoomStart).SetEase(Ease.OutQuart));
+        _ = m_openDialogueSequence.Insert(0f, dialogueMainContainerRectTransform.DOAnchorMax(m_maxAnchorAnimZoomEnd, transitionDuration).From(m_maxAnchorAnimZoomStart).SetEase(Ease.OutQuart));
+
+        _ = m_openDialogueSequence.OnComplete(() =>
         {
             ToggleDialogueInterfaceElements(true);
+            m_inputActionRef.action.performed += DisplayNextDialogue;
             ComputeSentences();
         });
 
-        _ = m_openDroplistSequence.Play();
+        _ = m_openDialogueSequence.Play();
     }
 
     
@@ -306,17 +318,21 @@ public class DialogueManager : MonoBehaviour
 
         m_dialogueCanvas.SetActive(true);
         ShowNPCImage(true);
-        Sequence sequence = DOTween.Sequence();
+        m_closeDialogueSequence = DOTween.Sequence();
+        RectTransform dialogueMainContainerRectTransform = m_dialogueMainContainerCanvasGroup.GetComponent<RectTransform>();
 
-        _ = sequence.Append(m_dialogueCanvas.GetComponent<RectTransform>().DOScale(new Vector2(0, 0), transitionDuration).SetEase(m_fadeCurve));
-        _ = sequence.OnComplete(() =>
+        _ = m_closeDialogueSequence.Insert(0f, dialogueMainContainerRectTransform.DOAnchorMin(m_maxAnchorAnimZoomStart, transitionDuration).From(m_minAnchorAnimZoomEnd).SetEase(Ease.OutQuart));
+        _ = m_closeDialogueSequence.Insert(0f, dialogueMainContainerRectTransform.DOAnchorMax(m_maxAnchorAnimZoomStart, transitionDuration).From(m_maxAnchorAnimZoomEnd).SetEase(Ease.OutQuart));
+
+        ToggleDialogueInterfaceElements(false);
+
+        _ = m_closeDialogueSequence.OnComplete(() =>
         {
-            ToggleDialogueInterfaceElements(false);
             m_dialogueCanvas.SetActive(false);
-            m_dialogueCanvas.GetComponent<RectTransform>().localScale = originPos;
+            //m_dialogueCanvas.GetComponent<RectTransform>().localScale = originPos;
             m_haveFinishDialogue = true;
         });
-        _ = sequence.Play();
+        _ = m_closeDialogueSequence.Play();
     }
     #endregion
 
