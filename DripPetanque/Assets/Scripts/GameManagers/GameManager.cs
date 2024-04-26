@@ -8,6 +8,11 @@ using UnityUtility.Singletons;
 
 public class GameManager : MonoBehaviourSingleton<GameManager>
 {
+    public CinematicsSubGameManager CinematicsSubGameManager => m_cinematicsSubGameManager;
+    public DialogueSubGameManager DialogueSubGameManager => m_dialogueSubGameManager;
+    public ExplorationSubGameManager ExplorationSubGameManager => m_explorationSubGameManager;
+    public PetanqueSubGameManager PetanqueSubGameManager => m_petanqueSubGameManager;
+
     [Title(nameof(SubGameManager) + "s")]
     [SerializeField] private CinematicsSubGameManager m_cinematicsSubGameManager;
     [SerializeField] private DialogueSubGameManager m_dialogueSubGameManager;
