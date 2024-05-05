@@ -18,9 +18,9 @@ MonoBehaviour:
   typingDelay: 0.02
   sentenceDatas:
   - isSkippable: 1
-    NPCName: Paul
+    NPCName: Paysan (a l'air de sentir mauvais)
     NPCSprite: {fileID: 0}
-    sentence: DIALOGUE 1-2
+    sentence: Eh mais c'est le Ouicheur
     showData: 0
     audioClipData:
       audioClip: {fileID: 8300000, guid: 14101bfc541c0994fae8aca9be4e2082, type: 3}
@@ -40,9 +40,9 @@ MonoBehaviour:
     eventIDToLaunch:
       m_iD: 
   - isSkippable: 1
-    NPCName: Paul
+    NPCName: Denis (de la compta)
     NPCSprite: {fileID: 0}
-    sentence: DIALOGUE 2-2
+    sentence: "Oui c'est lui \xE0 mon avis"
     showData: 0
     audioClipData:
       audioClip: {fileID: 0}
@@ -61,29 +61,7 @@ MonoBehaviour:
     startOfEvent: 0
     eventIDToLaunch:
       m_iD: ToJacottin
-  - isSkippable: 1
-    NPCName: Jordan
-    NPCSprite: {fileID: 0}
-    sentence: BZBZBZBZBBZBZBZBZBZBZBZBZBZBZ
-    showData: 0
-    audioClipData:
-      audioClip: {fileID: 0}
-      audioLoop: 0
-      startType: 0
-      fadeInTime: 0
-      delay: 0
-      stopType: 0
-      fadeOutTime: 0
-      maxVolume: 100
-      showaudioClipElements: 0
-    showSfxElements: 0
-    withSFX: 0
-    typingIsComplete: 1
-    withCustomEvent: 0
-    startOfEvent: 0
-    eventIDToLaunch:
-      m_iD: ToYannis
-  nbSentences: 3
+  nbSentences: 2
   showDialogueElements: 1
   textType: 1
   NextGameState: 4
