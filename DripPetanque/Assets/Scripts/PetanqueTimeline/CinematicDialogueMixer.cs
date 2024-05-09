@@ -10,8 +10,6 @@ public class CinematicDialogueMixer : PlayableBehaviour
     {
         DialogueManager dialogueManager = playerData as DialogueManager;
 
-        Debug.Log("PROCESSING");
-
         if (!dialogueManager)
         {
             return;
