@@ -61,7 +61,30 @@ MonoBehaviour:
     startOfEvent: 0
     eventIDToLaunch:
       m_iD: ToJacottin
-  nbSentences: 2
+  - isSkippable: 1
+    NPCName: Nicolas Sarkozy
+    NPCSprite: {fileID: 0}
+    sentence: BLIBLIBLIB
+    showData: 0
+    audioClipData:
+      audioClip: {fileID: 0}
+      audioLoop: 0
+      startType: 0
+      fadeInTime: 0
+      delay: 0
+      stopType: 0
+      fadeOutTime: 0
+      maxVolume: 100
+      showaudioClipElements: 0
+    showSfxElements: 0
+    withSFX: 0
+    typingIsComplete: 1
+    withCustomEvent: 0
+    startOfEvent: 0
+    eventIDToLaunch:
+      m_iD: ToJacottin
+  nbSentences: 3
   showDialogueElements: 1
   textType: 1
+  IsCinematicDialogue: 1
   NextGameState: 4
