@@ -6,4 +6,12 @@ using UnityEngine;
 public class QuestLog : ScriptableObject
 {
     public List<Quest> Quests = new List<Quest>();
+
+    public void ResetAllQuests()
+    {
+        foreach (Quest quest in Quests)
+        {
+            quest.ResetQuestData();
+        }
+    }
 }

@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     [SerializeField] private CinemachineBrain m_mainCamera;
 
+    [SerializeField] private QuestLog m_questLog;
+
     [Title("Inputs")]
     [SerializeField] private InputActionAsset m_actionAsset;
     [SerializeField] private string m_commonActionMapName = "Common";
@@ -40,6 +42,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         base.Initialize();
 
         DontDestroyOnLoad(gameObject);
+
+        m_questLog.ResetAllQuests();
 
         VirtualCamerasManager.RegisterBrain(m_mainCamera);
         m_sharedDatas = new GameManagersSharedDatas();

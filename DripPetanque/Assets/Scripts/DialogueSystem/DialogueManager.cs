@@ -57,6 +57,7 @@ public class DialogueManager : MonoBehaviour
     private TextType m_textType;
     private Sequence m_openDialogueSequence;
     private Sequence m_closeDialogueSequence;
+    private int m_endOfDialogueIndex;
     #endregion
 
     private void Awake()
@@ -64,9 +65,24 @@ public class DialogueManager : MonoBehaviour
         m_audioSource = GetComponent<AudioSource>();
     }
 
-    public void StartDialogue(DialogueData dialogueData)
+    public void StartDialogue(DialogueData dialogueData, int fromSentence = -1, int toSentence = -1)
     {
-        _ = StartCoroutine(StartDialogueCoroutine(dialogueData));
+        if(fromSentence != -1)
+        {
+            if(toSentence != -1 && toSentence > fromSentence)
+            {
+                _ = StartCoroutine(StartDialogueFromCustomSentenceBoundariesCoroutine(dialogueData, fromSentence, toSentence));
+            }
+            else
+            {
+                _ = StartCoroutine(StartDialogueFromCustomSentenceBoundariesCoroutine(dialogueData, fromSentence, fromSentence + 1));
+            }
+
+        }
+        else
+        {
+            _ = StartCoroutine(StartDialogueCoroutine(dialogueData));
+        }
     }
 
     private void ToggleDialogueInterfaceElements(bool state)
@@ -97,6 +113,36 @@ public class DialogueManager : MonoBehaviour
         foreach (SentenceData sentenceData in dialogueData.sentenceDatas)
         {
             m_sentenceDatas.Add(sentenceData);
+        }
+
+        m_endOfDialogueIndex = m_sentenceDatas.Count;
+
+        //Set up dialogue UI element at first start, then update at each ComputeSentences()
+        if (m_textType == TextType.Dialogue)
+        {
+            //m_talkerImage.gameObject.SetActive(true);
+            m_talkerNameText.gameObject.SetActive(true);
+            //m_talkerImage.sprite = m_sentenceDatas[m_sentenceIndex].NPCSprite;
+            m_talkerNameText.text = m_sentenceDatas[m_sentenceIndex].NPCName;
+
+        }
+
+        ShowDialogue();
+    }
+
+    private IEnumerator StartDialogueFromCustomSentenceBoundariesCoroutine(DialogueData dialogueData, int fromSentence, int toSentence)
+    {
+        m_haveFinishDialogue = false;
+        m_sentenceIndex = 0;
+        m_dialogueText.text = "";
+        m_textType = dialogueData.textType;
+        yield return new WaitForEndOfFrame();
+        m_sentenceDatas.Clear();
+        m_currentDialogueData = dialogueData;
+
+        for(int i = fromSentence; i <= toSentence; i++)
+        {
+            m_sentenceDatas.Add(dialogueData.sentenceDatas[i]);
         }
 
         //Set up dialogue UI element at first start, then update at each ComputeSentences()

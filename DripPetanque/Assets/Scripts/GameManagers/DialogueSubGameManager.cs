@@ -24,7 +24,9 @@ public class DialogueSubGameManager : SubGameManager
         m_sharedDatas.NextDialogueToStart = null;
 
         m_dialogueManager.OnDialogueEnded += OnDialogueEnded;
-        m_dialogueManager.StartDialogue(m_currentDialogue);
+
+        m_dialogueManager.StartDialogue(m_currentDialogue, (int)m_sharedDatas.CustomDialogueBoundariesToDisplay.X, (int)m_sharedDatas.CustomDialogueBoundariesToDisplay.Y);
+
     }
 
     private void OnDialogueEnded()

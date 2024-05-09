@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static AudioClipData;
 using static DialogueData;
 using static SentenceData;
@@ -12,6 +13,9 @@ public class DialogueDataEditor : CustomEditorBase
         serializedObject.Update();
 
         EditorGUI.BeginChangeCheck();
+
+        SerializedProperty nextStateAfterDialogue = serializedObject.FindProperty("NextGameState");
+        AddPopup(ref nextStateAfterDialogue, "Next State after Dialogue", typeof(GameState));
 
         SerializedProperty isCinematicDialogue = serializedObject.FindProperty("IsCinematicDialogue");
         ToggleField("Is Cinematic Dialogue ?", isCinematicDialogue);

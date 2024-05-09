@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,10 +7,15 @@ public class Quest : ScriptableObject
 {
     [SerializeField] private List<QuestObjective> m_questObjectives = new List<QuestObjective>();
     private bool m_isInitialized;
+    private bool m_isActive;
 
     public Dictionary<string, QuestObjective> QuestObjective = new Dictionary<string, QuestObjective>();
-
-
+    public static Action OnQuestTaken;
+    public bool IsActive
+    {
+        get => m_isActive;
+        private set => m_isActive = value;
+    }
 
     public void Initialize()
     {
@@ -25,5 +30,40 @@ public class Quest : ScriptableObject
         {
             QuestObjective.Add(m_questObjectives[i].GetQuestId(), m_questObjectives[i]);
         }
+    }
+
+    public void SetQuestAsActive()
+    {
+        m_isActive = true;
+
+        if (!m_isInitialized)
+        {
+            Initialize();
+        }
+
+        OnQuestTaken?.Invoke();
+    }
+
+    public bool IsComplete()
+    {
+        bool isComplete = true;
+
+        foreach(QuestObjective objective in QuestObjective.Values)
+        {
+            if(!objective.IsComplete())
+            {
+                isComplete = false;
+                break;
+            }
+        }
+
+        return isComplete;
+    }
+
+    public void ResetQuestData()
+    {
+        m_isActive = false;
+        m_isInitialized = false;
+        QuestObjective.Clear();
     }
 }

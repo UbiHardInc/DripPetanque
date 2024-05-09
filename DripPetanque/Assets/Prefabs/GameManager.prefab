@@ -402,6 +402,7 @@ MonoBehaviour:
   m_petanqueSubGameManager: {fileID: 3573455257882393289}
   m_startState: 4
   m_mainCamera: {fileID: 7564619528680852679}
+  m_questLog: {fileID: 11400000, guid: e3bea6dbbce0cba48997333c412157a7, type: 2}
   m_actionAsset: {fileID: -944628639613478452, guid: 462a9b2de1b64484aa61d3a207013de5,
     type: 3}
   m_commonActionMapName: Common
