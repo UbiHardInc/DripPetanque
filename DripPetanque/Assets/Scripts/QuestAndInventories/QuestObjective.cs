@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct QuestObjective
+public class QuestObjective
 {
     [SerializeField] private string m_questId;
 
