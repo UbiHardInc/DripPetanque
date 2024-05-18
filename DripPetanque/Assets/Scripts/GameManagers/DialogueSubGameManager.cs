@@ -24,8 +24,14 @@ public class DialogueSubGameManager : SubGameManager
         m_sharedDatas.NextDialogueToStart = null;
 
         m_dialogueManager.OnDialogueEnded += OnDialogueEnded;
-
-        m_dialogueManager.StartDialogue(m_currentDialogue, (int)m_sharedDatas.CustomDialogueBoundariesToDisplay.X, (int)m_sharedDatas.CustomDialogueBoundariesToDisplay.Y);
+        if((int)m_sharedDatas.CustomDialogueBoundariesToDisplay.X >= 0)
+        {
+            m_dialogueManager.StartDialogue(m_currentDialogue, (int)m_sharedDatas.CustomDialogueBoundariesToDisplay.X, (int)m_sharedDatas.CustomDialogueBoundariesToDisplay.Y);
+        }
+        else
+        {
+            m_dialogueManager.StartDialogue(m_currentDialogue);
+        }
 
     }
 

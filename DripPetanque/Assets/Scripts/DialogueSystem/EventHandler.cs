@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(DialogueEvents))]
 public class EventHandler : MonoBehaviour
 {
     [UnityEngine.Serialization.FormerlySerializedAs("_iD")]

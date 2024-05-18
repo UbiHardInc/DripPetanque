@@ -67,22 +67,19 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(DialogueData dialogueData, int fromSentence = -1, int toSentence = -1)
     {
-        if(fromSentence != -1)
+        if (toSentence != -1 && toSentence > fromSentence)
         {
-            if(toSentence != -1 && toSentence > fromSentence)
-            {
-                _ = StartCoroutine(StartDialogueFromCustomSentenceBoundariesCoroutine(dialogueData, fromSentence, toSentence));
-            }
-            else
-            {
-                _ = StartCoroutine(StartDialogueFromCustomSentenceBoundariesCoroutine(dialogueData, fromSentence, fromSentence + 1));
-            }
-
+            _ = StartCoroutine(StartDialogueFromCustomSentenceBoundariesCoroutine(dialogueData, fromSentence, toSentence));
         }
         else
         {
-            _ = StartCoroutine(StartDialogueCoroutine(dialogueData));
+            _ = StartCoroutine(StartDialogueFromCustomSentenceBoundariesCoroutine(dialogueData, fromSentence, fromSentence + 1));
         }
+    }
+
+    public void StartDialogue(DialogueData dialogueData)
+    {
+        _ = StartCoroutine(StartDialogueCoroutine(dialogueData));
     }
 
     private void ToggleDialogueInterfaceElements(bool state)
