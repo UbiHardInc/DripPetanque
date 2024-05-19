@@ -21,16 +21,19 @@ public class SceneTransitioner : MonoBehaviour
         Done,
     }
 
+    public event Action OnFadeInOver;
+
     public event Action<SceneReference> OnTransitionStart;
     public event Action<SceneReference> OnTransitionEnd;
 
     [SerializeField] private SceneReference m_sceneToTransitionTo;
+    [SerializeField] private bool m_fadeOut;
 
     [SerializeField] private ScreenCache m_cache;
 
     [SerializeField] private Timer m_fadeTimer;
 
-    [SerializeField] private TransitionAction m_transitionAction = TransitionAction.LoadScene;
+    [NonSerialized] private TransitionAction m_transitionAction = TransitionAction.LoadScene;
 
 
     [NonSerialized] private bool m_isTransitioning;
@@ -38,8 +41,23 @@ public class SceneTransitioner : MonoBehaviour
 
     [NonSerialized] private HierarchicalRecorder m_recorder;
 
-    [ContextMenu("Transition")]
-    public void StartTransition()
+    [ContextMenu("Load Transition")]
+    public void StartLoadTransition(bool fadeOut = true)
+    {
+        m_transitionAction = TransitionAction.LoadScene;
+        m_fadeOut = fadeOut;
+        StartTransition();
+    }
+
+    [ContextMenu("Unload Transition")]
+    public void StartUnloadTransition(bool fadeOut = false)
+    {
+        m_transitionAction = TransitionAction.UnloadScene;
+        m_fadeOut = fadeOut;
+        StartTransition();
+    }
+
+    private void StartTransition()
     {
         m_recorder = new HierarchicalRecorder();
         m_recorder.BeginEvent("SceneTransition");
@@ -86,6 +104,7 @@ public class SceneTransitioner : MonoBehaviour
             m_fadeTimer.Stop();
             m_cache.UpdateCache(1.0f);
             DoTransitionAction();
+            OnFadeInOver?.Invoke();
             return;
         }
         m_cache.UpdateCache(m_fadeTimer.Progress);
@@ -126,7 +145,14 @@ public class SceneTransitioner : MonoBehaviour
     private void OnSceneActionOver(AsyncOperation operation)
     {
         operation.completed -= OnSceneActionOver;
-        StartFadeOut();
+        if (m_fadeOut)
+        {
+            StartFadeOut();
+        }
+        else
+        {
+            EndTransition();
+        }
     }
 
     private void StartFadeOut()
@@ -144,10 +170,7 @@ public class SceneTransitioner : MonoBehaviour
     {
         if (m_fadeTimer.Update(deltaTime))
         {
-            m_fadeTimer.Stop();
             EndTransition();
-            m_cache.Show(false);
-            m_cache.UpdateCache(0.0f);
             return;
         }
         m_cache.UpdateCache(1.0f - m_fadeTimer.Progress);
@@ -155,6 +178,10 @@ public class SceneTransitioner : MonoBehaviour
 
     private void EndTransition()
     {
+        m_fadeTimer.Stop();
+        m_cache.Show(false);
+        m_cache.UpdateCache(0.0f);
+
         m_currentStep = TransitionStep.Done;
         m_isTransitioning = false;
         OnTransitionEnd?.Invoke(m_sceneToTransitionTo);

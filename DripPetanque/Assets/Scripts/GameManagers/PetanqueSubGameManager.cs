@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityUtility.Pools;
+using UnityUtility.SceneReference;
 using UnityUtility.Utils;
 
 public class PetanqueSubGameManager : SubGameManager
@@ -15,13 +16,15 @@ public class PetanqueSubGameManager : SubGameManager
 
     public override GameState CorrespondingState => GameState.Petanque;
 
-    [SerializeField] private PetanqueGameSettings m_gameSettings;
-    [SerializeField] private ShootManager m_playerShootManager;
-    [SerializeField] private ComputerShootManager m_computerShootManager;
-    [SerializeField] private PetanqueField m_field;
+    public event Action OnPetanqueSceneLoaded;
+    public event Action ReactivateMainScene;
 
-    [SerializeField] private Transform m_jack;
+    [SerializeField] private PetanqueSceneDatas m_petanqueSceneDatas;
 
+    [SerializeField] private SceneTransitioner m_petanqueSceneLoader;
+    [SerializeField] private ResultDisplay m_resultDisplay;
+
+    // Thrown balls
     [NonSerialized] private List<PooledObject<ControllableBall>> m_playerBalls = new List<PooledObject<ControllableBall>>();
     [NonSerialized] private List<PooledObject<Ball>> m_computerBalls = new List<PooledObject<Ball>>();
     [NonSerialized] private List<Ball> m_allBalls = new List<Ball>();
@@ -30,12 +33,39 @@ public class PetanqueSubGameManager : SubGameManager
     [NonSerialized] private int m_playerThrownBalls = 0;
     [NonSerialized] private int m_computerThrownBalls = 0;
 
+    // Petanque Scene's data
+    [NonSerialized] private PetanqueGameSettings m_gameSettings;
+    [NonSerialized] private ShootManager m_playerShootManager;
+    [NonSerialized] private ComputerShootManager m_computerShootManager;
+    [NonSerialized] private Transform m_jack;
+
     public override void BeginState(GameState previousState)
     {
         base.BeginState(previousState);
-        StartPetanque(m_field);
+        m_petanqueSceneDatas.OnDatasFilled += OnPetanqueDatasFilled;
+
+        m_petanqueSceneLoader.StartLoadTransition(fadeOut: false);
+        m_petanqueSceneLoader.OnTransitionEnd += OnSceneLoaded;
     }
 
+    private void OnSceneLoaded(SceneReference reference)
+    {
+        OnPetanqueSceneLoaded?.Invoke();
+    }
+
+    private void OnPetanqueDatasFilled()
+    {
+        m_petanqueSceneDatas.OnDatasFilled -= OnPetanqueDatasFilled;
+
+        m_gameSettings = m_petanqueSceneDatas.GameSettings;
+        m_playerShootManager = m_petanqueSceneDatas.PlayerShootManager;
+        m_computerShootManager = m_petanqueSceneDatas.ComputerShootManager;
+        m_jack = m_petanqueSceneDatas.Field.JackPosition;
+
+        StartPetanque(m_petanqueSceneDatas.Field);
+    }
+
+    #region Petanque GameLoop
     private void StartPetanque(PetanqueField field)
     {
         ResetPetanque();
@@ -46,7 +76,7 @@ public class PetanqueSubGameManager : SubGameManager
         NextTurn();
     }
 
-    private void EndPetanque()
+    private void DisplayResult()
     {
         m_playerShootManager.OnBallSpawned -= OnHumanBallSpawned;
         m_computerShootManager.OnBallSpawned -= OnComputerBallSpawned;
@@ -54,6 +84,21 @@ public class PetanqueSubGameManager : SubGameManager
         (List<Ball> closestBalls, PetanquePlayers ballsOwner) = GetClosestBallsFromJack();
 
         Debug.LogError($"{ballsOwner} won the game with {closestBalls.Count} points");
+
+        m_resultDisplay.DislayResult(EndPetanque);
+    }
+
+    private void EndPetanque()
+    {
+        m_petanqueSceneLoader.StartUnloadTransition(fadeOut: true);
+        m_petanqueSceneLoader.OnFadeInOver += OnFadeInOver;
+        m_requestedGameState = GameState.Exploration;
+    }
+
+    private void OnFadeInOver()
+    {
+        m_petanqueSceneLoader.OnFadeInOver -= OnFadeInOver;
+        m_
     }
 
     private void ResetPetanque()
@@ -95,7 +140,7 @@ public class PetanqueSubGameManager : SubGameManager
     {
         if (m_computerThrownBalls + m_playerThrownBalls == 2 * m_gameSettings.BallsPerGame)
         {
-            EndPetanque();
+            DisplayResult();
             return;
         }
         PetanquePlayers nextTurn = ComputeNextTurn();
@@ -175,4 +220,5 @@ public class PetanqueSubGameManager : SubGameManager
         float b1Dist = Vector3Utils.SqrDistance(b1.transform.position, m_jack.position);
         return b0Dist.CompareTo(b1Dist);
     }
+    #endregion
 }
