@@ -98,7 +98,7 @@ public class PetanqueSubGameManager : SubGameManager
     private void OnFadeInOver()
     {
         m_petanqueSceneLoader.OnFadeInOver -= OnFadeInOver;
-        m_
+        ReactivateMainScene?.Invoke();
     }
 
     private void ResetPetanque()
