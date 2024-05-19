@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasImageScrennCache : ScreenCache
+public class CanvasImageScreenCache : ScreenCache
 {
     [SerializeField] private Color m_cacheColor;
-    [SerializeField] private RawImage m_image;
+    [SerializeField] private Image m_image;
 
     public override void Show(bool show)
     {
