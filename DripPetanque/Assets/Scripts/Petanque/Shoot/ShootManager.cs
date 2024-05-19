@@ -8,19 +8,16 @@ public class ShootManager : BaseShootManager<ShootStep, ControllableBall>
 
     [SerializeField] private Transform m_arrow;
     [SerializeField] private Transform m_arrowPivot;
-    [SerializeField] private Camera m_camera;
     [SerializeField] private InputActionReference m_startShootInput;
-
-    [SerializeField] private CinemachineBrain m_cinemachineCamera;
 
 
     protected override void Init()
     {
         base.Init();
 
-        m_leftRightStep.Init(m_arrowPivot, m_camera);
-        m_forceStep.Init(m_arrow, m_camera);
-        m_upDownStep.Init(m_arrowPivot, m_camera);
+        m_leftRightStep.Init(m_arrowPivot);
+        m_forceStep.Init(m_arrow);
+        m_upDownStep.Init(m_arrowPivot);
 
         //m_startShootInput.action.performed += StartShoot;
     }

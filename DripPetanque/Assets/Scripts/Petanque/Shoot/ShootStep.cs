@@ -27,20 +27,17 @@ public class ShootStep : BaseShootStep
 
     [NonSerialized] private StepState m_currentState;
     [NonSerialized] private Transform m_arrow;
-    [NonSerialized] private Camera m_camera;
 
     [NonSerialized] private Vector3 m_startScaleOrRotation;
 
-    [NonSerialized] private Vector3 m_camStartPosition;
-    [NonSerialized] private Quaternion m_camStartRotation;
     [NonSerialized] private float m_camTransitionTimer;
 
-    public void Init(Transform arrow, Camera camera)
+    public void Init(Transform arrow)
     {
         m_currentState = StepState.NotStarted;
         m_arrow = arrow;
-        m_camera = camera;
         VirtualCamerasManager.RegisterCamera(m_cameraPosition);
+        m_gauge.gameObject.SetActive(false);
     }
 
     public override void Start()
@@ -48,8 +45,6 @@ public class ShootStep : BaseShootStep
         m_currentState = StepState.MovingCamera;
         VirtualCamerasManager.SwitchToCamera(m_cameraPosition, m_camTransitionTime);
         m_startScaleOrRotation = m_data.ScaleOrRotation == ScaleOrRotationEnum.Scale ? m_arrow.localScale : m_arrow.localRotation.eulerAngles;
-        m_camStartPosition = m_camera.transform.position;
-        m_camStartRotation = m_camera.transform.rotation;
         m_camTransitionTimer = 0.0f;
         m_stepOutputValue = 0.0f;
     }
