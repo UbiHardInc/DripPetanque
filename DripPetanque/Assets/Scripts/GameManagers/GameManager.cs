@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     public GameManagersSharedDatas SharedDatas => m_sharedDatas;
 
+    public event Action<GameState> OnGameStateEntered;
+    public event Action<GameState> OnGameStateExited;
+
     [Title(nameof(SubGameManager) + "s")]
     [SerializeField] private CinematicsSubGameManager m_cinematicsSubGameManager;
     [SerializeField] private DialogueSubGameManager m_dialogueSubGameManager;
@@ -73,6 +76,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
         m_currentSubGameManager = m_subGameManagers[m_startState];
         m_currentSubGameManager.BeginState(GameState.None);
+        OnGameStateEntered?.Invoke(m_startState);
     }
 
     private void Update()
@@ -82,10 +86,18 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         {
             if (nextState != m_currentSubGameManager.CorrespondingState)
             {
-                m_currentSubGameManager.EndState(nextState);
-                m_currentSubGameManager = m_subGameManagers[nextState];
-                m_currentSubGameManager.BeginState(nextState);
+                StartState(nextState);
             }
         }
+    }
+
+    private void StartState(GameState nextState)
+    {
+        m_currentSubGameManager.EndState(nextState);
+        OnGameStateExited?.Invoke(m_currentSubGameManager.CorrespondingState);
+
+        m_currentSubGameManager = m_subGameManagers[nextState];
+        m_currentSubGameManager.BeginState(nextState);
+        OnGameStateEntered?.Invoke(nextState);
     }
 }
