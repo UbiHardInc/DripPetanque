@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityUtility.CustomAttributes;
+using UnityUtility.SceneReference;
 using UnityUtility.Singletons;
 
 public class GameManager : MonoBehaviourSingleton<GameManager>
@@ -24,9 +26,11 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     [SerializeField] private ExplorationSubGameManager m_explorationSubGameManager;
     [SerializeField] private PetanqueSubGameManager m_petanqueSubGameManager;
 
-    [Title("Misc")]
+    [Title("Start")]
+    [SerializeField] private SceneReference m_startScene;
     [SerializeField] private GameState m_startState;
 
+    [Title("Misc")]
     [SerializeField] private CinemachineBrain m_mainCamera;
 
     [Title("Inputs")]
@@ -38,8 +42,12 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     [NonSerialized] private Dictionary<GameState, SubGameManager> m_subGameManagers;
 
+    [NonSerialized] private bool m_initialized;
+
     public override void Initialize()
     {
+        m_initialized = false;
+
         base.Initialize();
 
         DontDestroyOnLoad(gameObject);
@@ -77,10 +85,24 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         m_currentSubGameManager = m_subGameManagers[m_startState];
         m_currentSubGameManager.BeginState(GameState.None);
         OnGameStateEntered?.Invoke(m_startState);
+
+        AsyncOperation op = SceneManager.LoadSceneAsync(m_startScene, LoadSceneMode.Single);
+        op.completed += OnStartSceneLoaded;
+    }
+
+    private void OnStartSceneLoaded(AsyncOperation operation)
+    {
+        operation.completed -= OnStartSceneLoaded;
+        m_initialized = true;
     }
 
     private void Update()
     {
+        if (!m_initialized)
+        {
+            return;
+        }
+
         m_currentSubGameManager.UpdateState(Time.deltaTime);
         if (m_currentSubGameManager.RequestStateChange(out GameState nextState))
         {
@@ -95,6 +117,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     {
         m_currentSubGameManager.EndState(nextState);
         OnGameStateExited?.Invoke(m_currentSubGameManager.CorrespondingState);
+
+        Debug.LogWarning($"[{nameof(GameManager)}] Exiting GameState {m_currentSubGameManager.CorrespondingState} and entering GameState {nextState}");
 
         m_currentSubGameManager = m_subGameManagers[nextState];
         m_currentSubGameManager.BeginState(nextState);

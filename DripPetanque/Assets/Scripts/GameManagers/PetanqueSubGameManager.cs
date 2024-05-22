@@ -88,8 +88,13 @@ public class PetanqueSubGameManager : SubGameManager
         (List<Ball> closestBalls, PetanquePlayers ballsOwner) = GetClosestBallsFromJack();
 
         Debug.LogError($"{ballsOwner} won the game with {closestBalls.Count} points");
+        ResultDatas result = new ResultDatas()
+        {
+            Points = closestBalls.Count,
+            Winner = ballsOwner,
+        };
 
-        m_resultDisplay.DislayResult(EndPetanque);
+        m_resultDisplay.DislayResult(result, EndPetanque);
     }
 
     private void EndPetanque()
