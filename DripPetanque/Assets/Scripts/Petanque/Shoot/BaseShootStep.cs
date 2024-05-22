@@ -14,4 +14,9 @@ public abstract class BaseShootStep
     public abstract void Update(float deltaTime);
     public abstract bool IsFinished();
 
+    public virtual void Dispose()
+    {
+
+    }
+
 }

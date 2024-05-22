@@ -53,6 +53,7 @@ public class PetanqueSubGameManager : SubGameManager
 
     private void OnSceneLoaded(SceneReference reference)
     {
+        m_petanqueSceneLoader.OnTransitionEnd -= OnSceneLoaded;
         OnPetanqueSceneLoaded?.Invoke();
     }
 
@@ -96,6 +97,7 @@ public class PetanqueSubGameManager : SubGameManager
         m_petanqueSceneLoader.StartUnloadTransition(fadeOut: true);
         m_petanqueSceneLoader.OnFadeInOver += OnFadeInOver;
         m_requestedGameState = GameState.Exploration;
+        ResetPetanque();
     }
 
     private void OnFadeInOver()

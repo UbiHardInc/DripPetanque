@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Pools;
+using UnityUtility.Utils;
 
 public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     where TShootStep : BaseShootStep
@@ -132,6 +133,12 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     private void OnBallStopped(Ball ball)
     {
         ball.OnBallStopped -= OnBallStopped;
+        Finish();
+    }
+
+    private void Finish()
+    {
         m_currentState = ShootState.Finished;
+        m_allSteps.ForEach(step => step.Dispose());
     }
 }

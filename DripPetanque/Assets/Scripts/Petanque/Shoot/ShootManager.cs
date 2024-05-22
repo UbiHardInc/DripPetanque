@@ -15,6 +15,8 @@ public class ShootManager : BaseShootManager<ShootStep, ControllableBall>
     {
         base.Init();
 
+        m_arrow.gameObject.SetActive(false);
+
         m_leftRightStep.Init(m_arrowPivot);
         m_forceStep.Init(m_arrow);
         m_upDownStep.Init(m_arrowPivot);

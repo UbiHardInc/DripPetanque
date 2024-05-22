@@ -88,6 +88,13 @@ public class ShootStep : BaseShootStep
         }
     }
 
+    public override void Dispose()
+    {
+        base.Dispose();
+
+        VirtualCamerasManager.UnRegisterCamera(m_cameraPosition);
+    }
+
     private void MoveCamera(float deltaTime)
     {
         if (VirtualCamerasManager.IsBrainBlending())
