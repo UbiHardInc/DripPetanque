@@ -399,7 +399,7 @@ MonoBehaviour:
   m_dialogueSubGameManager: {fileID: 4359634221030858744}
   m_explorationSubGameManager: {fileID: 8531854692067118445}
   m_petanqueSubGameManager: {fileID: 3573455257882393289}
-  m_startState: 2
+  m_startState: 4
   m_mainCamera: {fileID: 7564619528680852679}
   m_actionAsset: {fileID: -944628639613478452, guid: 462a9b2de1b64484aa61d3a207013de5,
     type: 3}

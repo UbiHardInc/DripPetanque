@@ -19,6 +19,9 @@ public class PetanqueSubGameManager : SubGameManager
     public event Action OnPetanqueSceneLoaded;
     public event Action ReactivateMainScene;
 
+    public event Action<bool> OnBallLauched;
+    public event Action<bool> OnNextTurn;
+
     [SerializeField] private PetanqueSceneDatas m_petanqueSceneDatas;
 
     [SerializeField] private SceneTransitioner m_petanqueSceneLoader;
@@ -120,6 +123,8 @@ public class PetanqueSubGameManager : SubGameManager
         m_playerThrownBalls++;
         spawnedBall.Object.OnBallStopped += OnBallStopped;
         m_allBalls.Add(spawnedBall.Object);
+
+        OnBallLauched?.Invoke(false);
     }
 
     private void OnComputerBallSpawned(PooledObject<Ball> spawnedBall)
@@ -128,6 +133,8 @@ public class PetanqueSubGameManager : SubGameManager
         m_computerThrownBalls++;
         spawnedBall.Object.OnBallStopped += OnBallStopped;
         m_allBalls.Add(spawnedBall.Object);
+
+        OnBallLauched?.Invoke(false);
     }
 
     private void OnBallStopped(Ball ball)
@@ -145,6 +152,8 @@ public class PetanqueSubGameManager : SubGameManager
         }
         PetanquePlayers nextTurn = ComputeNextTurn();
         m_shootTurn = nextTurn == PetanquePlayers.None ? m_shootTurn : nextTurn;
+
+        OnNextTurn?.Invoke(true);
 
         switch (m_shootTurn)
         {
