@@ -73,10 +73,16 @@ public class PetanqueSubGameManager : SubGameManager
     private void StartPetanque(PetanqueField field)
     {
         ResetPetanque();
+
+        m_playerShootManager.Init();
+        m_computerShootManager.Init();
+
         m_playerShootManager.OnBallSpawned += OnHumanBallSpawned;
         m_computerShootManager.OnBallSpawned += OnComputerBallSpawned;
+
         m_jack.position = field.JackPosition.position;
         m_shootTurn = PetanquePlayers.Human;
+
         NextTurn();
     }
 
@@ -88,6 +94,7 @@ public class PetanqueSubGameManager : SubGameManager
         (List<Ball> closestBalls, PetanquePlayers ballsOwner) = GetClosestBallsFromJack();
 
         Debug.LogError($"{ballsOwner} won the game with {closestBalls.Count} points");
+
         ResultDatas result = new ResultDatas()
         {
             Points = closestBalls.Count,
@@ -100,15 +107,21 @@ public class PetanqueSubGameManager : SubGameManager
     private void EndPetanque()
     {
         m_petanqueSceneLoader.StartUnloadTransition(fadeOut: true);
+
+        m_playerShootManager.Dispose();
+        m_computerShootManager.Dispose();
+
         m_petanqueSceneLoader.OnFadeInOver += OnFadeInOver;
-        m_requestedGameState = GameState.Exploration;
-        ResetPetanque();
     }
 
     private void OnFadeInOver()
     {
+        ResetPetanque();
+
         m_petanqueSceneLoader.OnFadeInOver -= OnFadeInOver;
         ReactivateMainScene?.Invoke();
+
+        m_requestedGameState = GameState.Exploration;
     }
 
     private void ResetPetanque()

@@ -1,4 +1,3 @@
-using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +10,7 @@ public class ShootManager : BaseShootManager<ShootStep, ControllableBall>
     [SerializeField] private InputActionReference m_startShootInput;
 
 
-    protected override void Init()
+    public override void Init()
     {
         base.Init();
 

@@ -97,7 +97,7 @@ public class ShootStep : BaseShootStep
 
     private void MoveCamera(float deltaTime)
     {
-        if (VirtualCamerasManager.IsBrainBlending())
+        if (VirtualCamerasManager.IsBrainMoving())
         {            
             //float lerpFactor = Mathf.SmoothStep(0, 1, m_camTransitionTimer / m_camTransitionTime);
             //m_camera.transform.position = Vector3.Lerp(m_camStartPosition, m_cameraPosition.transform.position, lerpFactor);
@@ -147,5 +147,10 @@ public class ShootStep : BaseShootStep
         }
 
         m_stepOutputValue = gaugeValue;
+    }
+
+    public override bool HasTempValue()
+    {
+        return m_currentState >= StepState.Gauge;
     }
 }
