@@ -1513,16 +1513,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1660057539 &9223372036854775807
-SceneRoots:
-  m_ObjectHideFlags: 0
-  m_Roots:
-  - {fileID: 330585546}
-  - {fileID: 410087041}
-  - {fileID: 832575519}
-  - {fileID: 1893525591}
-  - {fileID: 1608161965}
-  - {fileID: 91628213}
 --- !u!1001 &1956161492
 PrefabInstance:
   m_ObjectHideFlags: 0
