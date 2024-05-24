@@ -203,7 +203,7 @@ public class DialogueDataEditor : CustomEditorBase
         //string eventId = sentenceData.eventIDToLaunch;
 
         SerializedProperty eventIDToLaunch = sentenceData.FindPropertyRelative("eventIDToLaunch");
-        SerializedProperty stringID = eventIDToLaunch.FindPropertyRelative("_iD");
+        SerializedProperty stringID = eventIDToLaunch.FindPropertyRelative("m_iD");
         TextField("Event ID", stringID);
         //sentenceData.eventIDToLaunch = eventId;
 
