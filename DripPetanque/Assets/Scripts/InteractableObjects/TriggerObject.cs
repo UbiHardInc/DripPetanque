@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// A simple component to propagate the Unity trigger events
+/// </summary>
 [RequireComponent(typeof(Collider))]
 public class TriggerObject : MonoBehaviour
 {
