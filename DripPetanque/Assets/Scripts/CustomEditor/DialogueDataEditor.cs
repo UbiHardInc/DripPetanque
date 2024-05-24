@@ -12,6 +12,10 @@ public class DialogueDataEditor : CustomEditorBase
         serializedObject.Update();
 
         EditorGUI.BeginChangeCheck();
+
+        SerializedProperty isCinematicDialogue = serializedObject.FindProperty("IsCinematicDialogue");
+        ToggleField("Is Cinematic Dialogue ?", isCinematicDialogue);
+
         ShowTransitionStartTime();
         ShowTransitionEndTime();
         ShowSentenceDisplayStyle();
@@ -203,7 +207,7 @@ public class DialogueDataEditor : CustomEditorBase
         //string eventId = sentenceData.eventIDToLaunch;
 
         SerializedProperty eventIDToLaunch = sentenceData.FindPropertyRelative("eventIDToLaunch");
-        SerializedProperty stringID = eventIDToLaunch.FindPropertyRelative("_iD");
+        SerializedProperty stringID = eventIDToLaunch.FindPropertyRelative("m_iD");
         TextField("Event ID", stringID);
         //sentenceData.eventIDToLaunch = eventId;
 

@@ -461,7 +461,7 @@
             "id": "b3e2e91c-412e-451b-9b93-6f7a32b7b466",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "NextDialogue",
                     "type": "Button",
                     "id": "b976264c-e9c6-4775-9b1b-0b8bc3faf268",
                     "expectedControlType": "Button",
@@ -474,11 +474,22 @@
                 {
                     "name": "",
                     "id": "aa46e596-7d9d-449c-bc79-e71cdbaf5574",
-                    "path": "",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "New action",
+                    "groups": "Xbox",
+                    "action": "NextDialogue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "958867d6-8647-425a-b67e-85fa5a5c0f63",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard",
+                    "action": "NextDialogue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
