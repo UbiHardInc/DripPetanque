@@ -216,7 +216,7 @@ public class G : F
 
 Les accolades doivent être placées sur des nouvelles lignes.
 
-Les mots clés, tels que else, catch ou finally doivent également être placés sur des nouvelles lignes.
+Les mots clés, tels que `else`, `catch` ou `finally` doivent également être placés sur des nouvelles lignes.
 
 Les membres des initialisateurs d'objet et des clauses d'expression de requête doivent être sur une nouvelle ligne.
 
@@ -348,7 +348,7 @@ public int Counter = 0;
 
 #### b - Privés et protégés
 
-Le nom des membres privés et protégés se compose du préfixe m_ et du nom du membre.
+Le nom des membres privés et protégés se compose du préfixe `m_` et du nom du membre.
 
 ```CSHARP
 protected string m_name = string.Empty;
@@ -365,7 +365,7 @@ private const string RES_PATH = "C:/Resources";
 
 #### d - Statiques
 
-Le nom des membres statiques se compose du préfixe s_ et du nom du membre.
+Le nom des membres statiques se compose du préfixe `s_` et du nom du membre.
 
 ```CSHARP
 private static List<int> s_ignoredValues = new List<int>() 
@@ -471,7 +471,7 @@ public void IncrementScore(int incrementBy)
 
 Si votre code appelle à répétition des fonctions qui retournent un résultat puis les rejette, c'est peut-être une occasion de l'optimiser en cachant votre variable.
 
-Attention à l'utilisation de `GameObject.transform`, il peut être utile de le mettre en cache ! (cf. [XIV](#viii---limiter-les-appels-aux-fonctions-lourdes-dunity))
+Attention à l'utilisation de `GameObject.transform`, il peut être utile de le mettre en cache ! (cf. [VIII](#viii---limiter-les-appels-aux-fonctions-lourdes-dunity))
 
 Exemple :
 
@@ -572,8 +572,8 @@ Pensez bien à vous désabonner de tous les events. Si vous ne savez pas quand v
 
 #### b - Event Unity ou `delegate` ?
 
-Évitez d'utiliser les events d'Unity et surtout la possibilité de les serialiser et d'indiquer depuis l'inspecteur quelle(s) fonctions doivent être appellées à leur invocation.\
-Non seulement, ils sont assez lourds mais rendent surtout la recherche de bugs beaucoup plus compliquée car on ne peut pas savoir en regardant seulement le code par qui la fonction est appelée.\
+Évitez d'utiliser les events d'Unity et surtout la possibilité de les serialiser et d'indiquer depuis l'inspecteur quelle(s) fonction(s) doivent être appellées à leur invocation.\
+Non seulement, ils sont assez lourds mais rendent surtout la recherche de bugs beaucoup plus compliquée car on ne peut pas savoir en regardant seulement le code par qui la fonction est appelée.
 
 Favorisez l'utilisation des `delegate` (comme `Action`, `Func` ou autres `delegate` customs) qui sont plus légers et dont peut suivre tous les appels depuis le code.
 
@@ -590,7 +590,7 @@ Ce sont des commentaires avec `///`, sur plusieurs lignes et contenant des balis
 
 Un autre avantage est que VisualStudio génère automatiquement un summary vide avec les catégories à remplir si vous mettez 3 slashs (`///`) juste avant l'élément que vous voulez commenter.
 
-![Exemple](Images\SummaryExample.gif)
+![Exemple](Images/SummaryExample.gif)
 
 Pour une documentation plus complète sur ces balises XML et leur role, [un lien vers la documentation Microsoft](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags).
 
@@ -635,7 +635,7 @@ public static string[] SplitBySize(string st, int wantedSize)
 
 donne le résultat suivant quand on passe le curseur au dessus de la méthode :
 
-![MethodSummaryExample](Images\MethodSummaryExample.png)
+![MethodSummaryExample](Images/MethodSummaryExample.png)
 
 ### 4 - Variables et accesseurs
 
