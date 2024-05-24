@@ -98,14 +98,14 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DissolveAmount: 0.06
+    - _DissolveAmount: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Height: 4
+    - _Height: 20
     - _MaskGradiant: 3
     - _Metallic: 0
     - _NoiseScale: 67.8
@@ -121,7 +121,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _TextureDissolveAmount: 0.11
+    - _TextureDissolveAmount: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
