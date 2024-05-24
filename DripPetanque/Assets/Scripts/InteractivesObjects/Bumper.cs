@@ -1,18 +1,15 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bumper : MonoBehaviour
 {
-    private BumpManager.BumpersStrenght bumperForce;
+    public BumpManager.BumpersStrength bumperForce;
     private GameObject m_ball;
 
     public Color bumpColor;
     public ForceMode forceMode = ForceMode.VelocityChange;
 
-    void Start ()
+    private void Start ()
     {
         m_ball = GameObject.FindGameObjectWithTag ("Player");
     }
@@ -22,14 +19,14 @@ public class Bumper : MonoBehaviour
         if (collision.gameObject == m_ball)
         {
             Rigidbody ballRigidBody = m_ball.GetComponent<Rigidbody>();
-            ballRigidBody.AddExplosionForce(BumpManager.Instance.GetBumperStrenght(bumperForce), collision.GetContact(0).point, 5,0,forceMode);
-            StartCoroutine(changeOnBump());
+            ballRigidBody.AddExplosionForce(BumpManager.Instance.GetBumperStrength(bumperForce), collision.GetContact(0).point, 5,0,forceMode);
+            _ = StartCoroutine(ChangeOnBump());
             SpriteRandom.Instance.FlashSprite();
             Debug.Log("Bumped!");
         }
     }
 
-    private IEnumerator changeOnBump()
+    private IEnumerator ChangeOnBump()
     {
         MeshRenderer meshCollider = gameObject.GetComponent<MeshRenderer>();
         MaterialPropertyBlock matPro = new MaterialPropertyBlock();
