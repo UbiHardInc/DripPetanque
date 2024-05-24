@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-[CreateAssetMenu(fileName = "Dialogue", menuName = "SO/Dialogue")]
+[CreateAssetMenu(fileName = nameof(DialogueData), menuName = "Scriptables/Dialogues/" + nameof(DialogueData))]
 public class DialogueData : ScriptableObject
 {
     public enum SentenceDisplayStyle { Direct, Type } // sentences display style enum

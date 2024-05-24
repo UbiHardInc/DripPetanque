@@ -24,7 +24,7 @@ public class UIVirtualTouchZone : MonoBehaviour, IPointerDownHandler, IDragHandl
     [Header("Output")]
     public Event touchZoneOutputEvent;
 
-    void Start()
+    private void Start()
     {
         SetupHandle();
     }
@@ -40,7 +40,7 @@ public class UIVirtualTouchZone : MonoBehaviour, IPointerDownHandler, IDragHandl
     public void OnPointerDown(PointerEventData eventData)
     {
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(containerRect, eventData.position, eventData.pressEventCamera, out pointerDownPosition);
+        _ = RectTransformUtility.ScreenPointToLocalPointInRectangle(containerRect, eventData.position, eventData.pressEventCamera, out pointerDownPosition);
 
         if(handleRect)
         {
@@ -52,7 +52,7 @@ public class UIVirtualTouchZone : MonoBehaviour, IPointerDownHandler, IDragHandl
     public void OnDrag(PointerEventData eventData)
     {
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(containerRect, eventData.position, eventData.pressEventCamera, out currentPointerPosition);
+        _ = RectTransformUtility.ScreenPointToLocalPointInRectangle(containerRect, eventData.position, eventData.pressEventCamera, out currentPointerPosition);
         
         Vector2 positionDelta = GetDeltaBetweenPositions(pointerDownPosition, currentPointerPosition);
 
@@ -77,32 +77,32 @@ public class UIVirtualTouchZone : MonoBehaviour, IPointerDownHandler, IDragHandl
         }
     }
 
-    void OutputPointerEventValue(Vector2 pointerPosition)
+    private void OutputPointerEventValue(Vector2 pointerPosition)
     {
         touchZoneOutputEvent.Invoke(pointerPosition);
     }
 
-    void UpdateHandleRectPosition(Vector2 newPosition)
+    private void UpdateHandleRectPosition(Vector2 newPosition)
     {
         handleRect.anchoredPosition = newPosition;
     }
 
-    void SetObjectActiveState(GameObject targetObject, bool newState)
+    private void SetObjectActiveState(GameObject targetObject, bool newState)
     {
         targetObject.SetActive(newState);
     }
 
-    Vector2 GetDeltaBetweenPositions(Vector2 firstPosition, Vector2 secondPosition)
+    private Vector2 GetDeltaBetweenPositions(Vector2 firstPosition, Vector2 secondPosition)
     {
         return secondPosition - firstPosition;
     }
 
-    Vector2 ClampValuesToMagnitude(Vector2 position)
+    private Vector2 ClampValuesToMagnitude(Vector2 position)
     {
         return Vector2.ClampMagnitude(position, 1);
     }
 
-    Vector2 ApplyInversionFilter(Vector2 position)
+    private Vector2 ApplyInversionFilter(Vector2 position)
     {
         if(invertXOutputValue)
         {
@@ -117,7 +117,7 @@ public class UIVirtualTouchZone : MonoBehaviour, IPointerDownHandler, IDragHandl
         return position;
     }
 
-    float InvertValue(float value)
+    private float InvertValue(float value)
     {
         return -value;
     }
