@@ -17,4 +17,9 @@ public class ComputerShootStep : BaseShootStep
     {
         return true;
     }
+
+    public override bool HasTempValue()
+    {
+        return false;
+    }
 }

@@ -86,4 +86,4 @@ MonoBehaviour:
   nbSentences: 3
   showDialogueElements: 1
   textType: 1
-  NextGameState: 4
+  NextGameState: 2
