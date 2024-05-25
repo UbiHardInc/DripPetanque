@@ -35,7 +35,7 @@ MonoBehaviour:
     showSfxElements: 0
     withSFX: 1
     typingIsComplete: 1
-    withCustomEvent: 0
+    withCustomEvent: 1
     startOfEvent: 0
     eventIDToLaunch:
       m_iD: 

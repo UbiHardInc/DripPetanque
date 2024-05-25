@@ -12,6 +12,10 @@ public class DialogueDataEditor : CustomEditorBase
         serializedObject.Update();
 
         EditorGUI.BeginChangeCheck();
+
+        SerializedProperty isCinematicDialogue = serializedObject.FindProperty("IsCinematicDialogue");
+        ToggleField("Is Cinematic Dialogue ?", isCinematicDialogue);
+
         ShowTransitionStartTime();
         ShowTransitionEndTime();
         ShowSentenceDisplayStyle();

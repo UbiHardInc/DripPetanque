@@ -189,6 +189,26 @@ public class DialogueManager : MonoBehaviour
         }
 
     }
+    public void DisplayNextDialogueCinematic()
+    {
+        if (m_currentDialogueData.sentenceDatas[m_sentenceIndex].typingIsComplete)
+        {
+            m_sentenceIndex++;
+            //feedbackSFXAudioSource.PlayOneShot(m_nextDialogueButtonClickSound);
+            m_isClickedOnce = false;
+        }
+
+        if (m_sentenceIndex < m_sentenceDatas.Count)
+        {
+            ComputeSentences();
+        }
+        else
+        {
+            //Callback();
+            EndDialogue();
+        }
+
+    }
 
     private IEnumerator ClickCooldownCoroutine()
     {
@@ -259,6 +279,7 @@ public class DialogueManager : MonoBehaviour
     private void DialogueZoomIn(float transitionDuration)
     {
         m_dialogueCanvas.SetActive(true);
+        m_nextButtonCanvasGroup.gameObject.SetActive(!m_currentDialogueData.IsCinematicDialogue);
         m_openDialogueSequence = DOTween.Sequence();
 
         RectTransform dialogueMainContainerRectTransform = m_dialogueMainContainerCanvasGroup.GetComponent<RectTransform>();
