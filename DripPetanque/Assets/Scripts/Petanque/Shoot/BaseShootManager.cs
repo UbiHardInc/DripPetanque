@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Pools;
@@ -36,7 +37,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     [SerializeField] private BallTrajectoryController m_trajectoryController;
 
     [SerializeField] private CallbackRecieverComponentPool<TBall> m_ballsPool;
-
+    
     [NonSerialized] protected ShootState m_currentState;
 
     [NonSerialized] protected TShootStep[] m_allSteps;

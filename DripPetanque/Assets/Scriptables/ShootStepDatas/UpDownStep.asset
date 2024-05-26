@@ -17,3 +17,4 @@ MonoBehaviour:
   m_axis: 1
   m_scaleOrRotation: 1
   m_range: {x: -50, y: -10}
+  m_infoPanelMessage: Press A to lock an angle.

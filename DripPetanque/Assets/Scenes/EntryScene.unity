@@ -252,6 +252,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &360320245 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2085230052733458860, guid: 74179b3f0414be94995874b0655f40ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 3864234717316683070}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7a824020df1a92479be2ded5259eadb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,22 +724,11 @@ PrefabInstance:
       propertyPath: m_resultDisplay
       value: 
       objectReference: {fileID: 799375716}
-    - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
+    - target: {fileID: 3573455257882393289, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
-      propertyPath: m_startState
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
-        type: 3}
-      propertyPath: m_startScene.m_scenePath
-      value: Assets/Scenes/Proto_Level_Design.unity
-      objectReference: {fileID: 0}
-    - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
-        type: 3}
-      propertyPath: m_startScene.m_sceneAsset
+      propertyPath: m_turnChangeDisplay
       value: 
-      objectReference: {fileID: 102900000, guid: 91524a1cb2566fe448c30fd09f144d7f,
-        type: 3}
+      objectReference: {fileID: 360320245}
     - target: {fileID: 7162645624520431926, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_cache
