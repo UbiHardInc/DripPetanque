@@ -1,11 +1,12 @@
 using System;
+using UnityUtility.Utils;
 
 [Serializable]
 public class ComputerShootStep : BaseShootStep
 {
     public override void Start()
     {
-        m_stepOutputValue = (m_data.Range.x + m_data.Range.y) / 2.0f;
+        m_stepOutputValue = UnityEngine.Random.value.RemapFrom01(m_data.Range);
     }
 
     public override void Update(float deltaTime)
@@ -15,5 +16,10 @@ public class ComputerShootStep : BaseShootStep
     public override bool IsFinished()
     {
         return true;
+    }
+
+    public override bool HasTempValue()
+    {
+        return false;
     }
 }
