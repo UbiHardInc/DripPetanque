@@ -79,7 +79,7 @@ public class InteractableObjectDetector : MonoBehaviour
         GameObject otherGo = other.gameObject;
         if (otherGo.TryGetComponent(out InteractableObject interactable))
         {
-            _ = m_interactableObjectsInRange.Remove(interactable);
+            _ = m_interactableObjectsInRange.RemoveAll(obj => obj == interactable);
         }
         else
         {

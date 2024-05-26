@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4040857010285356945}
   - component: {fileID: 5392843223402118641}
   m_Layer: 0
-  m_Name: BallPrefab
+  m_Name: ControllableBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,10 +130,10 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
+  m_IsKinematic: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!114 &5392843223402118641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,9 +147,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_groundLayer: 6
-  m_speedToStop: 0.01
+  m_speedToStop: 0.1
   m_timerToStop:
     m_duration: 2
+    m_repeat: 0
   m_ballDirectionInput: {fileID: 4547984145589096452, guid: 462a9b2de1b64484aa61d3a207013de5,
     type: 3}
   m_jumpInput: {fileID: -1517193691251892182, guid: 462a9b2de1b64484aa61d3a207013de5,
