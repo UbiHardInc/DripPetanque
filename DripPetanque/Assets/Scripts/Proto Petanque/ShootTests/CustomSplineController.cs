@@ -2,6 +2,7 @@ using System;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
+using UnityUtility.CustomAttributes;
 using UnityUtility.Utils;
 
 public class CustomSplineController : MonoBehaviour
@@ -27,6 +28,8 @@ public class CustomSplineController : MonoBehaviour
 
     // Gizmos
     [NonSerialized] private Vector3 m_attractionPointPosition = Vector3.zero;
+    [NonSerialized] private Vector3 m_tangentStart = Vector3.zero;
+    [NonSerialized] private Vector3 m_tangentEnd = Vector3.zero;
 
     [ContextMenu(nameof(Start))]
     private void Start()
@@ -69,10 +72,12 @@ public class CustomSplineController : MonoBehaviour
         m_attractionPointPosition = attractionPoint;
 
         m_firstKnot.Position = startPosition;
-        m_firstKnot.TangentOut = (attractionPoint - startPosition) * m_attractionFactor;
+        m_tangentStart = (attractionPoint - startPosition) * m_attractionFactor;
+        m_firstKnot.TangentOut = m_tangentStart;
 
         m_lastKnot.Position = endPosition;
-        m_lastKnot.TangentOut = (attractionPoint - endPosition) * -m_attractionFactor;
+        m_tangentEnd = (attractionPoint - endPosition) * -m_attractionFactor;
+        m_lastKnot.TangentOut = m_tangentEnd;
 
 
         m_spline.SetKnot(0, m_firstKnot);
@@ -93,12 +98,27 @@ public class CustomSplineController : MonoBehaviour
 
 #if UNITY_EDITOR
 
+    [Title("Debug")]
+    [SerializeField] private float m_yAngle;
+    [SerializeField] private float m_xAngle;
+    [SerializeField] private float m_force;
+
+    [ContextMenu(nameof(UpdateSplineParameters))]
+    private void UpdateSplineParameters()
+    {
+        SetSplineParameters(m_yAngle, m_xAngle, m_force);
+    }
+
     private void OnDrawGizmos()
     {
-        if (Application.isPlaying)
+        if (!Application.isPlaying)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(m_attractionPointPosition, 0.3f);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(m_firstKnot.Position, m_firstKnot.Position.ToVector3() + m_tangentStart);
+            Gizmos.DrawLine(m_lastKnot.Position, m_lastKnot.Position.ToVector3() - m_tangentEnd);
         }
     }
 #endif
