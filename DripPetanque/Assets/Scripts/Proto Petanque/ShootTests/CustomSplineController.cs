@@ -82,13 +82,15 @@ public class CustomSplineController : MonoBehaviour
 
         m_spline.SetKnot(0, m_firstKnot);
         m_spline.SetKnot(1, m_lastKnot);
+        m_spline.SetTangentMode(TangentMode.Mirrored);
     }
 
     public void SetSplineParameters(float yAngle, float xAngle, float force)
     {
         float forceMagnitude = Mathf.Pow(force, m_forcePow) * m_forceMult;
-        Vector3 splineForward = transform.forward.Rotate(transform.up, yAngle);
-        Vector3 attractionPoint = splineForward.Rotate(-Vector3.Cross(splineForward, transform.up), xAngle).normalized * forceMagnitude;
+        Vector3 splineUp = transform.up;
+        Vector3 splineForward = transform.forward.Rotate(splineUp, yAngle);
+        Vector3 attractionPoint = splineForward.Rotate(-Vector3.Cross(splineForward, splineUp), xAngle).normalized * forceMagnitude;
         attractionPoint = m_startPoint.position + attractionPoint;
 
         m_endPoint.position = attractionPoint.ProjectOn(splineForward) / m_forwardFactor;
@@ -103,6 +105,8 @@ public class CustomSplineController : MonoBehaviour
     [SerializeField] private float m_xAngle;
     [SerializeField] private float m_force;
 
+    [SerializeField, Min(1)] private int m_resolution;
+
     [ContextMenu(nameof(UpdateSplineParameters))]
     private void UpdateSplineParameters()
     {
@@ -111,15 +115,48 @@ public class CustomSplineController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!Application.isPlaying)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(m_attractionPointPosition, 0.3f);
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(m_attractionPointPosition, 0.3f);
 
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(m_firstKnot.Position, m_firstKnot.Position.ToVector3() + m_tangentStart);
-            Gizmos.DrawLine(m_lastKnot.Position, m_lastKnot.Position.ToVector3() - m_tangentEnd);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawLine(m_firstKnot.Position, m_firstKnot.Position.ToVector3() + m_tangentStart);
+        Gizmos.DrawLine(m_lastKnot.Position, m_lastKnot.Position.ToVector3() - m_tangentEnd);
+
+        Span<Vector3> splinePoints = stackalloc Vector3[4] 
+        {
+            m_firstKnot.Position,
+            m_firstKnot.Position.ToVector3() + m_tangentStart,
+            m_lastKnot.Position.ToVector3() - m_tangentEnd,
+            m_lastKnot.Position,
+        };
+
+        DrawBezier(splinePoints, m_resolution);
+    }
+
+    private void DrawBezier(Span<Vector3> points, int resolution)
+    {
+        for (int i = 0; i < resolution - 1; i++)
+        {
+            Gizmos.DrawLine(GetSplineValue(points, (float)i / resolution), GetSplineValue(points, ((float)(i + 1)) / resolution));
         }
     }
+
+    private Vector3 GetSplineValue(Span<Vector3> points, float t)
+    {
+        int pointsCount = points.Length;
+
+        if (pointsCount == 2)
+        {
+            return Vector3.Lerp(points[0], points[1], t);
+        }
+
+        Span<Vector3> interPoints = stackalloc Vector3[pointsCount - 1];
+        for (int i = 0; i < pointsCount - 1; i++)
+        {
+            interPoints[i] = Vector3.Lerp(points[i], points[i + 1], t);
+        }
+        return GetSplineValue(interPoints, t);
+    }
+
 #endif
 }
