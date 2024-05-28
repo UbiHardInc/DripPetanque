@@ -33,6 +33,18 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.layer == this.gameObject.layer)
+        {
+            if (m_touchedGround)
+            {
+                StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ball));
+            }
+            else
+            {
+                StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ballAir));
+            }
+        }
+        
         if (collision.gameObject.layer == m_groundLayer)
         {
             //if not this, the call is made twice

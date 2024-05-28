@@ -177,7 +177,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     {
         if (filter != m_actualFilter)
         {
-            Debug.LogError("Battle filter switch called.");
+            //Debug.LogError("Battle filter switch called.");
             
             m_actualFilter = filter;
         
