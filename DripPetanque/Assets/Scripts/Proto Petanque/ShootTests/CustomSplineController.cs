@@ -88,12 +88,16 @@ public class CustomSplineController : MonoBehaviour
     public void SetSplineParameters(float yAngle, float xAngle, float force)
     {
         float forceMagnitude = Mathf.Pow(force, m_forcePow) * m_forceMult;
+
         Vector3 splineUp = transform.up;
         Vector3 splineForward = transform.forward.Rotate(splineUp, yAngle);
-        Vector3 attractionPoint = splineForward.Rotate(-Vector3.Cross(splineForward, splineUp), xAngle).normalized * forceMagnitude;
+
+        Vector3 projectedAttractionPoint = splineForward * forceMagnitude;
+
+        Vector3 attractionPoint = projectedAttractionPoint + splineUp * Mathf.Tan(xAngle) * forceMagnitude;
         attractionPoint = m_startPoint.position + attractionPoint;
 
-        m_endPoint.position = attractionPoint.ProjectOn(splineForward) / m_forwardFactor;
+        m_endPoint.position = projectedAttractionPoint * 2;
 
         UpdateSpline(attractionPoint);
     }
