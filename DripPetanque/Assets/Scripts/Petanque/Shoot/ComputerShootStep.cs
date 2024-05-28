@@ -11,6 +11,7 @@ public class ComputerShootStep : BaseShootStep
     public override void Start()
     {
         m_stepOutputValue = UnityEngine.Random.value.RemapFrom01(m_data.Range);
+        
         m_infoPanelText.transform.parent.gameObject.SetActive(true);
         m_infoPanelText.text = "Opponent's turn.";
     }

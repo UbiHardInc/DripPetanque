@@ -83,6 +83,11 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         m_currentStep = 0;
         m_allSteps[m_currentStep].Start();
         m_currentState = ShootState.Steps;
+        
+        if (Owner == PetanqueSubGameManager.PetanquePlayers.Human)
+        {
+            StartCoroutine(SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.Low));
+        }
     }
 
     private void UpdateSteps(float deltaTime)
@@ -107,7 +112,6 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     {
         m_currentState = ShootState.LaunchBall;
 
-
         Debug.LogWarning($"Left-Right : {m_leftRightStep.StepOutputValue}");
         Debug.LogWarning($"Force : {m_forceStep.StepOutputValue}");
         Debug.LogWarning($"Up-Down : {m_upDownStep.StepOutputValue}");
@@ -119,6 +123,12 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         OnBallSpawned?.Invoke(requestedBall);
 
         m_trajectoryController.StartNewBall(requestedBall.Object);
+
+        if (Owner == PetanqueSubGameManager.PetanquePlayers.Human)
+        {
+            StartCoroutine(SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.None));
+        }
+        StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop));
     }
 
     private void OnBallStopped(Ball ball)
