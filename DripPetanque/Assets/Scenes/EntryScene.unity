@@ -729,6 +729,22 @@ PrefabInstance:
       propertyPath: m_turnChangeDisplay
       value: 
       objectReference: {fileID: 360320245}
+    - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
+        type: 3}
+      propertyPath: m_startState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
+        type: 3}
+      propertyPath: m_startScene.m_scenePath
+      value: Assets/Scenes/EntryScene.unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
+        type: 3}
+      propertyPath: m_startScene.m_sceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05,
+        type: 3}
     - target: {fileID: 7162645624520431926, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_cache
@@ -752,6 +768,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4937983946293474298, guid: 95e5e068fce92574d92b6e31706b32ee,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -7860394916745936664, guid: 1414d859890c0cb418be718485357e3e,
+        type: 2}
     - target: {fileID: 6888876654467131860, guid: 95e5e068fce92574d92b6e31706b32ee,
         type: 3}
       propertyPath: m_LocalPosition.x
