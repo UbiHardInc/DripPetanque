@@ -15,7 +15,7 @@ public class DialogueData : ScriptableObject
     public bool showDialogueElements;
     public enum TextType { Text, Dialogue }
     public TextType textType;
-
+    public bool IsCinematicDialogue;
     public GameState NextGameState;
 }
 

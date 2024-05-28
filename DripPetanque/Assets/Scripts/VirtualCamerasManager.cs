@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityUtility.Singletons;
+using UnityUtility.Utils;
 
 public class VirtualCamerasManager : MonoBehaviourSingleton<VirtualCamerasManager>
 {
@@ -19,6 +20,7 @@ public class VirtualCamerasManager : MonoBehaviourSingleton<VirtualCamerasManage
 
     private static List<CinemachineVirtualCamera> s_allVirtualCameras = new List<CinemachineVirtualCamera>();
     private static CinemachineBrain s_brain = null;
+    private static CinemachineVirtualCamera s_currentTarget;
     private static CinemachineBlendDefinition s_defaultBlend = default;
 
     public static void RegisterBrain(CinemachineBrain brain)
@@ -45,14 +47,14 @@ public class VirtualCamerasManager : MonoBehaviourSingleton<VirtualCamerasManage
         
     }
 
-    public static bool IsBrainBlending()
+    public static bool IsBrainMoving()
     {
         if (s_brain == null)
         {
             Debug.LogError($"No {nameof(CinemachineBrain)} registered");
             return false;
         }
-        return s_brain.IsBlending;
+        return !s_brain.transform.position.ApproximatelyEqualsPoint(s_currentTarget.transform.position);
     }
 
     public static void SwitchToCamera(CinemachineVirtualCamera virtualCamera)
@@ -76,6 +78,7 @@ public class VirtualCamerasManager : MonoBehaviourSingleton<VirtualCamerasManage
         {
             cam.gameObject.SetActive(false);
         }
+        s_currentTarget = virtualCamera;
         virtualCamera.gameObject.SetActive(true);
     }
 
@@ -91,6 +94,7 @@ public class VirtualCamerasManager : MonoBehaviourSingleton<VirtualCamerasManage
 
     public static void UnRegisterCamera(CinemachineVirtualCamera virtualCamera)
     {
+        virtualCamera.gameObject.SetActive(false);
         _ = s_allVirtualCameras.Remove(virtualCamera);
     }
 }

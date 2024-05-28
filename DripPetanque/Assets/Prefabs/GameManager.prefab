@@ -156,7 +156,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 67994384320335006}
   m_Father: {fileID: 2549502408026804203}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3573455257882393289
@@ -173,11 +174,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_specificActionMapNames:
   - Petanque
-  m_gameSettings: {fileID: 11400000, guid: 43a5056ccb4b29044821e1fa3015a879, type: 2}
-  m_playerShootManager: {fileID: 0}
-  m_computerShootManager: {fileID: 0}
-  m_field: {fileID: 0}
-  m_jack: {fileID: 0}
+  m_petanqueSceneDatas: {fileID: 11400000, guid: d7be7cf62780d9448bc646146a245f5a,
+    type: 2}
+  m_petanqueSceneLoader: {fileID: 7162645624520431926}
+  m_resultDisplay: {fileID: 0}
 --- !u!1 &6521977095962087902
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,8 +206,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6521977095962087902}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1989899, y: 0.2609929, z: -0.055074077, w: 0.9430019}
-  m_LocalPosition: {x: -4.45, y: 3.3, z: 0.79}
+  m_LocalRotation: {x: 0.38550144, y: -0.031823784, z: 0.013305038, w: 0.9220623}
+  m_LocalPosition: {x: 1.5912715, y: 9.847545, z: -7.2204237}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -244,11 +244,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60.000004
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -400,7 +400,10 @@ MonoBehaviour:
   m_dialogueSubGameManager: {fileID: 4359634221030858744}
   m_explorationSubGameManager: {fileID: 8531854692067118445}
   m_petanqueSubGameManager: {fileID: 3573455257882393289}
-  m_startState: 2
+  m_startScene:
+    m_sceneAsset: {fileID: 102900000, guid: 91524a1cb2566fe448c30fd09f144d7f, type: 3}
+    m_scenePath: Assets/Scenes/Proto_Level_Design.unity
+  m_startState: 4
   m_mainCamera: {fileID: 7564619528680852679}
   m_actionAsset: {fileID: -944628639613478452, guid: 462a9b2de1b64484aa61d3a207013de5,
     type: 3}
@@ -453,6 +456,58 @@ MonoBehaviour:
   m_specificActionMapNames:
   - Dialogue
   m_dialogueManager: {fileID: 1114732164661441098}
+--- !u!1 &8897849621479224047
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 67994384320335006}
+  - component: {fileID: 7162645624520431926}
+  m_Layer: 0
+  m_Name: PetanqueSceneLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &67994384320335006
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897849621479224047}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6709052394883187295}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7162645624520431926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897849621479224047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d1fe2ccfb157f49a962ef1060763ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sceneToTransitionTo:
+    m_sceneAsset: {fileID: 102900000, guid: f0b569dc47fb7054c9ac35e969e21225, type: 3}
+    m_scenePath: Assets/Scenes/Proto_Petanque.unity
+  m_fadeOut: 0
+  m_cache: {fileID: 0}
+  m_fadeTimer:
+    m_duration: 1
+    m_repeat: 0
 --- !u!1001 &2583264311999644173
 PrefabInstance:
   m_ObjectHideFlags: 0

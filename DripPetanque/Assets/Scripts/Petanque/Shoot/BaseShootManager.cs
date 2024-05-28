@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Pools;
+using UnityUtility.Utils;
 
 public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     where TShootStep : BaseShootStep
@@ -42,18 +43,8 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
 
     [NonSerialized] protected int m_currentStep = 0;
 
-    [NonSerialized] protected bool m_init = false;
 
-    protected void InitIfNeeded()
-    {
-        if (!m_init)
-        {
-            Init();
-            m_init = true;
-        }
-    }
-
-    protected virtual void Init()
+    public virtual void Init()
     {
         m_allSteps = new TShootStep[]
         {
@@ -88,7 +79,6 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
 
     protected virtual void StartSteps()
     {
-        InitIfNeeded();
         m_currentStep = 0;
         m_allSteps[m_currentStep].Start();
         m_currentState = ShootState.Steps;
@@ -101,6 +91,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
             m_currentStep++;
             if (m_currentStep >= m_allSteps.Length)
             {
+                m_splineController.SetSplineParameters(m_leftRightStep.StepOutputValue, m_upDownStep.StepOutputValue, m_forceStep.StepOutputValue);
                 LaunchBall();
                 return;
             }
@@ -133,5 +124,10 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     {
         ball.OnBallStopped -= OnBallStopped;
         m_currentState = ShootState.Finished;
+    }
+
+    public void Dispose()
+    {
+        m_allSteps.ForEach(step => step.Dispose());
     }
 }

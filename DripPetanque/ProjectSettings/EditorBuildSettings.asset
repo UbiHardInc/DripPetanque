@@ -8,4 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EntryScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/DissloveMask.unity
+    guid: 4c25d6d82d2aedf4c8a040f74e974697
+  - enabled: 1
+    path: Assets/Scenes/Proto_Petanque.unity
+    guid: f0b569dc47fb7054c9ac35e969e21225
+  - enabled: 1
+    path: Assets/Scenes/Proto_Level_Design.unity
+    guid: 91524a1cb2566fe448c30fd09f144d7f
+  - enabled: 1
+    path: Assets/Scenes/Empty.unity
+    guid: cf506317541d0b141b9613af853298fc
   m_configObjects: {}
