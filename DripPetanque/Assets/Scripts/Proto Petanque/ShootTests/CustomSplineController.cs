@@ -7,16 +7,18 @@ using UnityUtility.Utils;
 
 public class CustomSplineController : MonoBehaviour
 {
+    public float ForceMultiplier => m_forceMultiplier;
+    public float AttractionFactor => m_attractionFactor;
+
     [SerializeField] private Transform m_startPoint = null;
     [SerializeField] private Transform m_endPoint = null;
 
     [SerializeField] private float m_angle = 0.0f;
     [SerializeField] private float m_height = 0.0f;
-    [SerializeField, Range(0.0001f, 0.9999f)] private float m_forwardFactor = 0.5f;
+
     [SerializeField, Range(0.0f, 2.0f)] private float m_attractionFactor = 0.0f;
 
-    [SerializeField, Min(0.0f)] private float m_forcePow = 1.0f;
-    [SerializeField, Min(0.0f)] private float m_forceMult = 1.0f;
+    [SerializeField, Min(0.0f)] private float m_forceMultiplier = 1.0f;
 
     [SerializeField] private SplineContainer m_splineComponent = null;
 
@@ -55,7 +57,7 @@ public class CustomSplineController : MonoBehaviour
         Vector3 endPosition = m_endPoint.position;
 
         Vector3 startToEnd = endPosition - startPosition;
-        Vector3 attractionPointProj = startPosition + startToEnd * m_forwardFactor;
+        Vector3 attractionPointProj = startPosition + startToEnd;
 
         Vector3 splineUp = Vector3.up * Mathf.Cos(m_angle * Mathf.Deg2Rad) +
                            Vector3.Cross(startToEnd, Vector3.up).normalized * Mathf.Sin(m_angle * Mathf.Deg2Rad);
@@ -87,7 +89,7 @@ public class CustomSplineController : MonoBehaviour
 
     public void SetSplineParameters(float yAngle, float xAngle, float force)
     {
-        float forceMagnitude = Mathf.Pow(force, m_forcePow) * m_forceMult;
+        float forceMagnitude = force * m_forceMultiplier;
 
         Vector3 splineUp = transform.up;
         Vector3 splineForward = transform.forward.Rotate(splineUp, yAngle);
