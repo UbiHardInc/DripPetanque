@@ -10,24 +10,88 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
     [Title("Target Zone")]
     [SerializeField] private float m_targetZoneCenterDistance;
     [SerializeField] private Vector2 m_targetZoneSize;
+    [SerializeField] private Transform m_targetPoint;
+
+    [Title("Possible Targets")]
+    [SerializeField] private Transform[] m_bonuses;
+
+
+    [Button(nameof(TestShootDatasComputation)), ShowIf(nameof(m_buttonField))]
+    [SerializeField] private bool m_buttonField = false;
+
+    protected override void StartSteps()
+    {
+        base.StartSteps();
+
+        bool found = false;
+
+        foreach (Transform bonus in m_bonuses.ShuffleCopy())
+        {
+            if (TryComputeSplineDatas(bonus.position, out SplineDatas splineDatas))
+            {
+                Debug.Log($"The Bonus {bonus.name} was chosen", bonus);
+                found = true;
+
+                m_leftRightStep.SetValue(splineDatas.YAngle);
+                m_upDownStep.SetValue(splineDatas.XAngle);
+                m_forceStep.SetValue(splineDatas.Force);
+
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            Debug.LogError("Failed to find any bonus in range : shooting at random");
+            foreach(ComputerShootStep step in m_allSteps)
+            {
+                step.SetRandomValue();
+            }
+        }
+
+    }
+
+    private void TestShootDatasComputation()
+    {
+        if (TryComputeSplineDatas(m_targetPoint.position, out SplineDatas splineDatas))
+        {
+            m_splineController.SetSplineParameters(splineDatas);
+        }
+        else
+        {
+            Debug.LogError("Failed to compute the spline datas for this target point", m_targetPoint);
+        }
+    }
 
     // The code in this class may not be really clear but don't worry, I did the maths
-    private void ComputeShootDatas(Vector3 m)
+    private bool TryComputeSplineDatas(Vector3 m, out SplineDatas splineDatas)
     {
-        Vector3 startPosition = Vector3.zero;
+        splineDatas = default;
+
+        Vector3 startPosition = transform.position;
 
         float attractionFactor = m_splineController.AttractionFactor;
+        Transform slineControllerTransform = m_splineController.transform;
 
 
-        Vector3 forward = transform.forward;
-        Vector3 splineUp = transform.up;
+        Vector3 forward = slineControllerTransform.forward;
+        Vector3 splineUp = slineControllerTransform.up;
 
         Vector3 mPrime = Vector3.ProjectOnPlane(m - startPosition, splineUp);
         Vector3 splineForward = mPrime.normalized;
 
-        float yAngle = Vector3.Angle(forward, splineForward);
+        float yAngle = Vector3.SignedAngle(forward, splineForward, splineUp);
 
-        float force = ComputeForce(yAngle);
+        if (!yAngle.Between(m_leftRightStep.Range.x, m_leftRightStep.Range.y))
+        {
+            Debug.LogError($"The Y angle to the point does not lie in the leftRightStep range ({yAngle})", m_leftRightStep.Data);
+            return false;
+        }
+
+        if (!TryComputeForce(yAngle, out float force))
+        {
+            return false;
+        }
 
         // t Computation
         float mx = mPrime.magnitude;
@@ -38,22 +102,33 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
         float spx = Mathf.Lerp(sx, cx, attractionFactor);
         float epx = Mathf.Lerp(ex, cx, attractionFactor);
 
-        float t = ComputeT(sx, spx, epx, ex, mx);
+        if (!TryComputeT(sx, spx, epx, ex, mx, out float t))
+        {
+            return false;
+        }
 
         // attraction point computation
         float my = (m - mPrime).magnitude;
         float floorHeight = 0; // = sy = ey
 
         float attractionPointHeight = ComputeAttractionPointHeight(my, floorHeight, t, attractionFactor);
-        float xAngle = Mathf.Atan(attractionPointHeight / cx);
+        float xAngle = Mathf.Atan(attractionPointHeight / cx) * Mathf.Rad2Deg;
+
+        if (!xAngle.Between(m_upDownStep.Range.x, m_upDownStep.Range.y))
+        {
+            Debug.LogError($"The X angle to the point does not lie in the upDownStep range ({xAngle})", m_upDownStep.Data);
+            return false;
+        }
 
         // All of that to compute yAngle, xAngle and force
+        splineDatas = new SplineDatas(yAngle, xAngle, force);
+        return true;
     }
 
-    private float ComputeForce(float yAngle)
+    private bool TryComputeForce(float yAngle, out float force)
     {
-        float leftBound = m_targetZoneCenterDistance - m_targetZoneSize.x / 2;
-        float rightBound = m_targetZoneCenterDistance + m_targetZoneSize.x / 2;
+        float leftBound = -m_targetZoneSize.x / 2;
+        float rightBound = m_targetZoneSize.x / 2;
         float bottomBound = m_targetZoneCenterDistance - m_targetZoneSize.y / 2;
         float topBound = m_targetZoneCenterDistance + m_targetZoneSize.y / 2;
 
@@ -66,7 +141,7 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
         else
         {
             float r1x, r2x;
-            float tanAngle = Mathf.Tan(yAngle);
+            float tanAngle = Mathf.Tan(yAngle * Mathf.Deg2Rad);
 
             // The equation of the line from s to m
             float D(float x)
@@ -79,7 +154,8 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
             if (!r1x.Between(leftBound, rightBound))
             {
                 Debug.LogError("Unable to compute force to target this point");
-                return 0.0f;
+                force = 0.0f;
+                return false;
             }
 
             r2x = Mathf.Clamp(topBound * tanAngle, leftBound, rightBound);
@@ -96,7 +172,8 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
         dr1 = Mathf.Clamp(dr1, forceRange.x, forceRange.y);
         dr2 = Mathf.Clamp(dr2, forceRange.x, forceRange.y);
 
-        return Mathf.Lerp(dr1, dr2, UnityEngine.Random.value);
+        force = Mathf.Lerp(dr1, dr2, UnityEngine.Random.value);
+        return true;
     }
 
     /// <summary>
@@ -108,7 +185,7 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
     /// <param name="e">The x coordinates of the end point</param>
     /// <param name="m">The x coordinates of the m point</param>
     /// <returns></returns>
-    private float ComputeT(float s, float sTan, float eTan, float e, float m)
+    private bool TryComputeT(float s, float sTan, float eTan, float e, float m, out float t)
     {
         float a = e - 3 * eTan + 3 * sTan - s;
         float b = 3 * eTan - 6 * sTan + 3 * s;
@@ -130,11 +207,13 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
         {
             if (!double.IsNaN(root) && root.Between(0, 1))
             {
-                return (float)root;
+                t = (float)root;
+                return true;
             }
         }
         Debug.LogError("Not able to find a valid root");
-        return 0;
+        t = 0.0f;
+        return false;
     }
 
     private float ComputeAttractionPointHeight(float my, float floorHeight, float t, float attractionFactor)
