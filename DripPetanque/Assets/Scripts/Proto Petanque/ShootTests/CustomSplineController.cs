@@ -13,9 +13,6 @@ public class CustomSplineController : MonoBehaviour
     [SerializeField] private Transform m_startPoint = null;
     [SerializeField] private Transform m_endPoint = null;
 
-    [SerializeField] private float m_angle = 0.0f;
-    [SerializeField] private float m_height = 0.0f;
-
     [SerializeField, Range(0.0f, 2.0f)] private float m_attractionFactor = 0.0f;
 
     [SerializeField, Min(0.0f)] private float m_forceMultiplier = 1.0f;
@@ -48,22 +45,6 @@ public class CustomSplineController : MonoBehaviour
     private void Update()
     {
         //UpdateSpline();
-    }
-
-    private void OldMethod()
-    {
-
-        Vector3 startPosition = m_startPoint.position;
-        Vector3 endPosition = m_endPoint.position;
-
-        Vector3 startToEnd = endPosition - startPosition;
-        Vector3 attractionPointProj = startPosition + startToEnd;
-
-        Vector3 splineUp = Vector3.up * Mathf.Cos(m_angle * Mathf.Deg2Rad) +
-                           Vector3.Cross(startToEnd, Vector3.up).normalized * Mathf.Sin(m_angle * Mathf.Deg2Rad);
-
-        Vector3 attractionPoint = attractionPointProj + splineUp * m_height;
-        UpdateSpline(attractionPoint);
     }
 
     private void UpdateSpline(Vector3 attractionPoint)
