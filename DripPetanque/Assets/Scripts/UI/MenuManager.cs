@@ -1,98 +1,99 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityUtility.CustomAttributes;
 
 public class MenuManager : MonoBehaviour
 {
-    [Header("MainMenuVariables")]
-    [SerializeField] private float timeForMenuToAppear = 6.30f;
-    [Header("MainMenuObjects")]
-    [SerializeField] private GameObject transitionImage;
-    [SerializeField] private Button startButton;
-    [SerializeField] private Button optionButton;
-    
-    
-    //[Header("PauseMenuVariables")]
+    [Title("MainMenuVariables")]
+    [SerializeField, FormerlySerializedAs("timeForMenuToAppear")]
+    private float m_timeForMenuToAppear = 6.30f;
+    [Title("MainMenuObjects")]
+    [SerializeField, FormerlySerializedAs("transitionImage")]
+    private GameObject m_transitionImage;
+    [SerializeField, FormerlySerializedAs("startButton")]
+    private Button m_startButton;
+    [SerializeField, FormerlySerializedAs("optionButton")]
+    private Button m_optionButton;
 
-    [Header("PauseMenuObjects")] 
-    [SerializeField] private GameObject pauseMenu;
-    [SerializeField] private Button firstSelectedButton;
-    [SerializeField] private AudioMixerGroup musicMixerGroup;
-    [SerializeField] private AudioMixerGroup sfxMixerGroup;
-    [SerializeField] private Slider musicSlider;
-    [SerializeField] private Slider sfxSlider;
 
-    [Header("InputActionReferences")]
-    [SerializeField] private InputActionReference openMenu;
-    [SerializeField] private InputActionReference closeMenu;
-    
-    
-    
-    
+    [Title("PauseMenuObjects")]
+    [SerializeField, FormerlySerializedAs("pauseMenu")]
+    private GameObject m_pauseMenu;
+    [SerializeField, FormerlySerializedAs("firstSelectedButton")]
+    private Button m_firstSelectedButton;
+    [SerializeField, FormerlySerializedAs("musicMixerGroup")]
+    private AudioMixerGroup m_musicMixerGroup;
+    [SerializeField, FormerlySerializedAs("sfxMixerGroup")]
+    private AudioMixerGroup m_sfxMixerGroup;
+    [SerializeField, FormerlySerializedAs("musicSlider")]
+    private Slider m_musicSlider;
+    [SerializeField, FormerlySerializedAs("sfxSlider")]
+    private Slider m_sfxSlider;
+
+    [Title("InputActionReferences")]
+    [SerializeField, FormerlySerializedAs("openMenu")]
+    private InputActionReference m_openMenuInput;
+    [SerializeField, FormerlySerializedAs("closeMenu")]
+    private InputActionReference m_closeMenuInput;
+
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        openMenu.action.actionMap.Enable();
-        closeMenu.action.actionMap.Enable();
-        openMenu.action.performed += OpenMenu;
-        closeMenu.action.performed += CloseMenu;
-        
+        m_openMenuInput.action.actionMap.Enable();
+        m_closeMenuInput.action.actionMap.Enable();
+        m_openMenuInput.action.performed += OpenMenu;
+        m_closeMenuInput.action.performed += CloseMenu;
+
         if (SceneManager.GetActiveScene().name == "EntryScene")
         {
-            StartCoroutine(IntroMainMenu());
-            EventSystem.current.SetSelectedGameObject(startButton.gameObject);
-            startButton.GetComponent<Button>().Select();
+            _ = StartCoroutine(IntroMainMenu());
+            EventSystem.current.SetSelectedGameObject(m_startButton.gameObject);
+            m_startButton.GetComponent<Button>().Select();
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void MusicVolumeChange(bool add)
     {
         if (add)
         {
-            musicSlider.value += 0.1f;
+            m_musicSlider.value += 0.1f;
         }
         else
         {
-            musicSlider.value -= 0.1f;
+            m_musicSlider.value -= 0.1f;
         }
-        musicMixerGroup.audioMixer.SetFloat("musicVol", Mathf.Log10(musicSlider.value) * 20);
-        
+        _ = m_musicMixerGroup.audioMixer.SetFloat("musicVol", Mathf.Log10(m_musicSlider.value) * 20);
+
     }
-    
+
     public void SfxVolumeChange(bool add)
     {
         if (add)
         {
-            sfxSlider.value += 0.1f;
+            m_sfxSlider.value += 0.1f;
         }
         else
         {
-            sfxSlider.value -= 0.1f;
+            m_sfxSlider.value -= 0.1f;
         }
-        sfxMixerGroup.audioMixer.SetFloat("sfxVol", Mathf.Log10(sfxSlider.value) * 20);
-        StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop));
+        _ = m_sfxMixerGroup.audioMixer.SetFloat("sfxVol", Mathf.Log10(m_sfxSlider.value) * 20);
+        _ = StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop));
 
     }
 
     private IEnumerator IntroMainMenu()
     {
-        yield return new WaitForSeconds(timeForMenuToAppear);
-        StartCoroutine(FadeInAndOutGameObject.FadeInAndOut(transitionImage, false, 1f));
+        yield return new WaitForSeconds(m_timeForMenuToAppear);
+        _ = StartCoroutine(FadeInAndOutGameObject.FadeInAndOut(m_transitionImage, false, 1f));
     }
-    
+
     private void OpenMenu(InputAction.CallbackContext obj)
     {
         Debug.LogError("OpenMenuCalled");
@@ -102,16 +103,16 @@ public class MenuManager : MonoBehaviour
     public void OpenPauseMenu()
     {
         Debug.LogError("OpenPauseMenuCalled");
-        pauseMenu.SetActive(true);
-        
+        m_pauseMenu.SetActive(true);
+
         if (SceneManager.GetActiveScene().name != "EntryScene")
         {
             Time.timeScale = 0f;
         }
-        firstSelectedButton.Select();
-        
+        m_firstSelectedButton.Select();
+
     }
-    
+
     private void CloseMenu(InputAction.CallbackContext obj)
     {
         ClosePauseMenu();
@@ -119,15 +120,15 @@ public class MenuManager : MonoBehaviour
 
     public void ClosePauseMenu()
     {
-        pauseMenu.SetActive(false);
+        m_pauseMenu.SetActive(false);
         if (SceneManager.GetActiveScene().name == "EntryScene")
         {
-            startButton.GetComponent<Button>().Select();
+            m_startButton.GetComponent<Button>().Select();
         }
         else
         {
             Time.timeScale = 1f;
         }
-        
+
     }
 }
