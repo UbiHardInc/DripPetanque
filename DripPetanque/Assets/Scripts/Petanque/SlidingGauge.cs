@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityUtility.CustomAttributes;
@@ -74,8 +75,13 @@ public class SlidingGauge : MonoBehaviour
             default:
                 break;
         }
-
+        m_currentFilling = Smoothstep(m_currentFilling);
         m_slider.fillAmount = m_currentFilling;
+    }
+
+    private static float Smoothstep(float x)
+    {
+        return 3 * x * x - 2 * x * x * x;
     }
 
     public void SetHorizontalFillMethodAndOrigin(OriginHorizontal origin)
