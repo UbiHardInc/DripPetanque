@@ -18,7 +18,7 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
 
     [Button(nameof(TestShootDatasComputation)), ShowIf(nameof(m_buttonField))]
     [SerializeField] private bool m_buttonField = false;
-     
+
     protected override void StartSteps()
     {
         base.StartSteps();
@@ -43,7 +43,7 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
         if (!found)
         {
             Debug.LogError("Failed to find any bonus in range : shooting at random");
-            foreach(ComputerShootStep step in m_allSteps)
+            foreach (ComputerShootStep step in m_allSteps)
             {
                 step.SetRandomValue();
             }

@@ -10,7 +10,7 @@ public class ComputerShootStep : BaseShootStep
 
     public override void Start()
     {
-        m_stepOutputValue = float.IsNaN(m_givenValue) ? float.NaN : m_givenValue;
+        m_stepOutputValue = m_givenValue;
     }
 
     public override void Update(float deltaTime)
@@ -19,7 +19,7 @@ public class ComputerShootStep : BaseShootStep
 
     public override bool IsFinished()
     {
-        return true;
+        return !float.IsNaN(m_stepOutputValue);
     }
 
     public override bool HasTempValue()
