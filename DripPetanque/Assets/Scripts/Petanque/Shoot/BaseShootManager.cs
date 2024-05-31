@@ -33,7 +33,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     [SerializeField] protected TShootStep m_upDownStep;
     [Separator]
 
-    [SerializeField] private CustomSplineController m_splineController;
+    [SerializeField] protected CustomSplineController m_splineController;
     [SerializeField] private BallTrajectoryController m_trajectoryController;
 
     [SerializeField] private CallbackRecieverComponentPool<TBall> m_ballsPool;

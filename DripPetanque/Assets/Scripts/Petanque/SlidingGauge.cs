@@ -1,6 +1,5 @@
 using System;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -105,7 +104,7 @@ public class SlidingGauge : MonoBehaviour
             default:
                 break;
         }
-        
+        m_currentFilling = Smoothstep(m_currentFilling);        
         switch (m_imageType)
         { 
             case ImageTypeEnum.Slider:
@@ -116,6 +115,11 @@ public class SlidingGauge : MonoBehaviour
                 break;
         }
         
+    }
+
+    private static float Smoothstep(float x)
+    {
+        return 3 * x * x - 2 * x * x * x;
     }
 
     public void SetHorizontalFillMethodAndOrigin(OriginHorizontal origin)
