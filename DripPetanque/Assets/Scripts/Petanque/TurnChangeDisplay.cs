@@ -1,14 +1,12 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class TurnChangeDisplay : MonoBehaviour
 {
-    [SerializeField] private float m_secondsOfFades = 1;
-    
+    [SerializeField] private float m_secondsOfFades = 1.0f;
+    [SerializeField] private float m_secondsOfDisplay = 2.0f;
+
     [SerializeField] private TMP_Text m_text;
 
     public void Init()
@@ -18,16 +16,13 @@ public class TurnChangeDisplay : MonoBehaviour
 
     public IEnumerator DisplayTurn(bool isPlayer)
     {
-        StartCoroutine(FadeInAndOutGameObject.FadeInAndOut(gameObject, true, m_secondsOfFades));
-        yield return new WaitForSeconds(m_secondsOfFades);
-        m_text.gameObject.SetActive(true);
         m_text.text = isPlayer ? "Your Turn" : "Opponent's Turn";
-    }
+        yield return FadeInAndOutGameObject.FadeInAndOut(gameObject, true, m_secondsOfFades);
+        m_text.gameObject.SetActive(true);
 
-    public void CloseTurnPanel()
-    {
+        yield return new WaitForSeconds(m_secondsOfDisplay);
+
         m_text.gameObject.SetActive(false);
-        StartCoroutine(FadeInAndOutGameObject.FadeInAndOut(gameObject, false, m_secondsOfFades));
-        
+        yield return FadeInAndOutGameObject.FadeInAndOut(gameObject, false, m_secondsOfFades);
     }
 }

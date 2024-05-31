@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Pools;
@@ -17,7 +16,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         Finished = 3,
     }
 
-    protected abstract PetanqueSubGameManager.PetanquePlayers Owner {  get; } 
+    protected abstract PetanqueSubGameManager.PetanquePlayers Owner { get; }
 
     public event Action<PooledObject<TBall>> OnBallSpawned;
 
@@ -37,7 +36,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     [SerializeField] private BallTrajectoryController m_trajectoryController;
 
     [SerializeField] private CallbackRecieverComponentPool<TBall> m_ballsPool;
-    
+
     [NonSerialized] protected ShootState m_currentState;
 
     [NonSerialized] protected TShootStep[] m_allSteps;
@@ -83,10 +82,10 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         m_currentStep = 0;
         m_allSteps[m_currentStep].Start();
         m_currentState = ShootState.Steps;
-        
+
         if (Owner == PetanqueSubGameManager.PetanquePlayers.Human)
         {
-            StartCoroutine(SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.Low));
+            _ = StartCoroutine(SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.Low));
         }
     }
 
@@ -126,9 +125,9 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
 
         if (Owner == PetanqueSubGameManager.PetanquePlayers.Human)
         {
-            StartCoroutine(SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.None));
+            _ = StartCoroutine(SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.None));
         }
-        StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop));
+        _ = StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop));
     }
 
     private void OnBallStopped(Ball ball)

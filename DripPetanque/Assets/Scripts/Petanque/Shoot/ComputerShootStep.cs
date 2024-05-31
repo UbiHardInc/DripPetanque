@@ -1,7 +1,5 @@
 using System;
-using TMPro;
 using UnityEngine;
-using UnityUtility.Utils;
 
 [Serializable]
 public class ComputerShootStep : BaseShootStep
@@ -9,14 +7,10 @@ public class ComputerShootStep : BaseShootStep
     [SerializeField, Min(0.0f)] private float m_noiseAmount = 0.0f;
 
     [NonSerialized] private float m_givenValue = float.NaN;
-    [SerializeField] private TMP_Text m_infoPanelText;
-    
+
     public override void Start()
     {
         m_stepOutputValue = float.IsNaN(m_givenValue) ? float.NaN : m_givenValue;
-        
-        m_infoPanelText.transform.parent.gameObject.SetActive(true);
-        m_infoPanelText.text = "Opponent's turn.";
     }
 
     public override void Update(float deltaTime)
@@ -25,7 +19,6 @@ public class ComputerShootStep : BaseShootStep
 
     public override bool IsFinished()
     {
-        m_infoPanelText.transform.parent.gameObject.SetActive(false);
         return true;
     }
 

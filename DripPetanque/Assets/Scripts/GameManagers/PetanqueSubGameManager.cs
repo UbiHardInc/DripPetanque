@@ -85,7 +85,7 @@ public class PetanqueSubGameManager : SubGameManager
         m_jack.position = field.JackPosition.position;
         m_shootTurn = PetanquePlayers.Human;
 
-        StartCoroutine(NextTurn());
+        _ = StartCoroutine(NextTurn());
     }
 
     private void DisplayResult()
@@ -162,7 +162,7 @@ public class PetanqueSubGameManager : SubGameManager
     private void OnBallStopped(Ball ball)
     {
         ball.OnBallStopped -= OnBallStopped;
-        StartCoroutine(NextTurn());
+        _ = StartCoroutine(NextTurn());
     }
 
     private IEnumerator NextTurn()
@@ -172,6 +172,7 @@ public class PetanqueSubGameManager : SubGameManager
             DisplayResult();
             yield break;
         }
+
         PetanquePlayers latestPlayer = m_shootTurn;
         PetanquePlayers nextTurn = ComputeNextTurn();
         m_shootTurn = nextTurn == PetanquePlayers.None ? m_shootTurn : nextTurn;
@@ -183,9 +184,7 @@ public class PetanqueSubGameManager : SubGameManager
             case PetanquePlayers.Human:
                 if (m_shootTurn != latestPlayer || m_playerThrownBalls == 0)
                 {
-                    StartCoroutine(m_turnChangeDisplay.DisplayTurn(true));
-                    yield return new WaitForSeconds(4f);
-                    m_turnChangeDisplay.CloseTurnPanel();
+                    yield return m_turnChangeDisplay.DisplayTurn(true);
                 }
                 HumanShoot();
                 break;
@@ -193,9 +192,7 @@ public class PetanqueSubGameManager : SubGameManager
             case PetanquePlayers.Computer:
                 if (m_shootTurn != latestPlayer)
                 {
-                    StartCoroutine(m_turnChangeDisplay.DisplayTurn(false));
-                    yield return new WaitForSeconds(4f);
-                    m_turnChangeDisplay.CloseTurnPanel();
+                    yield return m_turnChangeDisplay.DisplayTurn(false);
                 }
                 ComputerShoot();
                 break;
@@ -245,7 +242,7 @@ public class PetanqueSubGameManager : SubGameManager
         {
             return (closestBalls, PetanquePlayers.None);
         }
-        
+
         m_allBalls.Sort(BallPositionComparison);
 
         PetanquePlayers ballsOwner = m_allBalls[0].BallOwner;

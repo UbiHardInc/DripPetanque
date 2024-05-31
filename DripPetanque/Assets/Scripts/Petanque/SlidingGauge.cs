@@ -1,7 +1,5 @@
 using System;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityUtility.CustomAttributes;
 using static UnityEngine.UI.Image;
@@ -25,15 +23,15 @@ public class SlidingGauge : MonoBehaviour
     public float FillingSpeed { get => m_fillingSpeed; set => m_fillingSpeed = value; }
     public ImageTypeEnum ImageType { get => m_imageType; set => m_imageType = value; }
     public FillingBehaviourEnum FillingBehaviour { get => m_fillingBehaviour; set => m_fillingBehaviour = value; }
-    
+
 
     [SerializeField] private Image m_slider = null;
     [SerializeField] private float m_fillingSpeed = 0.0f;
-    
+
     [SerializeField] private ImageTypeEnum m_imageType = ImageTypeEnum.Slider;
     [SerializeField, ShowIf(nameof(m_imageType), ImageTypeEnum.Rotation)]
-    private float rotationAngle = 45;
-    
+    private float m_rotationAngle = 45;
+
     [SerializeField] private FillingBehaviourEnum m_fillingBehaviour = FillingBehaviourEnum.BackAndForth;
     [SerializeField] private FillMethod m_fillMethod = FillMethod.Vertical;
 
@@ -50,8 +48,8 @@ public class SlidingGauge : MonoBehaviour
 
     [NonSerialized] private float m_currentFilling = 0.0f;
     [NonSerialized] private float m_inernalCurrentFilling = 0.0f;
-    [NonSerialized] private Vector3 m_negativePoint = new Vector3(0f,0f,0f) ;
-    [NonSerialized] private Vector3 m_positivePoint = new Vector3(0f,0f,0f);
+    [NonSerialized] private Vector3 m_negativePoint = new Vector3(0f, 0f, 0f);
+    [NonSerialized] private Vector3 m_positivePoint = new Vector3(0f, 0f, 0f);
 
     private void Start()
     {
@@ -80,13 +78,13 @@ public class SlidingGauge : MonoBehaviour
                 break;
             case ImageTypeEnum.Rotation:
                 //Get current position then add 50 to its Y axis
-                m_positivePoint = new Vector3(0f, 0f, rotationAngle);
+                m_positivePoint = new Vector3(0f, 0f, m_rotationAngle);
 
                 //Get current position then substract -50 to its Y axis
-                m_negativePoint = new Vector3(0f, 0f, -rotationAngle);
+                m_negativePoint = new Vector3(0f, 0f, -m_rotationAngle);
                 break;
         }
-        
+
     }
 
     // Update is called once per frame
@@ -104,9 +102,9 @@ public class SlidingGauge : MonoBehaviour
             default:
                 break;
         }
-        m_currentFilling = Smoothstep(m_currentFilling);        
+        m_currentFilling = Smoothstep(m_currentFilling);
         switch (m_imageType)
-        { 
+        {
             case ImageTypeEnum.Slider:
                 m_slider.fillAmount = m_currentFilling;
                 break;
@@ -114,7 +112,7 @@ public class SlidingGauge : MonoBehaviour
                 m_slider.transform.eulerAngles = Vector3.Lerp(m_positivePoint, m_negativePoint, m_currentFilling);
                 break;
         }
-        
+
     }
 
     private static float Smoothstep(float x)

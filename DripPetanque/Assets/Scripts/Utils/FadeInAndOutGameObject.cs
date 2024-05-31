@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,55 +22,49 @@ public class FadeInAndOutGameObject : MonoBehaviour
             b = 0;
         }
 
-        int mode = 0;
-        Color currentColor = Color.clear;
 
-        SpriteRenderer tempSPRenderer = objectToFade.GetComponent<SpriteRenderer>();
-        Image tempImage = objectToFade.GetComponent<Image>();
-        RawImage tempRawImage = objectToFade.GetComponent<RawImage>();
-        MeshRenderer tempRenderer = objectToFade.GetComponent<MeshRenderer>();
-        Text tempText = objectToFade.GetComponent<Text>();
+        Action<float> changeAlphaAction;
 
         //Check if this is a Sprite
-        if (tempSPRenderer != null)
+        if (objectToFade.TryGetComponent(out SpriteRenderer spriteRenderer))
         {
-            currentColor = tempSPRenderer.color;
-            mode = 0;
+            Color currentColor = spriteRenderer.color;
+            changeAlphaAction = (float alpha) => spriteRenderer.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
         }
         //Check if Image
-        else if (tempImage != null)
+        else if (objectToFade.TryGetComponent(out Image image))
         {
-            currentColor = tempImage.color;
-            mode = 1;
+            Color currentColor = image.color;
+            changeAlphaAction = (float alpha) => image.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
         }
         //Check if RawImage
-        else if (tempRawImage != null)
+        else if (objectToFade.TryGetComponent(out RawImage rawImage))
         {
-            currentColor = tempRawImage.color;
-            mode = 2;
+            Color currentColor = rawImage.color;
+            changeAlphaAction = (float alpha) => rawImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
         }
         //Check if Text 
-        else if (tempText != null)
+        else if (objectToFade.TryGetComponent(out Text text))
         {
-            currentColor = tempText.color;
-            mode = 3;
+            Color currentColor = text.color;
+            changeAlphaAction = (float alpha) => text.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
         }
 
         //Check if 3D Object
-        else if (tempRenderer != null)
+        else if (objectToFade.TryGetComponent(out MeshRenderer meshRenderer))
         {
-            currentColor = tempRenderer.material.color;
-            mode = 4;
+            Color currentColor = meshRenderer.material.color;
+            changeAlphaAction = (float alpha) => meshRenderer.material.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
 
             //ENABLE FADE Mode on the material if not done already
-            tempRenderer.material.SetFloat("_Mode", 2);
-            tempRenderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-            tempRenderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            tempRenderer.material.SetInt("_ZWrite", 0);
-            tempRenderer.material.DisableKeyword("_ALPHATEST_ON");
-            tempRenderer.material.EnableKeyword("_ALPHABLEND_ON");
-            tempRenderer.material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-            tempRenderer.material.renderQueue = 3000;
+            meshRenderer.material.SetFloat("_Mode", 2);
+            meshRenderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            meshRenderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            meshRenderer.material.SetInt("_ZWrite", 0);
+            meshRenderer.material.DisableKeyword("_ALPHATEST_ON");
+            meshRenderer.material.EnableKeyword("_ALPHABLEND_ON");
+            meshRenderer.material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            meshRenderer.material.renderQueue = 3000;
         }
         else
         {
@@ -82,24 +76,7 @@ public class FadeInAndOutGameObject : MonoBehaviour
             counter += Time.deltaTime;
             float alpha = Mathf.Lerp(a, b, counter / duration);
 
-            switch (mode)
-            {
-                case 0:
-                    tempSPRenderer.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
-                    break;
-                case 1:
-                    tempImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
-                    break;
-                case 2:
-                    tempRawImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
-                    break;
-                case 3:
-                    tempText.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
-                    break;
-                case 4:
-                    tempRenderer.material.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
-                    break;
-            }
+            changeAlphaAction(alpha);
             yield return null;
         }
     }
