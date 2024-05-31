@@ -98,8 +98,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DissolveAmount: 0
-    - _DissolveAmount: 0
+    - _DissolveAmount: 9.933177
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -122,7 +121,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _TextureDissolveAmount: 0
+    - _TextureDissolveAmount: 9.960898
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
