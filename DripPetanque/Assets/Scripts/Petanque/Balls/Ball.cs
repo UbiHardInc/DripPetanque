@@ -18,6 +18,7 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     [Title("Ball Stop")]
     [SerializeField] private float m_speedToStop = 0.01f;
     [SerializeField] private Timer m_timerToStop;
+    [SerializeField] private float m_stopSoundThreshold = 0.5f;
 
 
     [NonSerialized] protected bool m_ballStopped = false;
@@ -27,11 +28,32 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     [NonSerialized] protected Rigidbody m_rigidbody;
 
     [NonSerialized] private PetanquePlayers m_ballOwner;
+    
+    [NonSerialized] private bool m_alreadyTouchedTheGround = false;
+    [NonSerialized] private bool m_ballSoundStopped = false;
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.layer == this.gameObject.layer)
+        {
+            if (m_touchedGround)
+            {
+                StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ball));
+            }
+            else
+            {
+                StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ballAir));
+            }
+        }
+        
         if (collision.gameObject.layer == m_groundLayer)
         {
+            //if not this, the call is made twice
+            if (!m_alreadyTouchedTheGround)
+            {
+                StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ground));
+                m_alreadyTouchedTheGround = true;
+            }
             OnGroundTouched();
         }
     }
@@ -41,6 +63,12 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
         if (m_ballStopped)
         {
             return;
+        }
+        
+        if (m_rigidbody.velocity.magnitude < m_stopSoundThreshold && !m_ballSoundStopped && m_timerToStop.IsRunning)
+        {
+            SoundManager.Instance.StopBallRolling();
+            m_ballSoundStopped = true;
         }
 
         if (m_touchedGround)
@@ -81,6 +109,7 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     {
         m_touchedGround = false;
         m_ballStopped = false;
+        m_ballSoundStopped = false;
     }
 
     #region IPoolOperationCallbackReciever Implementation

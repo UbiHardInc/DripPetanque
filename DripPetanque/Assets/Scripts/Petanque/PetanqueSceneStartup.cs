@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
@@ -23,6 +24,11 @@ public class PetanqueSceneStartup : MonoBehaviour
     private void Awake()
     {
         _ = StartCoroutine(Dissolve());
+    }
+
+    private void Start()
+    {
+        SoundManager.Instance.PlayMusic(true, "battleFull");
     }
 
     private IEnumerator Dissolve()

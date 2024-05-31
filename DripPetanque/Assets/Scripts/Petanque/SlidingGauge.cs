@@ -1,5 +1,4 @@
 using System;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityUtility.CustomAttributes;
@@ -13,13 +12,26 @@ public class SlidingGauge : MonoBehaviour
         BackAndForth,
     }
 
+    public enum ImageTypeEnum
+    {
+        Slider,
+        Rotation
+    }
+
     public float CurrentFilling => m_currentFilling;
 
     public float FillingSpeed { get => m_fillingSpeed; set => m_fillingSpeed = value; }
+    public ImageTypeEnum ImageType { get => m_imageType; set => m_imageType = value; }
     public FillingBehaviourEnum FillingBehaviour { get => m_fillingBehaviour; set => m_fillingBehaviour = value; }
+
 
     [SerializeField] private Image m_slider = null;
     [SerializeField] private float m_fillingSpeed = 0.0f;
+
+    [SerializeField] private ImageTypeEnum m_imageType = ImageTypeEnum.Slider;
+    [SerializeField, ShowIf(nameof(m_imageType), ImageTypeEnum.Rotation)]
+    private float m_rotationAngle = 45;
+
     [SerializeField] private FillingBehaviourEnum m_fillingBehaviour = FillingBehaviourEnum.BackAndForth;
     [SerializeField] private FillMethod m_fillMethod = FillMethod.Vertical;
 
@@ -36,28 +48,43 @@ public class SlidingGauge : MonoBehaviour
 
     [NonSerialized] private float m_currentFilling = 0.0f;
     [NonSerialized] private float m_inernalCurrentFilling = 0.0f;
+    [NonSerialized] private Vector3 m_negativePoint = new Vector3(0f, 0f, 0f);
+    [NonSerialized] private Vector3 m_positivePoint = new Vector3(0f, 0f, 0f);
 
     private void Start()
     {
-        m_slider.type = Image.Type.Filled;
-        switch (m_fillMethod)
+        switch (m_imageType)
         {
-            case FillMethod.Horizontal:
-                SetHorizontalFillMethodAndOrigin(m_horizontalOrigin);
+            case ImageTypeEnum.Slider:
+                m_slider.type = Image.Type.Filled;
+                switch (m_fillMethod)
+                {
+                    case FillMethod.Horizontal:
+                        SetHorizontalFillMethodAndOrigin(m_horizontalOrigin);
+                        break;
+                    case FillMethod.Vertical:
+                        SetVerticalFillMethodAndOrigin(m_verticalOrigin);
+                        break;
+                    case FillMethod.Radial90:
+                        SetRadial90FillMethodAndOrigin(m_origin90);
+                        break;
+                    case FillMethod.Radial180:
+                        SetRadial180FillMethodAndOrigin(m_origin180);
+                        break;
+                    case FillMethod.Radial360:
+                        SetRadial360FillMethodAndOrigin(m_origin360);
+                        break;
+                }
                 break;
-            case FillMethod.Vertical:
-                SetVerticalFillMethodAndOrigin(m_verticalOrigin);
-                break;
-            case FillMethod.Radial90:
-                SetRadial90FillMethodAndOrigin(m_origin90);
-                break;
-            case FillMethod.Radial180:
-                SetRadial180FillMethodAndOrigin(m_origin180);
-                break;
-            case FillMethod.Radial360:
-                SetRadial360FillMethodAndOrigin(m_origin360);
+            case ImageTypeEnum.Rotation:
+                //Get current position then add 50 to its Y axis
+                m_positivePoint = new Vector3(0f, 0f, m_rotationAngle);
+
+                //Get current position then substract -50 to its Y axis
+                m_negativePoint = new Vector3(0f, 0f, -m_rotationAngle);
                 break;
         }
+
     }
 
     // Update is called once per frame
@@ -76,7 +103,16 @@ public class SlidingGauge : MonoBehaviour
                 break;
         }
         m_currentFilling = Smoothstep(m_currentFilling);
-        m_slider.fillAmount = m_currentFilling;
+        switch (m_imageType)
+        {
+            case ImageTypeEnum.Slider:
+                m_slider.fillAmount = m_currentFilling;
+                break;
+            case ImageTypeEnum.Rotation:
+                m_slider.transform.eulerAngles = Vector3.Lerp(m_positivePoint, m_negativePoint, m_currentFilling);
+                break;
+        }
+
     }
 
     private static float Smoothstep(float x)
