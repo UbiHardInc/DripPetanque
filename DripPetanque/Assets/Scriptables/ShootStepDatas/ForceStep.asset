@@ -17,3 +17,4 @@ MonoBehaviour:
   m_axis: 4
   m_scaleOrRotation: 0
   m_range: {x: 1, y: 2}
+  m_infoPanelMessage: Press A to lock a strenght.

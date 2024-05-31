@@ -7,6 +7,7 @@ public class ComputerShootStep : BaseShootStep
     [SerializeField, Min(0.0f)] private float m_noiseAmount = 0.0f;
 
     [NonSerialized] private float m_givenValue = float.NaN;
+
     public override void Start()
     {
         m_stepOutputValue = float.IsNaN(m_givenValue) ? float.NaN : m_givenValue;
@@ -18,7 +19,7 @@ public class ComputerShootStep : BaseShootStep
 
     public override bool IsFinished()
     {
-        return !float.IsNaN(m_givenValue);
+        return true;
     }
 
     public override bool HasTempValue()

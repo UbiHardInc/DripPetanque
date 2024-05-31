@@ -18,7 +18,7 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
 
     [Button(nameof(TestShootDatasComputation)), ShowIf(nameof(m_buttonField))]
     [SerializeField] private bool m_buttonField = false;
-
+     
     protected override void StartSteps()
     {
         base.StartSteps();

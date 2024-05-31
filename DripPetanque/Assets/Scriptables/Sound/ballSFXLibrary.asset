@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1473082168aa604fbcbbc1547325eb9, type: 3}
+  m_Name: ballSFXLibrary
+  m_EditorClassIdentifier: 
+  SoundAudioClips:
+    m_keyValuePairsList:
+    - Key: ground1
+      Value: {fileID: 8300000, guid: 2be61029602445d4293799a4e8a590e9, type: 3}
+    - Key: ground2
+      Value: {fileID: 8300000, guid: b6e57541f6098ce448dd2b19430f7493, type: 3}
+    - Key: ground3
+      Value: {fileID: 8300000, guid: 5f7441b88632b7f469e18f23d4a0d87b, type: 3}
+    - Key: ground4
+      Value: {fileID: 8300000, guid: 2fe279bd0fe117d45b3c13f47d2c3e78, type: 3}
+    - Key: ground5
+      Value: {fileID: 8300000, guid: 541f25f2388c9a24a9d6a3ac1f7fba9b, type: 3}
+    - Key: ground6
+      Value: {fileID: 8300000, guid: 4770e1953fff72f4daf6b8c3333c414f, type: 3}
+    - Key: rolling1
+      Value: {fileID: 8300000, guid: e85c0f729e5f33d42bfe3ce76cee9bb4, type: 3}
+    - Key: rolling2
+      Value: {fileID: 8300000, guid: 388b88309f3a6474fa0c69e636da5349, type: 3}
+    - Key: rolling3
+      Value: {fileID: 8300000, guid: d7c966518b3cb9d47ac75fe25d9e5b30, type: 3}
+    - Key: ballAir1
+      Value: {fileID: 8300000, guid: 33081780a2c842147bba766fccd701a3, type: 3}
+    - Key: ballAir2
+      Value: {fileID: 8300000, guid: 2a932a3b989b2c749bd46a67e2cbd9b9, type: 3}
+    - Key: ballAir3
+      Value: {fileID: 8300000, guid: 91ea93b79c855f74fa360ecc89df20c5, type: 3}
+    - Key: ballAir4
+      Value: {fileID: 8300000, guid: 81fad66950391c048b5dd8e7e4ba13d9, type: 3}
+    - Key: ballAir5
+      Value: {fileID: 8300000, guid: cd55cfbf3c4d1ff4bade52b55d7cdc67, type: 3}
+    - Key: ballAir6
+      Value: {fileID: 8300000, guid: a4f169e64b0c4ef419a3df94b3adbf1b, type: 3}
+    - Key: ball1
+      Value: {fileID: 8300000, guid: f09bbdae43d520d4dbecc44e216dcb81, type: 3}
+    - Key: ball2
+      Value: {fileID: 8300000, guid: 91e6754bfca0d9444b6ff5b6ea9787a3, type: 3}
+    - Key: ball3
+      Value: {fileID: 8300000, guid: 81477e5dd050a3046927678ccaceee41, type: 3}
+    - Key: swoop1
+      Value: {fileID: 8300000, guid: 122b181680011c14b9ed2a200fd483b2, type: 3}
+    - Key: swoop2
+      Value: {fileID: 8300000, guid: 96a9f69404d98f540845aba7d1b7cfed, type: 3}
+    - Key: swoop3
+      Value: {fileID: 8300000, guid: 0ae723c42e4e1224db38447986d77a95, type: 3}
+    - Key: swoop4
+      Value: {fileID: 8300000, guid: 2fc653596e5ff2f4bacd25051387950e, type: 3}
+    - Key: swoop5
+      Value: {fileID: 8300000, guid: dbf347351434122478c05e78352185d2, type: 3}
+    - Key: swoop6
+      Value: {fileID: 8300000, guid: c8dd6cf41af28c54299b7ed79f00b3a3, type: 3}
+    - Key: swoop7
+      Value: {fileID: 8300000, guid: 014a86faedb8a484c9f8c7188076395d, type: 3}
+    - Key: swoop8
+      Value: {fileID: 8300000, guid: 592957dc5bb5e5c4faf4a12d983c44bf, type: 3}
+    - Key: swoop9
+      Value: {fileID: 8300000, guid: 8f2834ff29bed2a4b8cd8b6598179dca, type: 3}
+    - Key: swoop10
+      Value: {fileID: 8300000, guid: 75ac901498cdcce4fbf9c76000165c3c, type: 3}
+    - Key: swoop11
+      Value: {fileID: 8300000, guid: b240d3cd9f84b164b8a9940286d4fb91, type: 3}
+    - Key: swoop12
+      Value: {fileID: 8300000, guid: eed1fd4fb64e53541ac55d3013f494df, type: 3}

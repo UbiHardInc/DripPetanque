@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityUtility.Pools;
@@ -26,6 +27,7 @@ public class PetanqueSubGameManager : SubGameManager
 
     [SerializeField] private SceneTransitioner m_petanqueSceneLoader;
     [SerializeField] private ResultDisplay m_resultDisplay;
+    [SerializeField] private TurnChangeDisplay m_turnChangeDisplay;
 
     // Thrown balls
     [NonSerialized] private List<PooledObject<ControllableBall>> m_playerBalls = new List<PooledObject<ControllableBall>>();
@@ -83,7 +85,7 @@ public class PetanqueSubGameManager : SubGameManager
         m_jack.position = field.JackPosition.position;
         m_shootTurn = PetanquePlayers.Human;
 
-        NextTurn();
+        _ = StartCoroutine(NextTurn());
     }
 
     private void DisplayResult()
@@ -160,16 +162,18 @@ public class PetanqueSubGameManager : SubGameManager
     private void OnBallStopped(Ball ball)
     {
         ball.OnBallStopped -= OnBallStopped;
-        NextTurn();
+        _ = StartCoroutine(NextTurn());
     }
 
-    private void NextTurn()
+    private IEnumerator NextTurn()
     {
         if (m_computerThrownBalls + m_playerThrownBalls == 2 * m_gameSettings.BallsPerGame)
         {
             DisplayResult();
-            return;
+            yield break;
         }
+
+        PetanquePlayers latestPlayer = m_shootTurn;
         PetanquePlayers nextTurn = ComputeNextTurn();
         m_shootTurn = nextTurn == PetanquePlayers.None ? m_shootTurn : nextTurn;
 
@@ -178,10 +182,18 @@ public class PetanqueSubGameManager : SubGameManager
         switch (m_shootTurn)
         {
             case PetanquePlayers.Human:
+                if (m_shootTurn != latestPlayer || m_playerThrownBalls == 0)
+                {
+                    yield return m_turnChangeDisplay.DisplayTurn(true);
+                }
                 HumanShoot();
                 break;
 
             case PetanquePlayers.Computer:
+                if (m_shootTurn != latestPlayer)
+                {
+                    yield return m_turnChangeDisplay.DisplayTurn(false);
+                }
                 ComputerShoot();
                 break;
 
@@ -230,7 +242,7 @@ public class PetanqueSubGameManager : SubGameManager
         {
             return (closestBalls, PetanquePlayers.None);
         }
-        
+
         m_allBalls.Sort(BallPositionComparison);
 
         PetanquePlayers ballsOwner = m_allBalls[0].BallOwner;
