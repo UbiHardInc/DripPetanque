@@ -14,6 +14,7 @@ public class ShootStepData : ScriptableObject
     public Axis Axis => m_axis;
     public ScaleOrRotationEnum ScaleOrRotation => m_scaleOrRotation;
     public Vector2 Range => m_range;
+    public string InfoPanelMessage => m_infoPanelMessage;
 
     [SerializeField] private SlidingGauge.FillingBehaviourEnum m_fillingBehaviour;
     [SerializeField] private float m_gaugeSpeed;
@@ -21,5 +22,6 @@ public class ShootStepData : ScriptableObject
     [SerializeField] private Axis m_axis;
     [SerializeField] private ScaleOrRotationEnum m_scaleOrRotation;
     [SerializeField] private Vector2 m_range;
+    [SerializeField] private string m_infoPanelMessage;
 
 }

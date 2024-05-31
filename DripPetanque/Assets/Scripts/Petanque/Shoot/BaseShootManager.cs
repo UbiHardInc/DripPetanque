@@ -16,7 +16,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         Finished = 3,
     }
 
-    protected abstract PetanqueSubGameManager.PetanquePlayers Owner {  get; } 
+    protected abstract PetanqueSubGameManager.PetanquePlayers Owner { get; }
 
     public event Action<PooledObject<TBall>> OnBallSpawned;
 
@@ -32,7 +32,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     [SerializeField] protected TShootStep m_upDownStep;
     [Separator]
 
-    [SerializeField] private CustomSplineController m_splineController;
+    [SerializeField] protected CustomSplineController m_splineController;
     [SerializeField] private BallTrajectoryController m_trajectoryController;
 
     [SerializeField] private CallbackRecieverComponentPool<TBall> m_ballsPool;
@@ -82,6 +82,11 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         m_currentStep = 0;
         m_allSteps[m_currentStep].Start();
         m_currentState = ShootState.Steps;
+
+        if (Owner == PetanqueSubGameManager.PetanquePlayers.Human)
+        {
+            _ = StartCoroutine(SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.Low));
+        }
     }
 
     private void UpdateSteps(float deltaTime)
@@ -106,7 +111,6 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     {
         m_currentState = ShootState.LaunchBall;
 
-
         Debug.LogWarning($"Left-Right : {m_leftRightStep.StepOutputValue}");
         Debug.LogWarning($"Force : {m_forceStep.StepOutputValue}");
         Debug.LogWarning($"Up-Down : {m_upDownStep.StepOutputValue}");
@@ -118,6 +122,12 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         OnBallSpawned?.Invoke(requestedBall);
 
         m_trajectoryController.StartNewBall(requestedBall.Object);
+
+        if (Owner == PetanqueSubGameManager.PetanquePlayers.Human)
+        {
+            _ = StartCoroutine(SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.None));
+        }
+        _ = StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop));
     }
 
     private void OnBallStopped(Ball ball)

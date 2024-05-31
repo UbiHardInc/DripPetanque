@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3210854752982234865}
   - component: {fileID: 4040857010285356945}
   - component: {fileID: 5392843223402118641}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ControllableBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
