@@ -145,7 +145,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         {
             yield return new WaitUntil(() => m_ballSfxSource.isPlaying == false);
             
-            StartCoroutine(PlayBallSounds(BallSFXType.rolling, true));
+            yield return PlayBallSounds(BallSFXType.rolling, true);
         }
 
         if (sfxType == BallSFXType.rolling)
@@ -153,7 +153,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             yield return new WaitUntil(() => m_ballSfxSource.isPlaying == false);
             if (m_ballStillRolling)
             {
-                StartCoroutine(PlayBallSounds(BallSFXType.rolling));
+                yield return PlayBallSounds(BallSFXType.rolling);
             }
             else
             {

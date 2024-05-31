@@ -18,6 +18,7 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     [Title("Ball Stop")]
     [SerializeField] private float m_speedToStop = 0.01f;
     [SerializeField] private Timer m_timerToStop;
+    [SerializeField] private float m_stopSoundThreshold = 0.5f;
 
 
     [NonSerialized] protected bool m_ballStopped = false;
@@ -64,7 +65,7 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
             return;
         }
         
-        if (m_rigidbody.velocity.magnitude < 0.5f && !m_ballSoundStopped && m_timerToStop.IsRunning)
+        if (m_rigidbody.velocity.magnitude < m_stopSoundThreshold && !m_ballSoundStopped && m_timerToStop.IsRunning)
         {
             SoundManager.Instance.StopBallRolling();
             m_ballSoundStopped = true;

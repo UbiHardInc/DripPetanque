@@ -84,9 +84,9 @@ AudioMixerController:
   m_UpdateMode: 0
   m_ExposedParameters:
   - guid: 55d6a4ed2c6875d44a8d8e4682ce9a18
-    name: MyExposedParam
+    name: musicVol
   - guid: cf71417342c28054bab588666b0d80fb
-    name: MyExposedParam 1
+    name: sfxVol
   m_AudioMixerGroupViews:
   - guids:
     - b0ce1e2c5700f8342946c6aa21f618c3
