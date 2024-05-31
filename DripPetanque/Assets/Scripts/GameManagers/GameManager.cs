@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     [SerializeField] private InputActionAsset m_actionAsset;
     [SerializeField] private string m_commonActionMapName = "Common";
 
+    public SubGameManager CurrentSubGameManager => m_currentSubGameManager;
     [NonSerialized] private SubGameManager m_currentSubGameManager;
     [NonSerialized] private GameManagersSharedDatas m_sharedDatas;
 

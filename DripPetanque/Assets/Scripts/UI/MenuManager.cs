@@ -8,8 +8,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityUtility.CustomAttributes;
+using UnityUtility.Singletons;
 
-public class MenuManager : MonoBehaviour
+public class MenuManager : MonoBehaviourSingleton<MenuManager>
 {
     [Title("MainMenuVariables")]
     [SerializeField] private float m_timeForMenuToAppear = 6.30f;

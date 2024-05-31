@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityUtility.Singletons;
 using Random = UnityEngine.Random;
 
@@ -23,13 +24,16 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         Low,
         High
     }
+    
+    public SoundLibrary RadioLibrary => m_radioLibrary;
+    private RadioManager m_radioManager;
 
     [Header("Parameters")] 
     [SerializeField] private float musicVolume = 0.5f;
     [SerializeField] private float filtersSpeedRate = 0.2f;
-    
+
     [Header("MusicLibraries")] 
-    [SerializeField] private SoundLibrary m_radioLibrary;
+    [SerializeField] protected SoundLibrary m_radioLibrary;
     [SerializeField] private SoundLibrary m_battleMusicLibrary;
     
     [Header("SoundLibraries")] 
@@ -45,7 +49,8 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     [SerializeField] private AudioSource m_SFXLoopSource2;
     [SerializeField] private AudioSource m_ballSfxSource;
 
-    private bool m_isMusicWaiting = false;
+    public bool IsMusicWaiting => m_isMusicWaiting;
+    protected bool m_isMusicWaiting = false;
     
     //Ball variables
     //Count of every ball sfx to apply random at play
@@ -62,6 +67,8 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     // Start is called before the first frame update
     void Start()
     {
+        m_radioManager = RadioManager.Instance;
+        
         m_musicSource1.volume = musicVolume;
         m_musicSource2.volume = musicVolume;
         InitBallSounds();
@@ -215,7 +222,9 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     }
 
     #endregion
-    
+
+    #region PlayFunctions
+
     public void PlayMusic(bool isBattle, string soundName)
     {
         SoundLibrary selectedLibrary = isBattle ? m_battleMusicLibrary : m_radioLibrary;
@@ -242,7 +251,12 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             m_isMusicWaiting = false;
 
             m_musicSource1.clip = clip;
-            m_musicSource1.Play(); 
+            m_musicSource1.Play();
+            if (soundName.StartsWith("music"))
+            {
+                StartCoroutine(m_radioManager.ShowMusicDataInUI());
+            }
+            
         }
         else
         {
@@ -281,4 +295,38 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             Debug.LogError("This sound isn't in this library.");
         }
     }
+
+    public void StopAllAudioSources()
+    {
+        m_musicSource1.Stop();
+        m_musicSource2.Stop();
+        m_SFXSource1.Stop();
+        m_SFXSource2.Stop();
+        m_SFXLoopSource1.Stop();
+        m_SFXLoopSource2.Stop();
+        m_ballSfxSource.Stop();
+    }
+
+    public void StopAllMusicSources()
+    {
+        m_musicSource1.Stop();
+        m_musicSource2.Stop();
+    }
+
+    public void StopAllSfxSources()
+    {
+        m_SFXSource1.Stop();
+        m_SFXSource2.Stop();
+        m_SFXLoopSource1.Stop();
+        m_SFXLoopSource2.Stop();
+        m_ballSfxSource.Stop();
+    }
+
+    public void StopAllSfxLoopSources()
+    {
+        m_SFXLoopSource1.Stop();
+        m_SFXLoopSource2.Stop();
+    }
+
+    #endregion
 }
