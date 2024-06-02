@@ -15,10 +15,6 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
     [Title("Possible Targets")]
     [SerializeField] private Transform[] m_bonuses;
 
-
-    [Button(nameof(TestShootDatasComputation)), ShowIf(nameof(m_buttonField))]
-    [SerializeField] private bool m_buttonField = false;
-
     protected override void StartSteps()
     {
         base.StartSteps();
@@ -51,6 +47,7 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
 
     }
 
+    [ContextMenu(nameof(TestShootDatasComputation))]
     private void TestShootDatasComputation()
     {
         if (TryComputeSplineDatas(m_targetPoint.position, out SplineDatas splineDatas))

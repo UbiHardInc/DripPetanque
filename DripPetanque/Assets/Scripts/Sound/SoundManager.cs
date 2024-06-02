@@ -60,8 +60,9 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     private BattleFilters m_actualFilter = BattleFilters.None;
     
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         m_musicSource1.volume = musicVolume;
         m_musicSource2.volume = musicVolume;
         InitBallSounds();
