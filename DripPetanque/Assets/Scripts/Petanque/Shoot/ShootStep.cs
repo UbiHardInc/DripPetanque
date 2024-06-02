@@ -32,8 +32,6 @@ public class ShootStep : BaseShootStep
 
     [NonSerialized] private Vector3 m_startScaleOrRotation;
 
-    [NonSerialized] private float m_camTransitionTimer;
-
     public void Init(Transform arrow)
     {
         m_currentState = StepState.NotStarted;
@@ -48,7 +46,6 @@ public class ShootStep : BaseShootStep
         m_currentState = StepState.MovingCamera;
         VirtualCamerasManager.SwitchToCamera(m_cameraPosition, m_camTransitionTime);
         m_startScaleOrRotation = m_data.ScaleOrRotation == ScaleOrRotationEnum.Scale ? m_arrow.localScale : m_arrow.localRotation.eulerAngles;
-        m_camTransitionTimer = 0.0f;
         m_stepOutputValue = 0.0f;
         m_infoPanelText.text = m_data.InfoPanelMessage;
     }
