@@ -36,11 +36,9 @@ public class PetanqueSceneStartup : MonoBehaviour
         int materialDissolveAmountID = Shader.PropertyToID("_DissolveAmount");
         int materialTextureDissolveAmountID = Shader.PropertyToID("_TextureDissolveAmount");
 
-        m_dissolveMaterial.SetFloat(materialDissolveAmountID, m_dissolveHeightRange.x);
-        m_dissolveMaterial.SetFloat(materialTextureDissolveAmountID, m_dissolveHeightRange.x);
         // Initialize the dissolve height to the minimum value of the range
-        //DissolvableRenderersManager.SetDissolveAmount(m_dissolveHeightRange.x, materialDissolveAmountID);
-        //DissolvableRenderersManager.SetDissolveAmount(m_dissolveHeightRange.x, materialTextureDissolveAmountID);
+        DissolvableRenderersManager.SetDissolveAmount(m_dissolveHeightRange.x, materialDissolveAmountID);
+        DissolvableRenderersManager.SetDissolveAmount(m_dissolveHeightRange.x, materialTextureDissolveAmountID);
 
         yield return DissolveProperty(materialDissolveAmountID, m_dissolveTime);
         yield return DissolveProperty(materialTextureDissolveAmountID, m_textureDissolveTime);
@@ -57,9 +55,7 @@ public class PetanqueSceneStartup : MonoBehaviour
         while (!dissolveTimer.Update(Time.deltaTime))
         {
             newAmount = dissolveTimer.Progress.RemapFrom01(m_dissolveHeightRange);
-            m_dissolveMaterial.SetFloat(propertyID, newAmount);
-
-            //DissolvableRenderersManager.SetDissolveAmount(newAmount, propertyID);
+            DissolvableRenderersManager.SetDissolveAmount(newAmount, propertyID);
             yield return null;
         }
         dissolveTimer.Stop();
