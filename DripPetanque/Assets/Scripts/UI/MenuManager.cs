@@ -105,7 +105,7 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
 
     public void OpenPauseMenu()
     {
-        Debug.LogError("OpenPauseMenuCalled");
+        //Debug.LogError("OpenPauseMenuCalled");
         m_pauseMenu.SetActive(true);
 
         if (SceneManager.GetActiveScene().name != "EntryScene")

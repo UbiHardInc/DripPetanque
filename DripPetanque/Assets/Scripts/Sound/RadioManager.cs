@@ -6,26 +6,26 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityUtility.Singletons;
 using Random = System.Random;
 
 public class RadioManager : MonoBehaviourSingleton<RadioManager>
 {
-    [Header("ManagerReferences")] 
-    [SerializeField] private SoundManager m_soundManager;
-
-    [Header("RadioGameObjects")] 
-    [SerializeField] private TMP_Text artistNameText;
-    [SerializeField] private TMP_Text songNameText;
-
-    [Header("Parameters")] 
-    [SerializeField] private float timeRadioUiStay = 2f;
-
     public enum RadioClipType
     {
         music,
         interlude
     }
+    
+    private SoundManager m_soundManager;
+    
+    [Header("RadioGameObjects")] 
+    [SerializeField] private TMP_Text m_artistNameText;
+    [SerializeField] private TMP_Text m_songNameText;
+    
+    [Header("Parameters")] 
+    [SerializeField] private float m_timeRadioUiStay = 2f;
 
     private string m_musicTitle;
     private string m_musicArtist;
@@ -40,7 +40,6 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
         
         if (GameManager.Instance.CurrentSubGameManager.CorrespondingState == GameState.Exploration)
         {
-            m_soundManager.StopAllMusicSources();
             StartRadio();
         }
     }
@@ -61,6 +60,7 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
     private void StartRadio()
     {
         ResetMasterPlaylist();
+        m_soundManager.StopAllMusicSources();
         AddAudioToWait();
     }
 
@@ -108,7 +108,6 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
             {
                 break;
             }
-            
         }
 
         m_playlistPlayNumber = 0;
@@ -116,11 +115,12 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
 
     public IEnumerator ShowMusicDataInUI()
     {
-        artistNameText.text = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-")[1];
-        songNameText.text = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-")[2];
+        m_artistNameText.text = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-")[1];
+        m_songNameText.text = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-")[2];
         
+        //Todo :
         //Call animation to show the radio UI
-        yield return new WaitForSeconds(timeRadioUiStay);
+        yield return new WaitForSeconds(m_timeRadioUiStay);
         //Call animation ti hide the radio UI
     }
 }
