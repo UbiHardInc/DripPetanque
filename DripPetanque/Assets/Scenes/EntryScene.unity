@@ -729,6 +729,11 @@ PrefabInstance:
       propertyPath: m_turnChangeDisplay
       value: 
       objectReference: {fileID: 360320245}
+    - target: {fileID: 6211272391152182218, guid: 84a690e815500154b91b5af419cd0578,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_startState
