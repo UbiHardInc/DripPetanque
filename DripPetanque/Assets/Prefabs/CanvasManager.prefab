@@ -3627,7 +3627,6 @@ GameObject:
   - component: {fileID: 4386891157501511117}
   - component: {fileID: 7860451874674300262}
   - component: {fileID: 5919573670929492743}
-  - component: {fileID: 4011825072267232979}
   m_Layer: 5
   m_Name: RadioUI
   m_TagString: Untagged
@@ -3693,21 +3692,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4011825072267232979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6236801091575410729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2241b75847193545bdce222aa3f4f4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_artistNameText: {fileID: 4705099632893830410}
-  m_songNameText: {fileID: 3257762654600660586}
-  m_timeRadioUiStay: 2
 --- !u!1 &6294306733287915907
 GameObject:
   m_ObjectHideFlags: 0
