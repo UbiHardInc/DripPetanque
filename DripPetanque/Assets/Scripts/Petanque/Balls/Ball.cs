@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Pools;
 using UnityUtility.Timer;
-using static PetanqueSubGameManager;
 
 public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
 {
@@ -12,7 +11,7 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
 
     public Rigidbody Rigidbody => m_rigidbody;
 
-    public PetanquePlayers BallOwner { get => m_ballOwner; set => m_ballOwner = value; }
+    public BasePetanquePlayer BallOwner { get => m_ballOwner; set => m_ballOwner = value; }
 
     [SerializeField, Layer] private int m_groundLayer;
 
@@ -28,7 +27,7 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
 
     [NonSerialized] protected Rigidbody m_rigidbody;
 
-    [NonSerialized] private PetanquePlayers m_ballOwner;
+    [NonSerialized] private BasePetanquePlayer m_ballOwner;
     
     [NonSerialized] private bool m_alreadyTouchedTheGround = false;
     [NonSerialized] private bool m_ballSoundStopped = false;
@@ -41,11 +40,11 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
         {
             if (m_touchedGround)
             {
-                StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ball));
+                SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ball);
             }
             else
             {
-                StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ballAir));
+                SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ballAir);
             }
         }
         
@@ -54,7 +53,7 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
             //if not this, the call is made twice
             if (!m_alreadyTouchedTheGround)
             {
-                StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ground));
+                SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ground);
                 m_alreadyTouchedTheGround = true;
             }
             OnGroundTouched();
