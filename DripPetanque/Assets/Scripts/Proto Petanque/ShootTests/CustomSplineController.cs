@@ -35,11 +35,6 @@ public class CustomSplineController : MonoBehaviour
         InitIfNeeded();
     }
 
-    private void Update()
-    {
-        //UpdateSpline();
-    }
-
     private void InitIfNeeded()
     {
         if (!m_init)
@@ -84,7 +79,7 @@ public class CustomSplineController : MonoBehaviour
 
     public void SetSplineParameters(float yAngle, float xAngle, float force)
     {
-        Vector3 startPoint = transform.localPosition;
+        Vector3 startPoint = Vector3.zero;
 
         float forceMagnitude = force * m_forceMultiplier;
 
