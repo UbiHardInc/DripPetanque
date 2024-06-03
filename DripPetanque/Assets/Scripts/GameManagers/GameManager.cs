@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public DialogueSubGameManager DialogueSubGameManager => m_dialogueSubGameManager;
     public ExplorationSubGameManager ExplorationSubGameManager => m_explorationSubGameManager;
     public PetanqueSubGameManager PetanqueSubGameManager => m_petanqueSubGameManager;
+    public SubGameManager CurrentSubGameManager => m_currentSubGameManager;
 
     public GameManagersSharedDatas SharedDatas => m_sharedDatas;
 

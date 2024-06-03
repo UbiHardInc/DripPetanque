@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityUtility.Singletons;
 using Random = UnityEngine.Random;
@@ -24,19 +22,22 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         High
     }
 
-    [Header("Parameters")] 
+    public SoundLibrary RadioLibrary => m_radioLibrary;
+    private RadioManager m_radioManager;
+
+    [Header("Parameters")]
     [SerializeField] private float musicVolume = 0.5f;
     [SerializeField] private float filtersSpeedRate = 0.2f;
-    
-    [Header("MusicLibraries")] 
-    [SerializeField] private SoundLibrary m_radioLibrary;
+
+    [Header("MusicLibraries")]
+    [SerializeField] protected SoundLibrary m_radioLibrary;
     [SerializeField] private SoundLibrary m_battleMusicLibrary;
-    
-    [Header("SoundLibraries")] 
+
+    [Header("SoundLibraries")]
     [SerializeField] private SoundLibrary m_ballSFXLibrary;
     [SerializeField] private SoundLibrary m_UiSFXLibrary;
 
-    [Header("AudioSources")] 
+    [Header("AudioSources")]
     [SerializeField] private AudioSource m_musicSource1;
     [SerializeField] private AudioSource m_musicSource2;
     [SerializeField] private AudioSource m_SFXSource1;
@@ -45,8 +46,9 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     [SerializeField] private AudioSource m_SFXLoopSource2;
     [SerializeField] private AudioSource m_ballSfxSource;
 
-    private bool m_isMusicWaiting = false;
-    
+    public bool IsMusicWaiting => m_isMusicWaiting;
+    protected bool m_isMusicWaiting = false;
+
     //Ball variables
     //Count of every ball sfx to apply random at play
     private int m_ballGroundNumber;
@@ -55,14 +57,16 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     private int m_ballToBallGroundNumber;
     private int m_swoopNumber;
     private bool m_ballStillRolling = false;
-    
+
     //Battle variables
     private BattleFilters m_actualFilter = BattleFilters.None;
-    
+
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        m_radioManager = RadioManager.Instance;
+
         m_musicSource1.volume = musicVolume;
         m_musicSource2.volume = musicVolume;
         InitBallSounds();
@@ -94,6 +98,8 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                     case BallSFXType.swoop:
                         m_swoopNumber++;
                         break;
+                    default:
+                        break;
                 }
                 i++;
             }
@@ -113,7 +119,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         {
             case BallSFXType.ground:
                 rndClip = Random.Range(1, m_ballGroundNumber + 1);
-                m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
+                _ = m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
                 break;
             case BallSFXType.rolling:
                 if (firstRolling)
@@ -121,30 +127,32 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                     m_ballStillRolling = true;
                 }
                 rndClip = Random.Range(1, m_ballRollingNumber + 1);
-                m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
+                _ = m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
                 break;
             case BallSFXType.ballAir:
                 rndClip = Random.Range(1, m_ballToBallAirNumber + 1);
-                m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
+                _ = m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
                 break;
             case BallSFXType.ball:
                 rndClip = Random.Range(1, m_ballToBallGroundNumber + 1);
-                m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
+                _ = m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
                 break;
             case BallSFXType.swoop:
                 rndClip = Random.Range(1, m_swoopNumber + 1);
-                m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
+                _ = m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
+                break;
+            default:
                 break;
         }
-        
+
         //Debug.LogError("Ball sounds played : " + sfxType.ToString() + rndClip.ToString());
-        
+
         m_ballSfxSource.PlayOneShot(clip);
 
         if (sfxType == BallSFXType.ground || sfxType == BallSFXType.ballAir)
         {
             yield return new WaitUntil(() => m_ballSfxSource.isPlaying == false);
-            
+
             yield return PlayBallSoundsCoroutine(BallSFXType.rolling, true);
         }
 
@@ -178,14 +186,14 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         _ = StartCoroutine(SwitchBattleMusicCoroutine(filter));
     }
 
-    private  IEnumerator SwitchBattleMusicCoroutine(BattleFilters filter)
+    private IEnumerator SwitchBattleMusicCoroutine(BattleFilters filter)
     {
         if (filter != m_actualFilter)
         {
             //Debug.LogError("Battle filter switch called.");
-            
+
             m_actualFilter = filter;
-        
+
             AudioSource playingSource = m_musicSource1.isPlaying ? m_musicSource1 : m_musicSource2;
             AudioSource nextSource = m_musicSource1.isPlaying ? m_musicSource2 : m_musicSource1;
             AudioClip nextSourceClip = null;
@@ -193,13 +201,15 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             switch (filter)
             {
                 case BattleFilters.High:
-                    m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleFullHigh", out nextSourceClip);
+                    _ = m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleFullHigh", out nextSourceClip);
                     break;
                 case BattleFilters.Low:
-                    m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleFullLow", out nextSourceClip);
+                    _ = m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleFullLow", out nextSourceClip);
                     break;
                 case BattleFilters.None:
-                    m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleFull", out nextSourceClip);
+                    _ = m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleFull", out nextSourceClip);
+                    break;
+                default:
                     break;
             }
             nextSource.clip = nextSourceClip;
@@ -214,54 +224,63 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
                 yield return null;
             }
-        
+
             playingSource.Stop();
         }
     }
 
     #endregion
-    
+
+    #region PlayFunctions
+
     public void PlayMusic(bool isBattle, string soundName)
     {
         SoundLibrary selectedLibrary = isBattle ? m_battleMusicLibrary : m_radioLibrary;
-        
-        AudioClip clip = null;
-        selectedLibrary.SoundAudioClips.TryGetValue(soundName, out clip);
+
+        _ = selectedLibrary.SoundAudioClips.TryGetValue(soundName, out AudioClip clip);
 
         m_musicSource1.clip = clip;
-        m_musicSource1.Play(); 
-        
+        m_musicSource1.Play();
+
     }
 
-    public IEnumerator PlayMusicAndWaitEnd(bool isBattle, string soundName)
+    public void PlayMusicAndWaitEnd(bool isBattle, string soundName)
+    {
+        _ = StartCoroutine(PlayMusicAndWaitEndCoroutine(isBattle, soundName));
+    }
+
+    public IEnumerator PlayMusicAndWaitEndCoroutine(bool isBattle, string soundName)
     {
         if (!m_isMusicWaiting)
         {
             SoundLibrary selectedLibrary = isBattle ? m_battleMusicLibrary : m_radioLibrary;
-        
-            AudioClip clip = null;
-            selectedLibrary.SoundAudioClips.TryGetValue(soundName, out clip);
-            
+
+            _ = selectedLibrary.SoundAudioClips.TryGetValue(soundName, out AudioClip clip);
+
             m_isMusicWaiting = true;
             yield return new WaitUntil(() => m_musicSource1.isPlaying == false);
             m_isMusicWaiting = false;
 
             m_musicSource1.clip = clip;
-            m_musicSource1.Play(); 
+            m_musicSource1.Play();
+            if (soundName.StartsWith("music"))
+            {
+                _ = StartCoroutine(m_radioManager.ShowMusicDataInUI());
+            }
+
         }
         else
         {
             Debug.LogError("There is already a music waiting to be played.");
         }
-        
+
     }
 
     public void PlayUISFX(string soundName, bool isLooping = false)
     {
         if (m_UiSFXLibrary.SoundAudioClips.ContainsKey(soundName))
         {
-            AudioClip clip = null;
-            m_UiSFXLibrary.SoundAudioClips.TryGetValue(soundName, out clip);
+            _ = m_UiSFXLibrary.SoundAudioClips.TryGetValue(soundName, out AudioClip clip);
             if (isLooping)
             {
                 if (m_SFXLoopSource1.isPlaying)
@@ -286,4 +305,38 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             Debug.LogError("This sound isn't in this library.");
         }
     }
+
+    public void StopAllAudioSources()
+    {
+        m_musicSource1.Stop();
+        m_musicSource2.Stop();
+        m_SFXSource1.Stop();
+        m_SFXSource2.Stop();
+        m_SFXLoopSource1.Stop();
+        m_SFXLoopSource2.Stop();
+        m_ballSfxSource.Stop();
+    }
+
+    public void StopAllMusicSources()
+    {
+        m_musicSource1.Stop();
+        m_musicSource2.Stop();
+    }
+
+    public void StopAllSfxSources()
+    {
+        m_SFXSource1.Stop();
+        m_SFXSource2.Stop();
+        m_SFXLoopSource1.Stop();
+        m_SFXLoopSource2.Stop();
+        m_ballSfxSource.Stop();
+    }
+
+    public void StopAllSfxLoopSources()
+    {
+        m_SFXLoopSource1.Stop();
+        m_SFXLoopSource2.Stop();
+    }
+
+    #endregion
 }
