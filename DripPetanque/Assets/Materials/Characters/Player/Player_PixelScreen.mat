@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PixelScreen
+  m_Name: Player_PixelScreen
   m_Shader: {fileID: -6465566751694194690, guid: 88be3a53379881445a239ec5e542f13b,
     type: 3}
   m_Parent: {fileID: 0}
