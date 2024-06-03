@@ -7,7 +7,7 @@ using UnityUtility.Utils;
 using static ShootStepData;
 
 [Serializable]
-public class ShootStep : BaseShootStep
+public class HumanShootStep : BaseShootStep
 {
     private static readonly Vector2 s_gaugeRange = new Vector2(0, 1);
 
@@ -55,7 +55,7 @@ public class ShootStep : BaseShootStep
         switch (m_currentState)
         {
             case StepState.NotStarted:
-                Debug.LogWarning($"{nameof(Update)} should not be called on a {nameof(ShootStep)} that did not start");
+                Debug.LogWarning($"{nameof(Update)} should not be called on a {nameof(HumanShootStep)} that did not start");
                 break;
             case StepState.MovingCamera:
                 MoveCamera(deltaTime);
@@ -64,7 +64,7 @@ public class ShootStep : BaseShootStep
                 UpdateGauge(deltaTime);
                 break;
             case StepState.Finished:
-                Debug.LogWarning($"{nameof(Update)} should no longer be called on a {nameof(ShootStep)} that already finished");
+                Debug.LogWarning($"{nameof(Update)} should no longer be called on a {nameof(HumanShootStep)} that already finished");
                 break;
             default:
                 break;
@@ -86,6 +86,8 @@ public class ShootStep : BaseShootStep
             case ScaleOrRotationEnum.Rotation:
                 m_arrow.localRotation = Quaternion.Euler(m_startScaleOrRotation);
                 break;
+            default:
+                break;
         }
     }
 
@@ -94,6 +96,11 @@ public class ShootStep : BaseShootStep
         base.Dispose();
 
         VirtualCamerasManager.UnRegisterCamera(m_cameraPosition);
+    }
+
+    public override void Reset()
+    {
+        base.Reset();
     }
 
     private void MoveCamera(float deltaTime)
@@ -146,6 +153,8 @@ public class ShootStep : BaseShootStep
                 Vector3 axisVal = m_data.Axis.ToVector() * gaugeValue;
                 Vector3 newRotation = m_startScaleOrRotation + axisVal;
                 m_arrow.localRotation = Quaternion.Euler(newRotation);
+                break;
+            default:
                 break;
         }
 

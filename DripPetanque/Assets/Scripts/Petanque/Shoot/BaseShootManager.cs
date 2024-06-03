@@ -16,7 +16,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         Finished = 3,
     }
 
-    protected abstract PetanqueSubGameManager.PetanquePlayers Owner { get; }
+    protected BasePetanquePlayer Owner { get; private set; }
 
     public event Action<PooledObject<TBall>> OnBallSpawned;
 
@@ -44,7 +44,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     [NonSerialized] protected int m_currentStep = 0;
 
 
-    public virtual void Init()
+    public virtual void Init(BasePetanquePlayer owner)
     {
         m_allSteps = new TShootStep[]
         {
@@ -52,9 +52,15 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
             m_upDownStep,
             m_forceStep,
         };
+        Owner = owner;
     }
 
-    protected virtual void Update()
+    public void StartShoot()
+    {
+        StartSteps();
+    }
+
+    public virtual void UpdateShoot()
     {
         switch (m_currentState)
         {
@@ -72,9 +78,9 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         }
     }
 
-    public void StartShoot()
+    public virtual void Reset()
     {
-        StartSteps();
+        m_allSteps.ForEach(step => step.Reset());
     }
 
     protected virtual void StartSteps()
@@ -83,9 +89,9 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         m_allSteps[m_currentStep].Start();
         m_currentState = ShootState.Steps;
 
-        if (Owner == PetanqueSubGameManager.PetanquePlayers.Human)
+        if (Owner.PlayerType == PetanquePlayerType.Human)
         {
-            _ = StartCoroutine(SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.Low));
+            SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.Low);
         }
     }
 
@@ -123,11 +129,11 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
 
         m_trajectoryController.StartNewBall(requestedBall.Object);
 
-        if (Owner == PetanqueSubGameManager.PetanquePlayers.Human)
+        if (Owner.PlayerType == PetanquePlayerType.Human)
         {
-            _ = StartCoroutine(SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.None));
+            SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.None);
         }
-        _ = StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop));
+        SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop);
     }
 
     private void OnBallStopped(Ball ball)
