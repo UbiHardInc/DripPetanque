@@ -65,19 +65,14 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     private BattleFilters m_actualFilter = BattleFilters.None;
     
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         m_radioManager = RadioManager.Instance;
         
         m_musicSource1.volume = musicVolume;
         m_musicSource2.volume = musicVolume;
         InitBallSounds();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     #region BallFunctions
@@ -111,8 +106,13 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             }
         }
     }
-    
-    public IEnumerator PlayBallSounds(BallSFXType sfxType, bool firstRolling = false)
+
+    public void PlayBallSounds(BallSFXType sfxType, bool firstRolling = false)
+    {
+        _ = StartCoroutine(PlayBallSoundsCoroutine(sfxType, firstRolling));
+    }
+
+    private IEnumerator PlayBallSoundsCoroutine(BallSFXType sfxType, bool firstRolling = false)
     {
         AudioClip clip = null;
         int rndClip = 1;
@@ -152,7 +152,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         {
             yield return new WaitUntil(() => m_ballSfxSource.isPlaying == false);
             
-            yield return PlayBallSounds(BallSFXType.rolling, true);
+            yield return PlayBallSoundsCoroutine(BallSFXType.rolling, true);
         }
 
         if (sfxType == BallSFXType.rolling)
@@ -160,7 +160,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             yield return new WaitUntil(() => m_ballSfxSource.isPlaying == false);
             if (m_ballStillRolling)
             {
-                yield return PlayBallSounds(BallSFXType.rolling);
+                yield return PlayBallSoundsCoroutine(BallSFXType.rolling);
             }
             else
             {
@@ -180,7 +180,12 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     #region BattleFunctions
 
-    public IEnumerator SwitchBattleMusic(BattleFilters filter)
+    public void SwitchBattleMusic(BattleFilters filter)
+    {
+        _ = StartCoroutine(SwitchBattleMusicCoroutine(filter));
+    }
+
+    private  IEnumerator SwitchBattleMusicCoroutine(BattleFilters filter)
     {
         if (filter != m_actualFilter)
         {

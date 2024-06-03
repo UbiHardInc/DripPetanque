@@ -1,18 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ShootManager : BaseShootManager<ShootStep, ControllableBall>
+public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBall>
 {
-    protected override PetanqueSubGameManager.PetanquePlayers Owner => PetanqueSubGameManager.PetanquePlayers.Human;
-
     [SerializeField] private Transform m_arrow;
     [SerializeField] private Transform m_arrowPivot;
     [SerializeField] private InputActionReference m_startShootInput;
 
-
-    public override void Init()
+    public override void Init(BasePetanquePlayer owner)
     {
-        base.Init();
+        base.Init(owner);
 
         m_arrow.gameObject.SetActive(false);
 

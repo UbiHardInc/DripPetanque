@@ -20,6 +20,11 @@ public abstract class BaseShootStep
     public abstract bool IsFinished();
     public abstract bool HasTempValue();
 
+    public virtual void Reset()
+    {
+
+    }
+
     public virtual void Dispose()
     {
 

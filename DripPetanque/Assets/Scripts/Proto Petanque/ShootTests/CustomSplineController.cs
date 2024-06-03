@@ -1,6 +1,5 @@
 using System;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityUtility.CustomAttributes;
@@ -10,9 +9,6 @@ public class CustomSplineController : MonoBehaviour
 {
     public float ForceMultiplier => m_forceMultiplier;
     public float AttractionFactor => m_attractionFactor;
-
-    [SerializeField] private Transform m_startPoint = null;
-    [SerializeField] private Transform m_endPoint = null;
 
     [SerializeField, Range(0.0f, 2.0f)] private float m_attractionFactor = 0.0f;
 
@@ -39,19 +35,14 @@ public class CustomSplineController : MonoBehaviour
         InitIfNeeded();
     }
 
-    private void Update()
-    {
-        //UpdateSpline();
-    }
-
     private void InitIfNeeded()
     {
         if (!m_init)
         {
             m_spline = m_splineComponent.Spline;
 
-            m_firstKnot = new BezierKnot(m_startPoint.position, float3.zero, float3.zero, quaternion.identity);
-            m_lastKnot = new BezierKnot(m_endPoint.position, float3.zero, float3.zero, quaternion.identity);
+            m_firstKnot = new BezierKnot(transform.localPosition, float3.zero, float3.zero, quaternion.identity);
+            m_lastKnot = new BezierKnot(transform.localPosition, float3.zero, float3.zero, quaternion.identity);
             m_spline.Knots = new BezierKnot[2] { m_firstKnot, m_lastKnot };
 
             m_spline.SetTangentMode(TangentMode.Mirrored);
@@ -60,21 +51,19 @@ public class CustomSplineController : MonoBehaviour
         }
     }
 
-    private void UpdateSpline(Vector3 attractionPoint)
+    private void UpdateSpline(Vector3 startPoint, Vector3 endPoint, Vector3 attractionPoint)
     {
         InitIfNeeded();
 
-        Vector3 startPosition = m_startPoint.position;
-        Vector3 endPosition = m_endPoint.position;
 
         m_attractionPointPosition = attractionPoint;
 
-        m_firstKnot.Position = startPosition;
-        m_tangentStart = (attractionPoint - startPosition) * m_attractionFactor;
+        m_firstKnot.Position = startPoint;
+        m_tangentStart = (attractionPoint - startPoint) * m_attractionFactor;
         m_firstKnot.TangentOut = m_tangentStart;
 
-        m_lastKnot.Position = endPosition;
-        m_tangentEnd = (attractionPoint - endPosition) * -m_attractionFactor;
+        m_lastKnot.Position = endPoint;
+        m_tangentEnd = (attractionPoint - endPoint) * -m_attractionFactor;
         m_lastKnot.TangentOut = m_tangentEnd;
 
 
@@ -90,7 +79,7 @@ public class CustomSplineController : MonoBehaviour
 
     public void SetSplineParameters(float yAngle, float xAngle, float force)
     {
-        m_startPoint.position = transform.position;
+        Vector3 startPoint = Vector3.zero;
 
         float forceMagnitude = force * m_forceMultiplier;
 
@@ -100,11 +89,11 @@ public class CustomSplineController : MonoBehaviour
         Vector3 projectedAttractionPoint = splineForward * forceMagnitude;
 
         Vector3 attractionPoint = projectedAttractionPoint + splineUp * Mathf.Tan(xAngle * Mathf.Deg2Rad) * forceMagnitude;
-        attractionPoint = m_startPoint.position + attractionPoint;
+        attractionPoint += startPoint;
 
-        m_endPoint.position = projectedAttractionPoint * 2;
+        Vector3 endPoint = startPoint + projectedAttractionPoint * 2;
 
-        UpdateSpline(attractionPoint);
+        UpdateSpline(startPoint, endPoint, attractionPoint);
     }
 
 #if UNITY_EDITOR
@@ -131,7 +120,7 @@ public class CustomSplineController : MonoBehaviour
         Gizmos.DrawLine(m_firstKnot.Position, m_firstKnot.Position.ToVector3() + m_tangentStart);
         Gizmos.DrawLine(m_lastKnot.Position, m_lastKnot.Position.ToVector3() - m_tangentEnd);
 
-        Span<Vector3> splinePoints = stackalloc Vector3[4] 
+        Span<Vector3> splinePoints = stackalloc Vector3[4]
         {
             m_firstKnot.Position,
             m_firstKnot.Position.ToVector3() + m_tangentStart,

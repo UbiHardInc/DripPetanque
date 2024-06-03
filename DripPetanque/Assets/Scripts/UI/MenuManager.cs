@@ -164,7 +164,7 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
             m_sfxSlider.value -= 0.1f;
         }
         _ = m_sfxMixerGroup.audioMixer.SetFloat("sfxVol", Mathf.Log10(m_sfxSlider.value) * 20);
-        _ = StartCoroutine(SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop));
+        SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop);
 
     }
 

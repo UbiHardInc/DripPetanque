@@ -179,6 +179,8 @@ MonoBehaviour:
   m_petanqueSceneLoader: {fileID: 7162645624520431926}
   m_resultDisplay: {fileID: 0}
   m_turnChangeDisplay: {fileID: 0}
+  m_defaultGameSettings: {fileID: 11400000, guid: 43a5056ccb4b29044821e1fa3015a879,
+    type: 2}
 --- !u!1 &6521977095962087902
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,9 +503,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d1fe2ccfb157f49a962ef1060763ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_sceneToTransitionTo:
-    m_sceneAsset: {fileID: 102900000, guid: f0b569dc47fb7054c9ac35e969e21225, type: 3}
-    m_scenePath: Assets/Scenes/Proto_Petanque.unity
   m_fadeOut: 0
   m_cache: {fileID: 0}
   m_fadeTimer:

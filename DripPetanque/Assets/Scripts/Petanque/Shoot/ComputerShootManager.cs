@@ -5,8 +5,6 @@ using UnityUtility.Utils;
 
 public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
 {
-    protected override PetanqueSubGameManager.PetanquePlayers Owner => PetanqueSubGameManager.PetanquePlayers.Computer;
-
     [Title("Target Zone")]
     [SerializeField] private float m_targetZoneCenterDistance;
     [SerializeField] private Vector2 m_targetZoneSize;
@@ -15,10 +13,6 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
     [Title("Possible Targets")]
     [SerializeField] private Transform[] m_bonuses;
 
-
-    [Button(nameof(TestShootDatasComputation)), ShowIf(nameof(m_buttonField))]
-    [SerializeField] private bool m_buttonField = false;
-     
     protected override void StartSteps()
     {
         base.StartSteps();
@@ -43,7 +37,7 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
         if (!found)
         {
             Debug.LogError("Failed to find any bonus in range : shooting at random");
-            foreach(ComputerShootStep step in m_allSteps)
+            foreach (ComputerShootStep step in m_allSteps)
             {
                 step.SetRandomValue();
             }
@@ -51,6 +45,7 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
 
     }
 
+    [ContextMenu(nameof(TestShootDatasComputation))]
     private void TestShootDatasComputation()
     {
         if (TryComputeSplineDatas(m_targetPoint.position, out SplineDatas splineDatas))
@@ -68,7 +63,7 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
     {
         splineDatas = default;
 
-        Vector3 startPosition = transform.position;
+        Vector3 startPosition = Vector3.zero;
 
         float attractionFactor = m_splineController.AttractionFactor;
         Transform slineControllerTransform = m_splineController.transform;
@@ -227,7 +222,7 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
 
     private void OnDrawGizmos()
     {
-        Vector3 center = transform.position + transform.forward * m_targetZoneCenterDistance;
+        Vector3 center = m_splineController.transform.position + m_splineController.transform.forward * m_targetZoneCenterDistance;
 
         Vector3 plb = center + new Vector3(-m_targetZoneSize.x / 2, 0, -m_targetZoneSize.y / 2);
         Vector3 plt = center + new Vector3(-m_targetZoneSize.x / 2, 0, m_targetZoneSize.y / 2);

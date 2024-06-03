@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 152805006f0a2b445afa175c51f814fe, type: 3}
   m_Name: DefaultSettings
   m_EditorClassIdentifier: 
+  m_petanqueScene:
+    m_sceneAsset: {fileID: 102900000, guid: f0b569dc47fb7054c9ac35e969e21225, type: 3}
+    m_scenePath: Assets/Scenes/Proto_Petanque.unity
   m_ballsPerGame: 3
   m_pointsToWin: 13
+  m_exitState: 4
