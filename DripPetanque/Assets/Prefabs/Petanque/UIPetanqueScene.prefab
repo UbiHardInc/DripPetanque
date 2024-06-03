@@ -84,6 +84,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6563040701984719043}
+  - component: {fileID: 5543922876993444346}
   m_Layer: 5
   m_Name: InfoPanelUI
   m_TagString: Untagged
@@ -112,6 +113,20 @@ RectTransform:
   m_AnchoredPosition: {x: -681.8506, y: -109.331924}
   m_SizeDelta: {x: 435.03662, y: 315.1406}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5543922876993444346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420048012592376071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2dc5e797d51134890b129fc4c8c05e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_text: {fileID: 1757770878178219733}
+  m_objectToDeactivate: {fileID: 6563040701984719043}
 --- !u!1 &753244299411095945
 GameObject:
   m_ObjectHideFlags: 0
