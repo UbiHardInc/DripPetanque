@@ -30,6 +30,13 @@ public class ComputerShootStep : BaseShootStep
     public override void Dispose()
     {
         base.Dispose();
+        Reset();
+    }
+
+    public override void Reset()
+    {
+        base.Reset();
+        m_stepOutputValue = float.NaN;
         m_givenValue = float.NaN;
     }
 
@@ -43,6 +50,7 @@ public class ComputerShootStep : BaseShootStep
 
     public void SetRandomValue()
     {
-        m_stepOutputValue = Mathf.Lerp(Range.x, Range.y, UnityEngine.Random.value);
+        m_givenValue = Mathf.Lerp(Range.x, Range.y, UnityEngine.Random.value);
+        m_stepOutputValue = m_givenValue;
     }
 }

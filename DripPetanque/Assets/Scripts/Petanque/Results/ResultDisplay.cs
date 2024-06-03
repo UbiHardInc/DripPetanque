@@ -8,18 +8,29 @@ public class ResultDisplay : MonoBehaviour
     [SerializeField] private InputActionReference m_endResultInput;
     [SerializeField] private TMP_Text m_text;
 
-    [NonSerialized] private Action m_onDisplayResultEnds;
+    [NonSerialized] private Action m_resultDisplayEndCallback;
 
     public void Init()
     {
         gameObject.SetActive(false);
     }
 
-    public void DislayResult(ResultDatas result, Action onDisplayResultEnds)
+    public void DislayGameResult(GameResultDatas result, Action resultDisplayEndCallback)
     {
         gameObject.SetActive(true);
-        m_text.text = $"{result.Winner} won the game with {result.Points} points";
-        m_onDisplayResultEnds = onDisplayResultEnds;
+        m_text.text = $"{result.Winner.PlayerName} won the game with {result.Winner.CurrentScore} points";
+        m_resultDisplayEndCallback = resultDisplayEndCallback;
+        m_endResultInput.action.performed += OnEndResultInputPerformed;
+    }
+
+    public void DislayRoundResult(RoundResultDatas result, Action resultDisplayEndCallback)
+    {
+        int roundIndex = result.RoundIndex;
+        BasePetanquePlayer winner = result.Winner;
+        m_text.text = $"{winner.PlayerName} won the round {roundIndex} with {winner.GetResultForRound(roundIndex).Score} points and now has {winner.CurrentScore}";
+
+        gameObject.SetActive(true);
+        m_resultDisplayEndCallback = resultDisplayEndCallback;
         m_endResultInput.action.performed += OnEndResultInputPerformed;
     }
 
@@ -27,6 +38,7 @@ public class ResultDisplay : MonoBehaviour
     {
         gameObject.SetActive(false);
         m_endResultInput.action.performed -= OnEndResultInputPerformed;
-        m_onDisplayResultEnds();
+        m_resultDisplayEndCallback();
     }
+
 }
