@@ -1,5 +1,5 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Timer;
@@ -10,9 +10,7 @@ public class PetanqueSceneStartup : MonoBehaviour
     [Title("Petanque Scene Datas")]
     [SerializeField] private PetanqueSceneDatas m_petanqueSceneDatas;
 
-    [SerializeField] private PetanqueGameSettings m_gameSettings;
-    [SerializeField] private ShootManager m_playerShootManager;
-    [SerializeField] private ComputerShootManager m_computerShootManager;
+    [SerializeField] private List<BasePetanquePlayer> m_petanquePlayers;
     [SerializeField] private PetanqueField m_field;
 
     [Title("Terrain Dissolve")]
@@ -63,9 +61,7 @@ public class PetanqueSceneStartup : MonoBehaviour
 
     private void OnSceneReady()
     {
-        m_petanqueSceneDatas.GameSettings = m_gameSettings;
-        m_petanqueSceneDatas.PlayerShootManager = m_playerShootManager;
-        m_petanqueSceneDatas.ComputerShootManager = m_computerShootManager;
+        m_petanqueSceneDatas.PetanquePlayers = m_petanquePlayers;
         m_petanqueSceneDatas.Field = m_field;
 
         m_petanqueSceneDatas.NotifyDatasFilled();
