@@ -20,6 +20,9 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     [SerializeField] private Timer m_timerToStop;
     [SerializeField] private float m_stopSoundThreshold = 0.5f;
 
+    [Title("Score")]
+    [SerializeField] private int m_baseBallScore = 1;
+
 
     [NonSerialized] protected bool m_ballStopped = false;
     [NonSerialized] protected bool m_touchedGround = false;
@@ -32,7 +35,7 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     [NonSerialized] private bool m_alreadyTouchedTheGround = false;
     [NonSerialized] private bool m_ballSoundStopped = false;
 
-    private List<BonusBase> m_bonusBases = new List<BonusBase>();
+    [NonSerialized] private List<BonusBase> m_bonuses = new List<BonusBase>();
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -100,27 +103,20 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
         m_grounded = true;
         m_touchedGround = true;
 
-        if (m_bonusBases.Count > 0)
+        if (m_bonuses.Count > 0)
         {
-            foreach (BonusBase bonus in m_bonusBases)
+            foreach (BonusBase bonus in m_bonuses)
             {
                 bonus.OnTounchGround();
             }
         }
     }
 
-    private void StopBall()
+    public int GetBallScore()
     {
-        m_ballStopped = true;
-        OnBallStopped?.Invoke(this);
-
-        if(m_bonusBases.Count > 0)
-        {
-            foreach(BonusBase bonus in m_bonusBases)
-            {
-                bonus.OnBallStop();
-            }
-        }
+        int score = m_baseBallScore;
+        m_bonuses.ForEach(bonus => bonus.ChangeBallScore(ref score));
+        return score;
     }
 
     public virtual void ResetBall()
@@ -128,6 +124,26 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
         m_touchedGround = false;
         m_ballStopped = false;
         m_ballSoundStopped = false;
+    }
+
+    public virtual void AttachBonus(BonusBase bonus)
+    {
+        m_bonuses.Add(bonus);
+        bonus.OnBonusAttached();
+    }
+
+    private void StopBall()
+    {
+        m_ballStopped = true;
+        OnBallStopped?.Invoke(this);
+
+        if(m_bonuses.Count > 0)
+        {
+            foreach(BonusBase bonus in m_bonuses)
+            {
+                bonus.OnBallStop();
+            }
+        }
     }
 
     #region IPoolOperationCallbackReciever Implementation

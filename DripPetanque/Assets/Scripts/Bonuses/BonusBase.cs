@@ -6,6 +6,10 @@ public abstract class BonusBase : MonoBehaviour
 
     public Sprite BonusSprite => m_bonusSprite;
 
+    public virtual void OnBonusAttached()
+    {
+
+    }
 
     public virtual void OnTounchGround()
     {
@@ -17,8 +21,8 @@ public abstract class BonusBase : MonoBehaviour
 
     }
 
-    public virtual int ChangeBallScore(int score)
+    public virtual void ChangeBallScore(ref int score)
     {
-        return score;
     }
+
 }

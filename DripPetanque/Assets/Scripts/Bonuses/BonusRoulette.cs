@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,7 +46,7 @@ public class BonusRoulette : MonoBehaviour
     {
         m_ballLaunched = !rouletteShouldStart;
 
-        if(rouletteShouldStart)
+        if (rouletteShouldStart)
         {
             BonusCycle();
         }
@@ -56,6 +55,9 @@ public class BonusRoulette : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        _ = Instantiate(m_bonusToAttachToBall, other.transform);
+        if (other.TryGetComponent(out Ball ball))
+        {
+            ball.AttachBonus(Instantiate(m_bonusToAttachToBall, other.transform));
+        }
     }
 }
