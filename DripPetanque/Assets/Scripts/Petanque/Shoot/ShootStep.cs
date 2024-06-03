@@ -25,7 +25,7 @@ public class ShootStep : BaseShootStep
     [SerializeField] private float m_camTransitionTime;
 
     [SerializeField] private InputActionReference m_validateInput;
-    [SerializeField] private TMP_Text m_infoPanelText;
+    [SerializeField] private InfoPanel m_infoPanel;
 
     [NonSerialized] private StepState m_currentState;
     [NonSerialized] private Transform m_arrow;
@@ -40,7 +40,7 @@ public class ShootStep : BaseShootStep
         m_arrow = arrow;
         VirtualCamerasManager.RegisterCamera(m_cameraPosition);
         m_gauge.transform.parent.gameObject.SetActive(false);
-        m_infoPanelText.transform.parent.gameObject.SetActive(false);
+        m_infoPanel.Activate(false);
     }
 
     public override void Start()
@@ -50,7 +50,7 @@ public class ShootStep : BaseShootStep
         m_startScaleOrRotation = m_data.ScaleOrRotation == ScaleOrRotationEnum.Scale ? m_arrow.localScale : m_arrow.localRotation.eulerAngles;
         m_camTransitionTimer = 0.0f;
         m_stepOutputValue = 0.0f;
-        m_infoPanelText.text = m_data.InfoPanelMessage;
+        m_infoPanel.SetText(m_data.InfoPanelMessage);
     }
 
     public override void Update(float deltaTime)
@@ -121,7 +121,7 @@ public class ShootStep : BaseShootStep
         m_gauge.FillingBehaviour = m_data.FillingBehaviour;
 
         m_gauge.transform.parent.gameObject.SetActive(true);
-        m_infoPanelText.transform.parent.gameObject.SetActive(true);
+        m_infoPanel.Activate(true);
 
         m_validateInput.action.performed += OnValidateInput;
     }
@@ -130,7 +130,7 @@ public class ShootStep : BaseShootStep
     {
         m_validateInput.action.performed -= OnValidateInput;
         m_gauge.transform.parent.gameObject.SetActive(false);
-        m_infoPanelText.transform.parent.gameObject.SetActive(false);
+        m_infoPanel.Activate(false);
         m_currentState = StepState.Finished;
     }
 
