@@ -130,7 +130,7 @@ public class ShootStep : BaseShootStep
     {
         m_validateInput.action.performed -= OnValidateInput;
         m_gauge.transform.parent.gameObject.SetActive(false);
-        m_infoPanelText.transform.parent.gameObject.SetActive(false);
+        m_infoPanelText.transform.parent.parent.gameObject.SetActive(false);
         m_currentState = StepState.Finished;
     }
 

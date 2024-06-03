@@ -155,13 +155,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_startPoint: {fileID: 1060751928}
   m_endPoint: {fileID: 2086566678}
-  m_angle: 0
-  m_height: 5
-  m_forwardFactor: 0.5
   m_attractionFactor: 0.502
-  m_forcePow: 2
-  m_forceMult: 6
+  m_forceMultiplier: 1
   m_splineComponent: {fileID: 676810656}
+  m_yAngle: 0
+  m_xAngle: 0
+  m_force: 0
+  m_resolution: 0
 --- !u!4 &64126290
 Transform:
   m_ObjectHideFlags: 0
@@ -2375,16 +2375,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_leftRightStep:
     m_data: {fileID: 11400000, guid: 3aaa45e9efae2ec45aa1596286781410, type: 2}
-    m_infoPanelText: {fileID: 2050101134}
+    m_noiseAmount: 0
   m_forceStep:
     m_data: {fileID: 11400000, guid: 73a30ca34739af24a9d1d162ce7915d7, type: 2}
-    m_infoPanelText: {fileID: 2050101134}
+    m_noiseAmount: 0
   m_upDownStep:
     m_data: {fileID: 11400000, guid: f397cdd70a126e34287f082f7aaaec1b, type: 2}
-    m_infoPanelText: {fileID: 2050101134}
+    m_noiseAmount: 0
   m_splineController: {fileID: 64126289}
   m_trajectoryController: {fileID: 64126291}
   m_ballsPool: {fileID: 2076156948}
+  m_targetZoneCenterDistance: 0
+  m_targetZoneSize: {x: 0, y: 0}
+  m_targetPoint: {fileID: 0}
+  m_bonuses: []
+  m_buttonField: 0
 --- !u!1 &1104294766
 GameObject:
   m_ObjectHideFlags: 0
