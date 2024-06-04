@@ -38,7 +38,7 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
 
         if (GameManager.Instance.CurrentSubGameManager.CorrespondingState == GameState.Exploration)
         {
-            StartRadio();
+            //StartRadio();
         }
     }
 
@@ -51,7 +51,7 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
 
         if (!m_soundManager.IsMusicWaiting)
         {
-            AddAudioToWait();
+            //AddAudioToWait();
         }
     }
 

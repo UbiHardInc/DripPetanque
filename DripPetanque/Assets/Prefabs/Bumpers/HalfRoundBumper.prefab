@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 780948441880572452}
   - component: {fileID: 3474372288996242405}
   - component: {fileID: 7933214728342032822}
+  - component: {fileID: 8071580101946279060}
   m_Layer: 0
   m_Name: HalfRoundBumper
   m_TagString: Untagged
@@ -1060,3 +1061,15 @@ MonoBehaviour:
   bumperForce: 1
   bumpColor: {r: 1, g: 0, b: 0, a: 0}
   forceMode: 2
+--- !u!114 &8071580101946279060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8152146383619606070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc68fd9604b7c8f48af5ec1d5bb4a9fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

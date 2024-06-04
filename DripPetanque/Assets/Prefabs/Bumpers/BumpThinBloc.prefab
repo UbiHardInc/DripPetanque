@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 925334954385603131}
   - component: {fileID: 4964100112068383796}
   - component: {fileID: 8550587163126154100}
+  - component: {fileID: 6083017622128252841}
   m_Layer: 0
   m_Name: BumpFace (1)
   m_TagString: Untagged
@@ -122,6 +123,18 @@ MonoBehaviour:
   bumperForce: 0
   bumpColor: {r: 1, g: 0, b: 0, a: 0}
   forceMode: 2
+--- !u!114 &6083017622128252841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254682198996518996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc68fd9604b7c8f48af5ec1d5bb4a9fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3055283435411405978
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +180,7 @@ GameObject:
   - component: {fileID: 31985922506004690}
   - component: {fileID: 6914500131196107897}
   - component: {fileID: 1923322940520599946}
+  - component: {fileID: 5317635965271324392}
   m_Layer: 0
   m_Name: Bloc
   m_TagString: Untagged
@@ -260,3 +274,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5317635965271324392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3103136647204622004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc68fd9604b7c8f48af5ec1d5bb4a9fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
