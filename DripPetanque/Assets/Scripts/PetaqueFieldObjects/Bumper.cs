@@ -16,7 +16,7 @@ public class Bumper : MonoBehaviour
         {
             Rigidbody ballRigidBody = collision.transform.GetComponent<Rigidbody>();
             ballRigidBody.AddExplosionForce(BumpManager.Instance.GetBumperStrength(bumperForce), collision.GetContact(0).point, 5,0,forceMode);
-            _ = StartCoroutine(ChangeOnBump());
+            //_ = StartCoroutine(ChangeOnBump());
             SpriteRandom.Instance.FlashSprite();
             Debug.Log("Bumped!");
         }
@@ -27,7 +27,7 @@ public class Bumper : MonoBehaviour
         MeshRenderer meshCollider = gameObject.GetComponent<MeshRenderer>();
         MaterialPropertyBlock matPro = new MaterialPropertyBlock();
         var basecolor = "_BaseColor";
-        //meshCollider.GetPropertyBlock(matPro, 0);
+        meshCollider.GetPropertyBlock(matPro, 0);
         Color lastColor;
         lastColor = matPro.HasColor(basecolor) ? matPro.GetColor(basecolor) : meshCollider.material.GetColor(basecolor);
         matPro.SetColor(basecolor,bumpColor);
