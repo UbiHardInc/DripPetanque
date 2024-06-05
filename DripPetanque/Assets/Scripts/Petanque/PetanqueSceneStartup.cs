@@ -52,6 +52,8 @@ public class PetanqueSceneStartup : MonoBehaviour
         yield return DissolveProperty(materialTextureDissolveAmountID, m_textureDissolveTime);
         yield return new WaitUntil(() => m_cinematicPlayed);
 
+        m_playableDirector.gameObject.SetActive(false);
+
         OnSceneReady();
     }
 
