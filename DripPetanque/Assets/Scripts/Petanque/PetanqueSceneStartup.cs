@@ -24,11 +24,6 @@ public class PetanqueSceneStartup : MonoBehaviour
         _ = StartCoroutine(Dissolve());
     }
 
-    private void Start()
-    {
-        SoundManager.Instance.PlayMusic(true, "battleFull");
-    }
-
     private IEnumerator Dissolve()
     {
         int materialDissolveAmountID = Shader.PropertyToID("_DissolveAmount");

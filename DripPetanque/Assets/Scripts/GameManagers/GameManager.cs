@@ -109,6 +109,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         {
             if (nextState != m_currentSubGameManager.CorrespondingState)
             {
+                SoundManager.Instance.UpdateState(nextState);
                 StartState(nextState);
             }
         }

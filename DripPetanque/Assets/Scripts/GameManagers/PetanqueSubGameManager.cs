@@ -152,6 +152,11 @@ public class PetanqueSubGameManager : SubGameManager
         }
 
         DisplayRoundResults(roundWinner);
+
+        if (roundWinner.CurrentScore >= Math.Round(m_gameSettings.PointsToWin * 0.7))
+        {
+            SoundManager.Instance.SwitchIntenseBattleMusic();
+        }
     }
 
     private BasePetanquePlayer ComputeRoundResults()

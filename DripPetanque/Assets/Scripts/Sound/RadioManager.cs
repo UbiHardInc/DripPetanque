@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityUtility.Singletons;
@@ -20,6 +21,7 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
     [Header("RadioGameObjects")]
     [SerializeField] private TMP_Text m_artistNameText;
     [SerializeField] private TMP_Text m_songNameText;
+    [SerializeField] private RectTransform m_radioUI;
 
     [Header("Parameters")]
     [SerializeField] private float m_timeRadioUiStay = 2f;
@@ -35,11 +37,6 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
     {
         base.Start();
         m_soundManager = SoundManager.Instance;
-
-        if (GameManager.Instance.CurrentSubGameManager.CorrespondingState == GameState.Exploration)
-        {
-            //StartRadio();
-        }
     }
 
     private void Update()
@@ -51,11 +48,11 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
 
         if (!m_soundManager.IsMusicWaiting)
         {
-            //AddAudioToWait();
+            AddAudioToWait();
         }
     }
 
-    private void StartRadio()
+    public void StartRadio()
     {
         ResetMasterPlaylist();
         m_soundManager.StopAllMusicSources();
@@ -113,12 +110,15 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
 
     public IEnumerator ShowMusicDataInUI()
     {
-        m_artistNameText.text = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-")[1];
-        m_songNameText.text = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-")[2];
+        Debug.LogError("ShowRadioUI Called");
+        m_artistNameText.text = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-")[1].Replace("/", " ");
+        m_songNameText.text = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-")[2].Replace("/", " ");
 
         //Todo :
         //Call animation to show the radio UI
+        m_radioUI.DOLocalMove(m_radioUI.localPosition + new Vector3(-529.9f,0f,0f), 2f);
         yield return new WaitForSeconds(m_timeRadioUiStay);
         //Call animation ti hide the radio UI
+        m_radioUI.DOLocalMove(m_radioUI.localPosition + new Vector3(529.9f, 0f, 0f), 2f);
     }
 }
