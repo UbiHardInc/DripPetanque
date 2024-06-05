@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -12,6 +13,7 @@ public abstract class BasePetanquePlayer : MonoBehaviour
     public abstract string PlayerName { get; }
     public abstract int ThownBallsCount { get; }
     public abstract int CurrentScore { get; }
+    public abstract IReadOnlyCollection<RoundResult> AllRoundResults { get; }
 
 
     public abstract void Init();

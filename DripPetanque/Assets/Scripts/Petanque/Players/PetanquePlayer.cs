@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityUtility.Pools;
 using System.Linq;
+using Unity.VisualScripting;
 
 [Serializable]
 public abstract class PetanquePlayer<TShootStep, TBall> : BasePetanquePlayer
@@ -15,6 +16,7 @@ public abstract class PetanquePlayer<TShootStep, TBall> : BasePetanquePlayer
     public override string PlayerName => m_playerName;
     public override int ThownBallsCount => m_thrownBallsCount;
     public override int CurrentScore => m_currentScore;
+    public override IReadOnlyCollection<RoundResult> AllRoundResults => m_roundResults.AsReadOnly();
 
 
     [SerializeField] private BaseShootManager<TShootStep, TBall> m_shotManager;

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,14 +19,6 @@ public class ResultDisplay : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void DislayGameResult(GameResultDatas result, Action resultDisplayEndCallback)
-    {
-        gameObject.SetActive(true);
-        m_text.text = $"{result.Winner.PlayerName} won the game with {result.Winner.CurrentScore} points";
-        m_resultDisplayEndCallback = resultDisplayEndCallback;
-        m_endResultInput.action.performed += OnEndResultInputPerformed;
-    }
-
     public void DislayRoundResult(RoundResultDatas result, Action resultDisplayEndCallback)
     {
         int roundIndex = result.RoundIndex;
@@ -33,34 +26,41 @@ public class ResultDisplay : MonoBehaviour
         m_text.text = $"{winner.PlayerName} won the round {roundIndex} with {winner.GetResultForRound(roundIndex).Score} points and now has {winner.CurrentScore}";
 
         gameObject.SetActive(true);
+        CreateRoundDisplay(result.AllPlayers, result.RoundIndex, result.Winner);
         m_resultDisplayEndCallback = resultDisplayEndCallback;
         m_endResultInput.action.performed += OnEndResultInputPerformed;
     }
 
-    public void DisplayDetailedGameResult(RoundResultDatas[] roundResults, GameResultDatas gameResult, Action resultDisplayEndCallback)
+    public void DisplayGameResult(GameResultDatas gameResult, Action resultDisplayEndCallback)
     {
-        int humanScore = 0;
-        int computerScore = 0;
-        foreach (var roundResult in roundResults)
-        {
-            switch (roundResult.Winner.PlayerType)
-            {
-                case PetanquePlayerType.Human:
-                    humanScore += roundResult.Winner.GetResultForRound(roundResult.RoundIndex).Score;
-                    break;
-                case PetanquePlayerType.Computer:
-                    computerScore += roundResult.Winner.GetResultForRound(roundResult.RoundIndex).Score;
-                    break;
-            }
-            
-            GameObject scorePanel = Instantiate(m_scorePanelPrefab, m_scorePanelLayout.transform);
-            scorePanel.GetComponent<RoundScorePanel>().InitializeRoundScorePanel(roundResult.RoundIndex, humanScore, computerScore, roundResult.Winner.PlayerType);
-        }
-        
         gameObject.SetActive(true);
+        CreateRoundDisplay(gameResult.AllPlayers, gameResult.RoundCount, gameResult.Winner);
         m_text.text = $"{gameResult.Winner.PlayerName} won the game with {gameResult.Winner.CurrentScore} points";
         m_resultDisplayEndCallback = resultDisplayEndCallback;
         m_endResultInput.action.performed += OnEndResultInputPerformed;
+    }
+
+    private void CreateRoundDisplay(List<BasePetanquePlayer> allPlayers, int roundIndex, BasePetanquePlayer winner)
+    {
+        BasePetanquePlayer humanPlayer = null;
+        BasePetanquePlayer computerPlayer = null;
+
+        foreach (var player in allPlayers)
+        {
+            switch (player.PlayerType)
+            {
+                case PetanquePlayerType.Human:
+                    humanPlayer = player;
+                    break;
+                case PetanquePlayerType.Computer:
+                    computerPlayer = player;
+                    break;
+            }
+        }
+        
+        GameObject scorePanel = Instantiate(m_scorePanelPrefab, m_scorePanelLayout.transform);
+        scorePanel.GetComponent<RoundScorePanel>().InitializeRoundScorePanel(roundIndex, humanPlayer.CurrentScore,
+            computerPlayer.CurrentScore, winner.PlayerType);
     }
 
     private void OnEndResultInputPerformed(InputAction.CallbackContext context)

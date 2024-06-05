@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public class RoundScorePanel : MonoBehaviour
 {
@@ -23,8 +24,10 @@ public class RoundScorePanel : MonoBehaviour
                 m_humanScore.color = m_colorWinText;
                 break;
             case PetanquePlayerType.Computer:
-                m_humanScore.color = m_colorWinText;
+                m_computerScore.color = m_colorWinText;
                 break;
         }
+
+        this.GetComponent<RectTransform>().DORotate(new Vector3(0f,0f,0f), 1f).From(new Vector3(0f, -90f, 0f));
     }
 }
