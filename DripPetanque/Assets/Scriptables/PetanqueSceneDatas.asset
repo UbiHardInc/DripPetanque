@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4f8ff1076afe9409c63dcd68cc92d6, type: 3}
   m_Name: PetanqueSceneDatas
   m_EditorClassIdentifier: 
-  GameSettings: {fileID: 0}
-  PlayerShootManager: {fileID: 0}
-  ComputerShootManager: {fileID: 0}
+  PetanquePlayers: []
   Field: {fileID: 0}

@@ -1,24 +1,20 @@
 using System.Collections;
 using UnityEngine;
+using UnityUtility.CustomAttributes;
 
 public class Bumper : MonoBehaviour
 {
+    [SerializeField, Layer] private int m_whatIsBall;
     public BumpManager.BumpersStrength bumperForce;
-    private GameObject m_ball;
 
     public Color bumpColor;
     public ForceMode forceMode = ForceMode.VelocityChange;
 
-    private void Start ()
-    {
-        m_ball = GameObject.FindGameObjectWithTag ("Player");
-    }
-
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject == m_ball)
+        if (collision.gameObject.layer == m_whatIsBall)
         {
-            Rigidbody ballRigidBody = m_ball.GetComponent<Rigidbody>();
+            Rigidbody ballRigidBody = collision.transform.GetComponent<Rigidbody>();
             ballRigidBody.AddExplosionForce(BumpManager.Instance.GetBumperStrength(bumperForce), collision.GetContact(0).point, 5,0,forceMode);
             _ = StartCoroutine(ChangeOnBump());
             SpriteRandom.Instance.FlashSprite();
