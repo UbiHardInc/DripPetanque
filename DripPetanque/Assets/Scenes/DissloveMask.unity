@@ -11037,7 +11037,10 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 0
+        m_Name: Smoothstep
+        m_Overridden: 0
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -11055,7 +11058,10 @@ VisualEffect:
     m_Gradient:
       m_Array: []
     m_NamedObject:
-      m_Array: []
+      m_Array:
+      - m_Value: {fileID: 2800000, guid: 7dce6bdd4b1085d4b89e0a370622d9ad, type: 3}
+        m_Name: NoiseTexture
+        m_Overridden: 1
     m_Bool:
       m_Array: []
 --- !u!1001 &610667234253600131
