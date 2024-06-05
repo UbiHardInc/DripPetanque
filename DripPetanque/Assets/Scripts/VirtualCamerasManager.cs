@@ -1,6 +1,6 @@
-using Cinemachine;
 using System;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityUtility.Singletons;
 using UnityUtility.Utils;
@@ -13,12 +13,7 @@ public class VirtualCamerasManager : MonoBehaviourSingleton<VirtualCamerasManage
         Blending,
     }
 
-    public class SwitchCameraCallbackReciever
-    {
-        public event Action OnCameraSwitchOver;
-    }
-
-    private static List<CinemachineVirtualCamera> s_allVirtualCameras = new List<CinemachineVirtualCamera>();
+    private static readonly List<CinemachineVirtualCamera> s_allVirtualCameras = new List<CinemachineVirtualCamera>();
     private static CinemachineBrain s_brain = null;
     private static CinemachineVirtualCamera s_currentTarget;
     private static CinemachineBlendDefinition s_defaultBlend = default;
@@ -27,7 +22,7 @@ public class VirtualCamerasManager : MonoBehaviourSingleton<VirtualCamerasManage
     {
         if (s_brain != null)
         {
-            throw new Exception($"There sould not be 2 {nameof(CinemachineBrain)} registered in the {nameof(VirtualCamerasManager)}");
+            throw new Exception($"There should not be 2 {nameof(CinemachineBrain)} registered in the {nameof(VirtualCamerasManager)}");
         }
         s_brain = brain;
         s_defaultBlend = s_brain.m_DefaultBlend;
@@ -40,11 +35,6 @@ public class VirtualCamerasManager : MonoBehaviourSingleton<VirtualCamerasManage
             Debug.LogError($"No {nameof(CinemachineBrain)} were previously registered");
         }
         s_brain = null;
-    }
-
-    private void Update()
-    {
-        
     }
 
     public static bool IsBrainMoving()

@@ -26,20 +26,24 @@ public class SceneTransitioner : MonoBehaviour
     public event Action<SceneReference> OnTransitionStart;
     public event Action<SceneReference> OnTransitionEnd;
 
-    [SerializeField] private SceneReference m_sceneToTransitionTo;
     [SerializeField] private bool m_fadeOut;
-
     [SerializeField] private ScreenCache m_cache;
 
     [SerializeField] private Timer m_fadeTimer;
 
+    // Cache
     [NonSerialized] private TransitionAction m_transitionAction = TransitionAction.LoadScene;
-
+    [NonSerialized] private SceneReference m_sceneToTransitionTo;
 
     [NonSerialized] private bool m_isTransitioning;
     [NonSerialized] private TransitionStep m_currentStep;
 
     [NonSerialized] private HierarchicalRecorder m_recorder;
+
+    public void SetScene(SceneReference scene)
+    {
+        m_sceneToTransitionTo = scene;
+    }
 
     [ContextMenu("Load Transition")]
     public void StartLoadTransition(bool fadeOut = true)

@@ -2,20 +2,17 @@ using System;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
+using UnityUtility.CustomAttributes;
 using UnityUtility.Utils;
 
 public class CustomSplineController : MonoBehaviour
 {
-    [SerializeField] private Transform m_startPoint = null;
-    [SerializeField] private Transform m_endPoint = null;
+    public float ForceMultiplier => m_forceMultiplier;
+    public float AttractionFactor => m_attractionFactor;
 
-    [SerializeField] private float m_angle = 0.0f;
-    [SerializeField] private float m_height = 0.0f;
-    [SerializeField, Range(0.0001f, 0.9999f)] private float m_forwardFactor = 0.5f;
     [SerializeField, Range(0.0f, 2.0f)] private float m_attractionFactor = 0.0f;
 
-    [SerializeField, Min(0.0f)] private float m_forcePow = 1.0f;
-    [SerializeField, Min(0.0f)] private float m_forceMult = 1.0f;
+    [SerializeField, Min(0.0f)] private float m_forceMultiplier = 1.0f;
 
     [SerializeField] private SplineContainer m_splineComponent = null;
 
@@ -24,82 +21,140 @@ public class CustomSplineController : MonoBehaviour
     [NonSerialized] private BezierKnot m_firstKnot;
     [NonSerialized] private BezierKnot m_lastKnot;
 
+    [NonSerialized] private bool m_init = false;
+
 
     // Gizmos
     [NonSerialized] private Vector3 m_attractionPointPosition = Vector3.zero;
+    [NonSerialized] private Vector3 m_tangentStart = Vector3.zero;
+    [NonSerialized] private Vector3 m_tangentEnd = Vector3.zero;
 
     [ContextMenu(nameof(Start))]
     private void Start()
     {
-        m_spline = m_splineComponent.Spline;
-
-        m_firstKnot = new BezierKnot(m_startPoint.position, float3.zero, float3.zero, quaternion.identity);
-        m_lastKnot = new BezierKnot(m_endPoint.position, float3.zero, float3.zero, quaternion.identity);
-        m_spline.Knots = new BezierKnot[2] {m_firstKnot, m_lastKnot};
-
-        m_spline.SetTangentMode(TangentMode.Mirrored);
+        InitIfNeeded();
     }
 
-    private void Update()
+    private void InitIfNeeded()
     {
-        //UpdateSpline();
+        if (!m_init)
+        {
+            m_spline = m_splineComponent.Spline;
+
+            m_firstKnot = new BezierKnot(transform.localPosition, float3.zero, float3.zero, quaternion.identity);
+            m_lastKnot = new BezierKnot(transform.localPosition, float3.zero, float3.zero, quaternion.identity);
+            m_spline.Knots = new BezierKnot[2] { m_firstKnot, m_lastKnot };
+
+            m_spline.SetTangentMode(TangentMode.Mirrored);
+
+            m_init = true;
+        }
     }
 
-    private void OldMethod()
+    private void UpdateSpline(Vector3 startPoint, Vector3 endPoint, Vector3 attractionPoint)
     {
+        InitIfNeeded();
 
-        Vector3 startPosition = m_startPoint.position;
-        Vector3 endPosition = m_endPoint.position;
-
-        Vector3 startToEnd = endPosition - startPosition;
-        Vector3 attractionPointProj = startPosition + startToEnd * m_forwardFactor;
-
-        Vector3 splineUp = Vector3.up * Mathf.Cos(m_angle * Mathf.Deg2Rad) +
-                           Vector3.Cross(startToEnd, Vector3.up).normalized * Mathf.Sin(m_angle * Mathf.Deg2Rad);
-
-        Vector3 attractionPoint = attractionPointProj + splineUp * m_height;
-        UpdateSpline(attractionPoint);
-    }
-
-    private void UpdateSpline(Vector3 attractionPoint)
-    {
-        Vector3 startPosition = m_startPoint.position;
-        Vector3 endPosition = m_endPoint.position;
 
         m_attractionPointPosition = attractionPoint;
 
-        m_firstKnot.Position = startPosition;
-        m_firstKnot.TangentOut = (attractionPoint - startPosition) * m_attractionFactor;
+        m_firstKnot.Position = startPoint;
+        m_tangentStart = (attractionPoint - startPoint) * m_attractionFactor;
+        m_firstKnot.TangentOut = m_tangentStart;
 
-        m_lastKnot.Position = endPosition;
-        m_lastKnot.TangentOut = (attractionPoint - endPosition) * -m_attractionFactor;
+        m_lastKnot.Position = endPoint;
+        m_tangentEnd = (attractionPoint - endPoint) * -m_attractionFactor;
+        m_lastKnot.TangentOut = m_tangentEnd;
 
 
         m_spline.SetKnot(0, m_firstKnot);
         m_spline.SetKnot(1, m_lastKnot);
+        m_spline.SetTangentMode(TangentMode.Mirrored);
+    }
+
+    public void SetSplineParameters(SplineDatas splineDatas)
+    {
+        SetSplineParameters(splineDatas.YAngle, splineDatas.XAngle, splineDatas.Force);
     }
 
     public void SetSplineParameters(float yAngle, float xAngle, float force)
     {
-        float forceMagnitude = Mathf.Pow(force, m_forcePow) * m_forceMult;
-        Vector3 splineForward = transform.forward.Rotate(transform.up, yAngle);
-        Vector3 attractionPoint = splineForward.Rotate(-Vector3.Cross(splineForward, transform.up), xAngle).normalized * forceMagnitude;
-        attractionPoint = m_startPoint.position + attractionPoint;
+        Vector3 startPoint = Vector3.zero;
 
-        m_endPoint.position = attractionPoint.ProjectOn(splineForward) / m_forwardFactor;
+        float forceMagnitude = force * m_forceMultiplier;
 
-        UpdateSpline(attractionPoint);
+        Vector3 splineUp = transform.up;
+        Vector3 splineForward = transform.forward.Rotate(splineUp, yAngle);
+
+        Vector3 projectedAttractionPoint = splineForward * forceMagnitude;
+
+        Vector3 attractionPoint = projectedAttractionPoint + splineUp * Mathf.Tan(xAngle * Mathf.Deg2Rad) * forceMagnitude;
+        attractionPoint += startPoint;
+
+        Vector3 endPoint = startPoint + projectedAttractionPoint * 2;
+
+        UpdateSpline(startPoint, endPoint, attractionPoint);
     }
 
 #if UNITY_EDITOR
 
+    [Title("Debug")]
+    [SerializeField] private float m_yAngle;
+    [SerializeField] private float m_xAngle;
+    [SerializeField] private float m_force;
+
+    [SerializeField, Min(1)] private int m_resolution;
+
+    [ContextMenu(nameof(UpdateSplineParameters))]
+    private void UpdateSplineParameters()
+    {
+        SetSplineParameters(m_yAngle, m_xAngle, m_force);
+    }
+
     private void OnDrawGizmos()
     {
-        if (Application.isPlaying)
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(m_attractionPointPosition, 0.3f);
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawLine(m_firstKnot.Position, m_firstKnot.Position.ToVector3() + m_tangentStart);
+        Gizmos.DrawLine(m_lastKnot.Position, m_lastKnot.Position.ToVector3() - m_tangentEnd);
+
+        Span<Vector3> splinePoints = stackalloc Vector3[4]
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(m_attractionPointPosition, 0.3f);
+            m_firstKnot.Position,
+            m_firstKnot.Position.ToVector3() + m_tangentStart,
+            m_lastKnot.Position.ToVector3() - m_tangentEnd,
+            m_lastKnot.Position,
+        };
+
+        DrawBezier(splinePoints, m_resolution);
+    }
+
+    private void DrawBezier(Span<Vector3> points, int resolution)
+    {
+        for (int i = 0; i < resolution - 1; i++)
+        {
+            Gizmos.DrawLine(GetSplineValue(points, (float)i / resolution), GetSplineValue(points, ((float)(i + 1)) / resolution));
         }
     }
+
+    private Vector3 GetSplineValue(Span<Vector3> points, float t)
+    {
+        int pointsCount = points.Length;
+
+        if (pointsCount == 2)
+        {
+            return Vector3.Lerp(points[0], points[1], t);
+        }
+
+        Span<Vector3> interPoints = stackalloc Vector3[pointsCount - 1];
+        for (int i = 0; i < pointsCount - 1; i++)
+        {
+            interPoints[i] = Vector3.Lerp(points[i], points[i + 1], t);
+        }
+        return GetSplineValue(interPoints, t);
+    }
+
 #endif
 }
