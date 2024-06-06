@@ -84,7 +84,6 @@ public class BonusRoulette : MonoBehaviour
         m_currentBonusIndex++;
         m_currentBonusIndex %= m_instanciatedBonuses.Length;
 
-        Debug.LogError($"Changing to Bonus {m_instanciatedBonuses[m_currentBonusIndex].name} at index {m_currentBonusIndex}");
         m_bonusToAttachToBall = m_instanciatedBonuses[m_currentBonusIndex];
         m_bonusToAttachToBall.gameObject.SetActive(true);
     }
@@ -94,7 +93,6 @@ public class BonusRoulette : MonoBehaviour
     {
         if (other.TryGetComponent(out Ball ball))
         {
-            Debug.LogError($"Attatching Bonus {m_bonusToAttachToBall.name}");
             ball.AttachBonus(Instantiate(m_bonusToAttachToBall, other.transform));
         }
     }
