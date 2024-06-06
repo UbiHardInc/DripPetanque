@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityUtility.Timer;
 using UnityUtility.Utils;
@@ -14,7 +12,7 @@ public class BonusRoulette : MonoBehaviour
     [SerializeField] private TriggerObject m_trigger;
 
     [NonSerialized] private BonusBase m_bonusToAttachToBall;
-    [NonSerialized] private bool m_ballLaunched;
+    [NonSerialized] protected bool m_ballLaunched;
 
     [NonSerialized] private BonusBase[] m_instanciatedBonuses;
 
@@ -43,13 +41,16 @@ public class BonusRoulette : MonoBehaviour
 
     private void OnDestroy()
     {
-        PetanqueSubGameManager petanqueSubGameManager = GameManager.Instance.PetanqueSubGameManager;
-        petanqueSubGameManager.OnBallLauched -= BonusRouletteStarter;
-        petanqueSubGameManager.OnNextTurn -= BonusRouletteStarter;
+        PetanqueSubGameManager petanqueSubGameManager = GameManager.Instance?.PetanqueSubGameManager;
+        if (petanqueSubGameManager != null)
+        {
+            petanqueSubGameManager.OnBallLauched -= BonusRouletteStarter;
+            petanqueSubGameManager.OnNextTurn -= BonusRouletteStarter;
+        }
         m_trigger.OnTriggerEnterEvent -= OnEnteredTrigger;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (!m_ballLaunched)
         {
