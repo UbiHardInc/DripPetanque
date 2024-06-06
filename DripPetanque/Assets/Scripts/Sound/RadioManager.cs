@@ -1,12 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityUtility.CustomAttributes;
 using UnityUtility.Singletons;
 using UnityUtility.Utils;
-using Random = System.Random;
 
 public class RadioManager : MonoBehaviourSingleton<RadioManager>
 {
@@ -16,25 +16,27 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
         interlude
     }
 
-    private SoundManager m_soundManager;
-
-    [Header("RadioGameObjects")]
+    [Title("RadioGameObjects")]
     [SerializeField] private TMP_Text m_artistNameText;
     [SerializeField] private TMP_Text m_songNameText;
     [SerializeField] private RectTransform m_radioUI;
 
-    [Header("Parameters")]
+    [Title("Parameters")]
     [SerializeField] private float m_timeRadioUiStay = 2f;
 
-    private readonly string m_musicTitle;
-    private readonly string m_musicArtist;
-    private readonly List<string> m_musicNameList = new List<string>();
-    private readonly List<string> m_interludeNameList = new List<string>();
-    private readonly List<string> m_masterPlaylist = new List<string>();
-    private int m_playlistPlayNumber;
+    [Title("Misc")]
+    [SerializeField] private bool m_firstTimePlaying = true;
 
-    private bool m_radioStarted;
-    [SerializeField]private bool m_firstTimePlaying = true;
+    [NonSerialized] private readonly string m_musicTitle;
+    [NonSerialized] private readonly string m_musicArtist;
+    [NonSerialized] private readonly List<string> m_musicNameList = new List<string>();
+    [NonSerialized] private readonly List<string> m_interludeNameList = new List<string>();
+    [NonSerialized] private readonly List<string> m_masterPlaylist = new List<string>();
+    [NonSerialized] private int m_playlistPlayNumber;
+
+    [NonSerialized] private bool m_radioStarted;
+
+    [NonSerialized] private SoundManager m_soundManager;
 
     protected override void Start()
     {
@@ -78,7 +80,7 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
     private void ResetMasterPlaylist()
     {
         m_masterPlaylist.Clear();
-        
+
         foreach (var nameAudioClip in m_soundManager.RadioLibrary.SoundAudioClips)
         {
             if (nameAudioClip.Key.StartsWith(RadioClipType.music.ToString()))
@@ -95,7 +97,6 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
                 {
                     m_interludeNameList.Add(nameAudioClip.Key);
                 }
-                
             }
         }
 
@@ -105,7 +106,7 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
         if (m_firstTimePlaying)
         {
             m_masterPlaylist.Add("interlude1");
-            m_interludeNameList.Remove("interlude1");
+            _ = m_interludeNameList.Remove("interlude1");
         }
 
         foreach (var interlude in m_interludeNameList)
@@ -118,7 +119,7 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
             {
                 m_masterPlaylist.Add(interlude);
             }
-            
+
 
             if (m_musicNameList.Count >= 2)
             {
@@ -145,15 +146,17 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
     public IEnumerator ShowMusicDataInUI()
     {
         Debug.LogError("ShowRadioUI Called");
-        m_artistNameText.text = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-")[1].Replace("/", " ");
-        m_songNameText.text = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-")[2].Replace("/", " ");
+        string[] splittedMusicName = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-");
+        m_artistNameText.text = splittedMusicName[1].Replace("/", " ");
+        m_songNameText.text = splittedMusicName[2].Replace("/", " ");
 
-        //Todo :
-        //Call animation to show the radio UI
-        m_radioUI.DOLocalMove(m_radioUI.localPosition + new Vector3(-529.9f,0f,0f), 2f);
+        Vector3 uiDisplacement = new Vector3(-529.9f, 0f, 0f); // @TODO : If possible, get rid of this hard-coded value
+
+        //Animation to show the radio UI
+        _ = m_radioUI.DOLocalMove(m_radioUI.localPosition + uiDisplacement, 2f);
         yield return new WaitForSeconds(m_timeRadioUiStay);
-        //Call animation ti hide the radio UI
-        m_radioUI.DOLocalMove(m_radioUI.localPosition + new Vector3(529.9f, 0f, 0f), 2f);
+        //Animation to hide the radio UI
+        _ = m_radioUI.DOLocalMove(m_radioUI.localPosition - uiDisplacement, 2f);
     }
 
     public void HideRadio()

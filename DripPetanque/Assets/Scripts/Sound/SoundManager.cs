@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityUtility.CustomAttributes;
 using UnityUtility.Singletons;
 using Random = UnityEngine.Random;
 
@@ -12,7 +13,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         Exploration,
         Petanque,
     }
-    
+
     public enum BallSFXType
     {
         ground,
@@ -36,21 +37,21 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     }
 
     public SoundLibrary RadioLibrary => m_radioLibrary;
-    private RadioManager m_radioManager;
+    public bool IsMusicWaiting => m_isMusicWaiting;
 
-    [Header("Parameters")]
-    [SerializeField] private float musicVolume = 0.5f;
-    [SerializeField] private float filtersSpeedRate = 0.2f;
+    [Title("Parameters")]
+    [SerializeField] private float m_musicVolume = 0.5f;
+    [SerializeField] private float m_filtersSpeedRate = 0.2f;
 
-    [Header("MusicLibraries")]
+    [Title("MusicLibraries")]
     [SerializeField] protected SoundLibrary m_radioLibrary;
     [SerializeField] private SoundLibrary m_battleMusicLibrary;
 
-    [Header("SoundLibraries")]
+    [Title("SoundLibraries")]
     [SerializeField] private SoundLibrary m_ballSFXLibrary;
     [SerializeField] private SoundLibrary m_UiSFXLibrary;
 
-    [Header("AudioSources")]
+    [Title("AudioSources")]
     [SerializeField] private AudioSource m_musicSource1;
     [SerializeField] private AudioSource m_musicSource2;
     [SerializeField] private AudioSource m_SFXSource1;
@@ -59,8 +60,9 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     [SerializeField] private AudioSource m_SFXLoopSource2;
     [SerializeField] private AudioSource m_ballSfxSource;
 
-    public bool IsMusicWaiting => m_isMusicWaiting;
-    protected bool m_isMusicWaiting = false;
+    private RadioManager m_radioManager;
+
+    private bool m_isMusicWaiting = false;
     private SoundGameState m_soundGameState;
 
     //Ball variables
@@ -89,8 +91,8 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         GameManager.Instance.OnGameStateEntered += UpdateState;
         GameManager.Instance.OnGameStateExited += UpdateState;
 
-        m_musicSource1.volume = musicVolume;
-        m_musicSource2.volume = musicVolume;
+        m_musicSource1.volume = m_musicVolume;
+        m_musicSource2.volume = m_musicVolume;
         InitBallSounds();
     }
 
@@ -115,7 +117,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                     }
                 }
             }
-            
+
             if (m_actualFilter != m_oldActualFilter)
             {
                 SwitchBattleMusic();
@@ -129,9 +131,9 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             }
         }
 
-        
+
     }
-    
+
     #region BallFunctions
 
     private void InitBallSounds()
@@ -209,7 +211,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
         m_ballSfxSource.PlayOneShot(clip);
 
-        if (sfxType == BallSFXType.ground || sfxType == BallSFXType.ballAir)
+        if (sfxType is BallSFXType.ground or BallSFXType.ballAir)
         {
             yield return new WaitUntil(() => m_ballSfxSource.isPlaying == false);
 
@@ -253,7 +255,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         StopAllMusicSources();
         PlayMusic(true, "battleIntro");
     }
-    
+
     private void RestartActualBattleMusic()
     {
         m_isBattleMusicSwitching = true;
@@ -270,6 +272,10 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                 break;
             case BattleVersions.Intense:
                 PlayMusic(true, m_actualFilter == BattleFilters.Low ? "battleIntenseLow" : "battleIntense");
+                break;
+            case BattleVersions.Intro:
+                break;
+            default:
                 break;
         }
 
@@ -288,7 +294,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         {
             yield return null;
         }
-        
+
         m_isBattleMusicSwitching = true;
 
         AudioSource playingSource = m_musicSource1.isPlaying ? m_musicSource1 : m_musicSource2;
@@ -312,6 +318,8 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                     ? m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleIntenseLow", out nextSourceClip)
                     : m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleIntense", out nextSourceClip);
                 break;
+            default:
+                break;
         }
 
         nextSource.clip = nextSourceClip;
@@ -320,10 +328,10 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         nextSource.time = playingSource.time;
         //Debug.LogError("Times when switching : next : " + nextSource.time + " playing : " + playingSource.time);
 
-        while (nextSource.volume < musicVolume)
+        while (nextSource.volume < m_musicVolume)
         {
-            nextSource.volume += filtersSpeedRate * Time.deltaTime;
-            playingSource.volume -= filtersSpeedRate * Time.deltaTime;
+            nextSource.volume += m_filtersSpeedRate * Time.deltaTime;
+            playingSource.volume -= m_filtersSpeedRate * Time.deltaTime;
 
             yield return null;
         }
@@ -352,16 +360,16 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         SoundLibrary selectedLibrary = isBattle ? m_battleMusicLibrary : m_radioLibrary;
 
         _ = selectedLibrary.SoundAudioClips.TryGetValue(soundName, out AudioClip clip);
-        
+
         m_musicSource1.clip = clip;
         m_actualMusicSource = true;
         m_musicSource2.Stop();
         m_musicSource1.Stop();
-        m_musicSource1.volume = musicVolume;
+        m_musicSource1.volume = m_musicVolume;
         m_musicSource1.time = 0.0f;
         m_musicSource1.Play();
         //Debug.LogError("Play time : " + m_musicSource1.time);
-        
+
     }
 
     public void PlayMusicAndWaitEnd(bool isBattle, string soundName)
@@ -491,6 +499,8 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                 break;
             case GameState.Cinematics:
                 //Do nothing
+                break;
+            default:
                 break;
         }
     }
