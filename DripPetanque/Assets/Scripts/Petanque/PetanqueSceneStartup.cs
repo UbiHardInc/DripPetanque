@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Timer;
 using UnityUtility.Utils;
@@ -9,9 +11,7 @@ public class PetanqueSceneStartup : MonoBehaviour
     [Title("Petanque Scene Datas")]
     [SerializeField] private PetanqueSceneDatas m_petanqueSceneDatas;
 
-    [SerializeField] private PetanqueGameSettings m_gameSettings;
-    [SerializeField] private ShootManager m_playerShootManager;
-    [SerializeField] private ComputerShootManager m_computerShootManager;
+    [SerializeField] private List<BasePetanquePlayer> m_petanquePlayers;
     [SerializeField] private PetanqueField m_field;
 
     [Title("Terrain Dissolve")]
@@ -20,9 +20,20 @@ public class PetanqueSceneStartup : MonoBehaviour
     [SerializeField] private float m_textureDissolveTime;
     [SerializeField] private Material m_dissolveMaterial;
 
+    [SerializeField] private PlayableDirector m_playableDirector;
+
+    private bool m_cinematicPlayed;
+
     private void Awake()
     {
         _ = StartCoroutine(Dissolve());
+    }
+
+    private void Start()
+    {
+        SoundManager.Instance.PlayMusic(true, "battleFull");
+
+        m_playableDirector.stopped += (_) => m_cinematicPlayed = true;
     }
 
     private IEnumerator Dissolve()
@@ -30,14 +41,18 @@ public class PetanqueSceneStartup : MonoBehaviour
         int materialDissolveAmountID = Shader.PropertyToID("_DissolveAmount");
         int materialTextureDissolveAmountID = Shader.PropertyToID("_TextureDissolveAmount");
 
-        m_dissolveMaterial.SetFloat(materialDissolveAmountID, m_dissolveHeightRange.x);
-        m_dissolveMaterial.SetFloat(materialTextureDissolveAmountID, m_dissolveHeightRange.x);
         // Initialize the dissolve height to the minimum value of the range
-        //DissolvableRenderersManager.SetDissolveAmount(m_dissolveHeightRange.x, materialDissolveAmountID);
-        //DissolvableRenderersManager.SetDissolveAmount(m_dissolveHeightRange.x, materialTextureDissolveAmountID);
+        DissolvableRenderersManager.SetDissolveAmount(m_dissolveHeightRange.x, materialDissolveAmountID);
+        DissolvableRenderersManager.SetDissolveAmount(m_dissolveHeightRange.x, materialTextureDissolveAmountID);
+
+        m_playableDirector.Play();
+        m_cinematicPlayed = false;
 
         yield return DissolveProperty(materialDissolveAmountID, m_dissolveTime);
         yield return DissolveProperty(materialTextureDissolveAmountID, m_textureDissolveTime);
+        yield return new WaitUntil(() => m_cinematicPlayed);
+
+        m_playableDirector.gameObject.SetActive(false);
 
         OnSceneReady();
     }
@@ -51,9 +66,7 @@ public class PetanqueSceneStartup : MonoBehaviour
         while (!dissolveTimer.Update(Time.deltaTime))
         {
             newAmount = dissolveTimer.Progress.RemapFrom01(m_dissolveHeightRange);
-            m_dissolveMaterial.SetFloat(propertyID, newAmount);
-
-            //DissolvableRenderersManager.SetDissolveAmount(newAmount, propertyID);
+            DissolvableRenderersManager.SetDissolveAmount(newAmount, propertyID);
             yield return null;
         }
         dissolveTimer.Stop();
@@ -61,9 +74,7 @@ public class PetanqueSceneStartup : MonoBehaviour
 
     private void OnSceneReady()
     {
-        m_petanqueSceneDatas.GameSettings = m_gameSettings;
-        m_petanqueSceneDatas.PlayerShootManager = m_playerShootManager;
-        m_petanqueSceneDatas.ComputerShootManager = m_computerShootManager;
+        m_petanqueSceneDatas.PetanquePlayers = m_petanquePlayers;
         m_petanqueSceneDatas.Field = m_field;
 
         m_petanqueSceneDatas.NotifyDatasFilled();

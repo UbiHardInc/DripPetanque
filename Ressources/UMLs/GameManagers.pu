@@ -1,0 +1,76 @@
+@startuml
+
+title GameManagers
+
+enum GameState
+{
+    None,
+    Dialogue,
+    Petanque,
+    Cinematics,
+    Exploration,
+}
+
+
+class GameManagersSharedDatas
+{
+    + DialogueData NextDialogueToStart;
+}
+
+' SubGameManagers
+abstract class SubGameManager
+{
+    + {abstract} GameState CorrespondingState
+    
+    + string[] m_specificActionMapNames
+    
+    # GameState m_requestedGameState
+    # GameManagersSharedDatas m_sharedDatas
+    
+    + {abstract} void Initialize(GameManagersSharedDatas)
+    
+    + {abstract} void BeginState(GameState)
+    + {abstract} void EndState(GameState)
+    + {abstract} bool RequestStateChange(out GameState)
+    + {abstract} void UpdateState(float)
+}
+
+class CinematicsSubGameManager
+CinematicsSubGameManager --|> SubGameManager
+
+class DialogueSubGameManager
+DialogueSubGameManager --|> SubGameManager
+
+class ExplorationSubGameManager
+ExplorationSubGameManager --|> SubGameManager
+
+class PetanqueSubGameManager
+PetanqueSubGameManager --|> SubGameManager
+
+SubGameManager --o GameManagersSharedDatas
+
+
+class GameManager
+{   
+    - CinematicsSubGameManager m_cinematicsSubGameManager
+    - DialogueSubGameManager m_dialogueSubGameManager
+    - ExplorationSubGameManager m_explorationSubGameManager
+    - PetanqueSubGameManager m_petanqueSubGameManager
+    
+    - SubGameManager m_currentSubGameManager
+    
+    # GameManagersSharedDatas m_sharedDatas
+
+}
+
+SubGameManager --* GameState
+
+GameManager --* CinematicsSubGameManager
+GameManager --* DialogueSubGameManager
+GameManager --* ExplorationSubGameManager
+GameManager --* PetanqueSubGameManager
+
+GameManager --* GameManagersSharedDatas
+
+
+@enduml

@@ -1,0 +1,155 @@
+@startuml
+
+title Petanque
+
+enum ScaleOrRotationEnum
+{
+    Scale
+    Rotation
+}
+
+class ShootStepData
+{
+  + float GaugeSpeed
+  + Axis Axis
+  + ScaleOrRotationEnum ScaleOrRotation
+  + Vector2 Range
+}
+
+ShootStepData --* ScaleOrRotationEnum
+
+abstract class BaseShootStep
+{
+    + float StepOutputValue
+
+    # ShootStepData m_data
+
+    + {abstract} void Start()
+    + {abstract} void Update(float deltaTime)
+    + {abstract} bool IsFinished()
+}
+
+BaseShootStep --* ShootStepData
+
+
+class ComputerShootStep
+ComputerShootStep --|> BaseShootStep
+
+class ShootStep
+ShootStep --|> BaseShootStep
+
+class Ball
+{
+  - PetanquePlayers m_ballOwner
+  
+  - float m_speedToStop
+  - bool m_ballStopped
+  
+  # {abstract} void OnGroundTouched()
+}
+
+class ControllableBall
+{
+  - InputActionReference m_ballDirectionInput
+  - InputActionReference m_jumpInput
+
+  - int m_jumpsCount
+}
+
+ControllableBall --|> Ball
+
+
+
+enum PetanquePlayers
+{
+    None
+    Human
+    Computer
+}
+
+enum ShootState
+{
+    NotStarted
+    Steps
+    LaunchBall
+    Finished
+}
+
+abstract class BaseShootManager<TShootStep, TBall>
+{
+  + event Action<PooledObject<TBall>> OnBallSpawned
+
+  # {abstract} PetanquePlayers Owner
+  
+  # TShootStep m_leftRightStep
+  # TShootStep m_forceStep
+  # TShootStep m_upDownStep
+  
+  # ShootState m_currentState
+  - ComponentPool<TBall> m_ballsPool
+  
+  - CustomSplineController m_splineController
+  - BallTrajectoryController m_trajectoryController
+
+  + {abstract} void Init()
+  
+  + void StartShoot()
+  
+  # {abstract} void StartSteps()
+  - void UpdateSteps(float)
+  # {abstract} void LaunchBall()
+
+}
+
+BaseShootManager --* PetanquePlayers
+BaseShootManager --* ShootState
+
+class ComputerShootManager
+ComputerShootManager --|> BaseShootManager
+
+class ShootManager
+ShootManager --|> BaseShootManager
+
+ShootManager -* ControllableBall
+ShootManager --* ShootStep
+ComputerShootManager -* Ball
+ComputerShootManager --* ComputerShootStep
+
+class PetanqueField
+{
+  + Transform JackPosition
+}
+
+class PetanqueGameSettings
+{
+  + int BallsPerGame
+  + int PointsToWin
+}
+
+class SubGameManager
+
+class PetanqueSubGameManager
+{
+  - ShootManager m_playerShootManager
+  - ComputerShootManager m_computerShootManager
+  
+  - PetanqueGameSettings m_gameSettings
+  - PetanqueField m_field
+  
+  + void StartPetanque(PetanqueField)
+  - void ResetPetanque()
+  - void NextTurn()
+  
+  - PetanquePlayers ComputeNextTurn()
+  - (List<Ball>, PetanquePlayers) GetClosestBallsFromJack()
+}
+
+SubGameManager  <|- PetanqueSubGameManager
+
+
+PetanqueSubGameManager --* ComputerShootManager
+PetanqueSubGameManager --* ShootManager
+
+PetanqueSubGameManager -* PetanqueGameSettings
+PetanqueSubGameManager -* PetanqueField
+@enduml

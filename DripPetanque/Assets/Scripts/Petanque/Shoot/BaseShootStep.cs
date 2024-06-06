@@ -7,6 +7,9 @@ public abstract class BaseShootStep
 {
     public float StepOutputValue => HasTempValue() || IsFinished() ? m_stepOutputValue : 0.5f.RemapFrom01(m_data.Range);
 
+    public Vector2 Range => m_data.Range;
+    public ShootStepData Data => m_data;
+
     [SerializeField] protected ShootStepData m_data;
 
     [NonSerialized] protected float m_stepOutputValue;
@@ -16,6 +19,11 @@ public abstract class BaseShootStep
     public abstract void Update(float deltaTime);
     public abstract bool IsFinished();
     public abstract bool HasTempValue();
+
+    public virtual void Reset()
+    {
+
+    }
 
     public virtual void Dispose()
     {
