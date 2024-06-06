@@ -250,7 +250,7 @@ public class PetanqueSubGameManager : SubGameManager
     private BasePetanquePlayer ComputeNextTurnPlayer()
     {
         float furthestClosestBallDistance = GetBound(m_invertDistances);
-        Comparison<float> distanceComparison = GetDistanceComparison(!m_invertDistances);
+        Comparison<float> distanceComparison = GetDistanceComparison(m_invertDistances);
 
         BasePetanquePlayer nextPlayer = null;
         foreach (BasePetanquePlayer player in m_players)

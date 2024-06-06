@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MultiplierScoreBonus : BonusBase
+public class ScoreMultiplierBonus : BonusBase
 {
     [SerializeField] private int m_scoreMultiplier;
 
