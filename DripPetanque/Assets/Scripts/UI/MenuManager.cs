@@ -39,8 +39,10 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
 
 
     // Start is called before the first frame update
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         m_openMenuInput.action.performed += OpenMenu;
         m_closeMenuInput.action.performed += CloseMenu;
         m_moveInput.action.started += MoveInUI;
