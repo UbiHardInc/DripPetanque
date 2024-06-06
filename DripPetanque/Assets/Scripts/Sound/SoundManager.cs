@@ -75,6 +75,8 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     //Battle variables
     private BattleFilters m_actualFilter = BattleFilters.None;
     private BattleVersions m_actualBattleVersion = BattleVersions.Intro;
+    private BattleFilters m_oldActualFilter = BattleFilters.None;
+    private BattleVersions m_oldActualBattleVersion = BattleVersions.Intro;
     private bool m_actualMusicSource = true;
     private bool m_isBattleMusicSwitching = false;
 
@@ -83,7 +85,9 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     {
         base.Start();
         m_radioManager = RadioManager.Instance;
-        m_soundGameState = SoundGameState.MainMenu;
+        UpdateState(GameManager.Instance.CurrentSubGameManager.CorrespondingState);
+        GameManager.Instance.OnGameStateEntered += UpdateState;
+        GameManager.Instance.OnGameStateExited += UpdateState;
 
         m_musicSource1.volume = musicVolume;
         m_musicSource2.volume = musicVolume;
@@ -111,7 +115,21 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                     }
                 }
             }
+            
+            if (m_actualFilter != m_oldActualFilter)
+            {
+                SwitchBattleMusic();
+                m_oldActualFilter = m_actualFilter;
+            }
+
+            if (m_actualBattleVersion != m_oldActualBattleVersion)
+            {
+                SwitchBattleMusic();
+                m_oldActualBattleVersion = m_actualBattleVersion;
+            }
         }
+
+        
     }
     
     #region BallFunctions
@@ -225,12 +243,13 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     public void InitBattleMusic()
     {
-        Debug.LogError("InitBattleMusic");
+        //Debug.LogError("InitBattleMusic");
         m_actualBattleVersion = BattleVersions.Intro;
         m_actualFilter = BattleFilters.None;
         m_isBattleMusicSwitching = false;
         m_actualMusicSource = true;
 
+        m_radioManager.HideRadio();
         StopAllMusicSources();
         PlayMusic(true, "battleIntro");
     }
@@ -238,13 +257,14 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     private void RestartActualBattleMusic()
     {
         m_isBattleMusicSwitching = true;
+        StopCoroutine(SwitchBattleMusicCoroutine());
         Debug.LogError("RestartActualMusic with : " + m_actualFilter.ToString() + " " + m_actualBattleVersion);
+        if (m_actualBattleVersion == BattleVersions.Intro)
+        {
+            m_actualBattleVersion = BattleVersions.Soft;
+        }
         switch (m_actualBattleVersion)
         {
-            case BattleVersions.Intro:
-                PlayMusic(true, m_actualFilter == BattleFilters.Low ? "battleSoftLow" : "battleSoft");
-                m_actualBattleVersion = BattleVersions.Soft;
-                break;
             case BattleVersions.Soft:
                 PlayMusic(true, m_actualFilter == BattleFilters.Low ? "battleSoftLow" : "battleSoft");
                 break;
@@ -256,70 +276,71 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         m_isBattleMusicSwitching = false;
     }
 
-    public void SwitchBattleMusic(BattleFilters filter, bool isChangingToIntense = false)
+    public void SwitchBattleMusic()
     {
-        _ = StartCoroutine(SwitchBattleMusicCoroutine(filter, isChangingToIntense));
+        _ = StartCoroutine(SwitchBattleMusicCoroutine());
     }
 
-    private IEnumerator SwitchBattleMusicCoroutine(BattleFilters filter, bool isChangingToIntense)
+    private IEnumerator SwitchBattleMusicCoroutine()
     {
-        Debug.LogError("SwitchBattleMusic to : " + filter.ToString() + " " + m_actualBattleVersion);
+        Debug.LogError("SwitchBattleMusic to : " + m_actualFilter.ToString() + " " + m_actualBattleVersion);
         while (m_isBattleMusicSwitching)
         {
             yield return null;
         }
+        
+        m_isBattleMusicSwitching = true;
 
-        if (filter != m_actualFilter || isChangingToIntense)
+        AudioSource playingSource = m_musicSource1.isPlaying ? m_musicSource1 : m_musicSource2;
+        AudioSource nextSource = m_musicSource1.isPlaying ? m_musicSource2 : m_musicSource1;
+        AudioClip nextSourceClip = null;
+
+        switch (m_actualBattleVersion)
         {
-            m_isBattleMusicSwitching = true;
-            m_actualFilter = filter;
-
-            AudioSource playingSource = m_musicSource1.isPlaying ? m_musicSource1 : m_musicSource2;
-            AudioSource nextSource = m_musicSource1.isPlaying ? m_musicSource2 : m_musicSource1;
-            AudioClip nextSourceClip = null;
-
-            switch (m_actualBattleVersion)
-            {
-                case BattleVersions.Intro:
-                    _ = filter == BattleFilters.Low
-                        ? m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleIntroLow", out nextSourceClip)
-                        : m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleIntro", out nextSourceClip);
-                    break;
-                case BattleVersions.Soft:
-                    _ = filter == BattleFilters.Low
-                        ? m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleSoftLow", out nextSourceClip)
-                        : m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleSoft", out nextSourceClip);
-                    break;
-                case BattleVersions.Intense:
-                    _ = filter == BattleFilters.Low
-                        ? m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleIntenseLow", out nextSourceClip)
-                        : m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleIntense", out nextSourceClip);
-                    break;
-            }
-
-            nextSource.clip = nextSourceClip;
-            nextSource.volume = 0.0f;
-            nextSource.time = playingSource.time;
-            nextSource.Play();
-
-            while (nextSource.volume < musicVolume)
-            {
-                nextSource.volume += filtersSpeedRate * Time.deltaTime;
-                playingSource.volume -= filtersSpeedRate * Time.deltaTime;
-
-                yield return null;
-            }
-
-            m_actualMusicSource = !m_actualMusicSource;
-            playingSource.Stop();
-            m_isBattleMusicSwitching = false;
+            case BattleVersions.Intro:
+                _ = m_actualFilter == BattleFilters.Low
+                    ? m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleIntroLow", out nextSourceClip)
+                    : m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleIntro", out nextSourceClip);
+                break;
+            case BattleVersions.Soft:
+                _ = m_actualFilter == BattleFilters.Low
+                    ? m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleSoftLow", out nextSourceClip)
+                    : m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleSoft", out nextSourceClip);
+                break;
+            case BattleVersions.Intense:
+                _ = m_actualFilter == BattleFilters.Low
+                    ? m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleIntenseLow", out nextSourceClip)
+                    : m_battleMusicLibrary.SoundAudioClips.TryGetValue("battleIntense", out nextSourceClip);
+                break;
         }
+
+        nextSource.clip = nextSourceClip;
+        nextSource.volume = 0.0f;
+        nextSource.Play();
+        nextSource.time = playingSource.time;
+        Debug.LogError("Times when switching : next : " + nextSource.time + " playing : " + playingSource.time);
+
+        while (nextSource.volume < musicVolume)
+        {
+            nextSource.volume += filtersSpeedRate * Time.deltaTime;
+            playingSource.volume -= filtersSpeedRate * Time.deltaTime;
+
+            yield return null;
+        }
+
+        m_actualMusicSource = !m_actualMusicSource;
+        playingSource.Stop();
+        m_isBattleMusicSwitching = false;
+    }
+
+    public void SwitchBattleFilterMusic(BattleFilters filter)
+    {
+        m_actualFilter = filter;
     }
 
     public void SwitchIntenseBattleMusic()
     {
         m_actualBattleVersion = BattleVersions.Intense;
-        SwitchBattleMusic(m_actualFilter, true);
     }
 
     #endregion
@@ -335,8 +356,11 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         m_musicSource1.clip = clip;
         m_actualMusicSource = true;
         m_musicSource2.Stop();
-        m_musicSource1.time = 0f;
+        m_musicSource1.Stop();
+        m_musicSource1.volume = musicVolume;
+        m_musicSource1.time = 0.0f;
         m_musicSource1.Play();
+        Debug.LogError("Play time : " + m_musicSource1.time);
         
     }
 
@@ -357,11 +381,20 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             yield return new WaitUntil(() => m_musicSource1.isPlaying == false);
             m_isMusicWaiting = false;
 
-            m_musicSource1.clip = clip;
-            m_musicSource1.Play();
-            if (soundName.StartsWith("music"))
+            if (m_soundGameState == SoundGameState.Exploration)
             {
-                _ = StartCoroutine(m_radioManager.ShowMusicDataInUI());
+                m_actualMusicSource = true;
+                m_musicSource2.Stop();
+                m_musicSource1.clip = clip;
+                m_musicSource1.Play();
+                if (soundName.StartsWith("music"))
+                {
+                    _ = StartCoroutine(m_radioManager.ShowMusicDataInUI());
+                }
+            }
+            else
+            {
+                yield break;
             }
         }
         else
@@ -437,13 +470,17 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     public void UpdateState(GameState nextState)
     {
+        Debug.LogError("Sound game state updated with : " + nextState.ToString());
         switch (nextState)
         {
             case GameState.None:
                 //Technically it's main menu so it is on it's own
+                m_soundGameState = SoundGameState.MainMenu;
+                StopAllMusicSources();
+                m_radioManager.HideRadio();
                 break;
             case GameState.Exploration:
-                RadioManager.Instance.StartRadio();
+                m_soundGameState = SoundGameState.Exploration;
                 break;
             case GameState.Dialogue:
                 //do nothing

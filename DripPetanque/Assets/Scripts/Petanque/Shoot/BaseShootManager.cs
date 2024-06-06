@@ -91,7 +91,8 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
 
         if (Owner.PlayerType == PetanquePlayerType.Human)
         {
-            SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.Low);
+            //SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.Low);
+            SoundManager.Instance.SwitchBattleFilterMusic(SoundManager.BattleFilters.Low);
         }
     }
 
@@ -131,7 +132,8 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
 
         if (Owner.PlayerType == PetanquePlayerType.Human)
         {
-            SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.None);
+            //SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.None);
+            SoundManager.Instance.SwitchBattleFilterMusic(SoundManager.BattleFilters.None);
         }
         SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop);
     }

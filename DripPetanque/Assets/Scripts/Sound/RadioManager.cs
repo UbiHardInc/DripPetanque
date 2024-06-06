@@ -33,6 +33,9 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
     private readonly List<string> m_masterPlaylist = new List<string>();
     private int m_playlistPlayNumber;
 
+    private bool m_radioStarted;
+    [SerializeField]private bool m_firstTimePlaying = true;
+
     protected override void Start()
     {
         base.Start();
@@ -41,19 +44,26 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
 
     private void Update()
     {
-        if (m_masterPlaylist.Count < m_playlistPlayNumber + 1)
+        if (m_masterPlaylist.Count < m_playlistPlayNumber + 1 && m_radioStarted)
         {
             ResetMasterPlaylist();
         }
 
-        if (!m_soundManager.IsMusicWaiting)
+        if (!m_soundManager.IsMusicWaiting && m_radioStarted)
         {
             AddAudioToWait();
+        }
+
+        if (GameManager.Instance.CurrentSubGameManager.CorrespondingState == GameState.Exploration && !m_radioStarted)
+        {
+            StartRadio();
         }
     }
 
     public void StartRadio()
     {
+        m_radioStarted = true;
+        m_radioUI.gameObject.SetActive(true);
         ResetMasterPlaylist();
         m_soundManager.StopAllMusicSources();
         AddAudioToWait();
@@ -67,6 +77,8 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
 
     private void ResetMasterPlaylist()
     {
+        m_masterPlaylist.Clear();
+        
         foreach (var nameAudioClip in m_soundManager.RadioLibrary.SoundAudioClips)
         {
             if (nameAudioClip.Key.StartsWith(RadioClipType.music.ToString()))
@@ -75,16 +87,38 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
             }
             else if (nameAudioClip.Key.StartsWith(RadioClipType.interlude.ToString()))
             {
-                m_interludeNameList.Add(nameAudioClip.Key);
+                if (!m_firstTimePlaying && nameAudioClip.Key == "interlude1")
+                {
+                    //Do Nothing
+                }
+                else
+                {
+                    m_interludeNameList.Add(nameAudioClip.Key);
+                }
+                
             }
         }
 
         m_musicNameList.Shuffle();
         m_interludeNameList.Shuffle();
 
+        if (m_firstTimePlaying)
+        {
+            m_masterPlaylist.Add("interlude1");
+            m_interludeNameList.Remove("interlude1");
+        }
+
         foreach (var interlude in m_interludeNameList)
         {
-            m_masterPlaylist.Add(interlude);
+            if (m_firstTimePlaying)
+            {
+                m_firstTimePlaying = false;
+            }
+            else
+            {
+                m_masterPlaylist.Add(interlude);
+            }
+            
 
             if (m_musicNameList.Count >= 2)
             {
@@ -120,5 +154,11 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
         yield return new WaitForSeconds(m_timeRadioUiStay);
         //Call animation ti hide the radio UI
         m_radioUI.DOLocalMove(m_radioUI.localPosition + new Vector3(529.9f, 0f, 0f), 2f);
+    }
+
+    public void HideRadio()
+    {
+        m_radioUI.gameObject.SetActive(false);
+        m_radioStarted = false;
     }
 }
