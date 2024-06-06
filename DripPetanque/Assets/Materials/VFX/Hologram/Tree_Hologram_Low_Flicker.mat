@@ -101,15 +101,15 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _FlickerIntensity: 0.4
-    - _FresnelScale: 4.43
+    - _FlickerIntensity: 0.79
+    - _FresnelScale: 4.7
     - _GlitchStrength: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NoiseScale: 500
-    - _NoiseStrength: 0.5
+    - _NoiseScale: 111.75
+    - _NoiseStrength: 7.68
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -126,11 +126,11 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.04584638, g: 0.5647059, b: 0, a: 1}
+    - _BaseColor: {r: 0.08373079, g: 0.6037736, b: 0.03645422, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 1.5, g: 0.7853403, b: 0, a: 0}
-    - _HologramTextureTiling: {r: 1, g: -0.7, b: 0, a: 0}
+    - _HologramTextureTiling: {r: 1, g: -1.31, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1782494536695792972
