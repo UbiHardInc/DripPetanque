@@ -22,3 +22,5 @@ MonoBehaviour:
       Value: {fileID: 8300000, guid: e2aa2a80a6c46c4409b5c6c69fe1acfa, type: 3}
     - Key: start
       Value: {fileID: 8300000, guid: fd35f9062331ce6499e6a0f873b4e9a7, type: 3}
+    - Key: applaud
+      Value: {fileID: 8300000, guid: edd384efd3c4db642b511e29b141e420, type: 3}

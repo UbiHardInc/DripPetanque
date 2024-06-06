@@ -26,6 +26,10 @@ public class ResultDisplay : MonoBehaviour
         m_text.text = $"{winner.PlayerName} won the round {roundIndex} with {winner.GetResultForRound(roundIndex).Score} points and now has {winner.CurrentScore}";
 
         gameObject.SetActive(true);
+        if (winner.PlayerType == PetanquePlayerType.Human)
+        {
+            SoundManager.Instance.PlayUISFX("applaud");
+        }
         CreateRoundDisplay(result.AllPlayers, result.RoundIndex, result.Winner);
         m_resultDisplayEndCallback = resultDisplayEndCallback;
         m_endResultInput.action.performed += OnEndResultInputPerformed;
@@ -35,6 +39,10 @@ public class ResultDisplay : MonoBehaviour
     {
         gameObject.SetActive(true);
         CreateRoundDisplay(gameResult.AllPlayers, gameResult.RoundCount, gameResult.Winner);
+        if (gameResult.Winner.PlayerType == PetanquePlayerType.Human)
+        {
+            SoundManager.Instance.PlayUISFX("applaud");
+        }
         m_text.text = $"{gameResult.Winner.PlayerName} won the game with {gameResult.Winner.CurrentScore} points";
         m_resultDisplayEndCallback = resultDisplayEndCallback;
         m_endResultInput.action.performed += OnEndResultInputPerformed;
