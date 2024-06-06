@@ -26,3 +26,5 @@ MonoBehaviour:
       Value: {fileID: 8300000, guid: edd384efd3c4db642b511e29b141e420, type: 3}
     - Key: city
       Value: {fileID: 8300000, guid: 11bc18fd38c1658429b9e39de5ab28b8, type: 3}
+    - Key: bumper
+      Value: {fileID: 8300000, guid: d0c73784296bb6a468139ebb34136d55, type: 3}
