@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5760780034956435632}
   - component: {fileID: 5178638124462551166}
   - component: {fileID: 1800123974065244344}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SM_Env_Road_Lines_02_Corner_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,12 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6619166139878076618}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.000000057601238, y: 0.70710576, z: -0.00000005760106, w: 0.7071079}
   m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &5178638124462551166
 MeshFilter:
@@ -51,6 +52,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
