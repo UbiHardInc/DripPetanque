@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_cacheColor: {r: 0, g: 0, b: 0, a: 1}
-  m_image: {fileID: 283564590}
+  m_image: {fileID: 0}
 --- !u!114 &283564590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,14 +425,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d1fe2ccfb157f49a962ef1060763ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_sceneToTransitionTo:
-    m_sceneAsset: {fileID: 102900000, guid: 4c25d6d82d2aedf4c8a040f74e974697, type: 3}
-    m_scenePath: Assets/Scenes/DissloveMask.unity
+  m_fadeOut: 0
   m_cache: {fileID: 283564589}
   m_fadeTimer:
     m_duration: 1
     m_repeat: 0
-  m_transitionAction: 0
 --- !u!4 &1685722808
 Transform:
   m_ObjectHideFlags: 0
