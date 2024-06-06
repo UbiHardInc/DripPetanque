@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8206665827618456359}
   - component: {fileID: 1540060852626754130}
   - component: {fileID: 8878948588525582537}
+  - component: {fileID: 6584926733794127752}
   m_Layer: 0
   m_Name: RoundBumper
   m_TagString: Untagged
@@ -120,6 +121,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09d30dae12e36245a0d7ba42a6306ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_whatIsBall: 8
   bumperForce: 1
   bumpColor: {r: 1, g: 0, b: 0, a: 0}
   forceMode: 2
+--- !u!114 &6584926733794127752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2477877440369299660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc68fd9604b7c8f48af5ec1d5bb4a9fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
