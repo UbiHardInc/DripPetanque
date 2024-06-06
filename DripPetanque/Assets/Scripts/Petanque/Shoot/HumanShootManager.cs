@@ -30,6 +30,8 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
         base.StartSteps();
 
         m_arrow.gameObject.SetActive(true);
+
+        SoundManager.Instance.SwitchBattleFilterMusic(SoundManager.BattleFilters.Low);
     }
 
     protected override void LaunchBall()
@@ -41,5 +43,7 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
         {
             m_allSteps[i].ResetArrow();
         }
+
+        SoundManager.Instance.SwitchBattleFilterMusic(SoundManager.BattleFilters.None);
     }
 }

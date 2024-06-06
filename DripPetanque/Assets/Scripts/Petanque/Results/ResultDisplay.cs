@@ -8,7 +8,7 @@ public class ResultDisplay : MonoBehaviour
 {
     [SerializeField] private InputActionReference m_endResultInput;
     [SerializeField] private TMP_Text m_text;
-    
+
     [SerializeField] private GameObject m_scorePanelLayout;
     [SerializeField] private GameObject m_scorePanelPrefab;
 
@@ -55,9 +55,13 @@ public class ResultDisplay : MonoBehaviour
                 case PetanquePlayerType.Computer:
                     computerPlayer = player;
                     break;
+                case PetanquePlayerType.None:
+                    break;
+                default:
+                    break;
             }
         }
-        
+
         GameObject scorePanel = Instantiate(m_scorePanelPrefab, m_scorePanelLayout.transform);
         scorePanel.GetComponent<RoundScorePanel>().InitializeRoundScorePanel(roundIndex, humanPlayer.CurrentScore,
             computerPlayer.CurrentScore, winner.PlayerType);
