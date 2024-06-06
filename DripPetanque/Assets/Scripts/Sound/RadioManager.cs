@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityUtility.CustomAttributes;
 using UnityUtility.Singletons;
 using UnityUtility.Utils;
-using Random = System.Random;
 
 public class RadioManager : MonoBehaviourSingleton<RadioManager>
 {
@@ -15,48 +16,56 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
         interlude
     }
 
-    private SoundManager m_soundManager;
-
-    [Header("RadioGameObjects")]
+    [Title("RadioGameObjects")]
     [SerializeField] private TMP_Text m_artistNameText;
     [SerializeField] private TMP_Text m_songNameText;
+    [SerializeField] private RectTransform m_radioUI;
 
-    [Header("Parameters")]
+    [Title("Parameters")]
     [SerializeField] private float m_timeRadioUiStay = 2f;
 
-    private readonly string m_musicTitle;
-    private readonly string m_musicArtist;
-    private readonly List<string> m_musicNameList = new List<string>();
-    private readonly List<string> m_interludeNameList = new List<string>();
-    private readonly List<string> m_masterPlaylist = new List<string>();
-    private int m_playlistPlayNumber;
+    [Title("Misc")]
+    [SerializeField] private bool m_firstTimePlaying = true;
+
+    [NonSerialized] private readonly string m_musicTitle;
+    [NonSerialized] private readonly string m_musicArtist;
+    [NonSerialized] private readonly List<string> m_musicNameList = new List<string>();
+    [NonSerialized] private readonly List<string> m_interludeNameList = new List<string>();
+    [NonSerialized] private readonly List<string> m_masterPlaylist = new List<string>();
+    [NonSerialized] private int m_playlistPlayNumber;
+
+    [NonSerialized] private bool m_radioStarted;
+
+    [NonSerialized] private SoundManager m_soundManager;
 
     protected override void Start()
     {
         base.Start();
         m_soundManager = SoundManager.Instance;
+    }
 
-        if (GameManager.Instance.CurrentSubGameManager.CorrespondingState == GameState.Exploration)
+    private void Update()
+    {
+        if (m_masterPlaylist.Count < m_playlistPlayNumber + 1 && m_radioStarted)
+        {
+            ResetMasterPlaylist();
+        }
+
+        if (!m_soundManager.IsMusicWaiting && m_radioStarted)
+        {
+            AddAudioToWait();
+        }
+
+        if (GameManager.Instance.CurrentSubGameManager.CorrespondingState == GameState.Exploration && !m_radioStarted)
         {
             StartRadio();
         }
     }
 
-    private void Update()
+    public void StartRadio()
     {
-        if (m_masterPlaylist.Count < m_playlistPlayNumber + 1)
-        {
-            ResetMasterPlaylist();
-        }
-
-        if (!m_soundManager.IsMusicWaiting)
-        {
-            AddAudioToWait();
-        }
-    }
-
-    private void StartRadio()
-    {
+        m_radioStarted = true;
+        m_radioUI.gameObject.SetActive(true);
         ResetMasterPlaylist();
         m_soundManager.StopAllMusicSources();
         AddAudioToWait();
@@ -70,6 +79,8 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
 
     private void ResetMasterPlaylist()
     {
+        m_masterPlaylist.Clear();
+
         foreach (var nameAudioClip in m_soundManager.RadioLibrary.SoundAudioClips)
         {
             if (nameAudioClip.Key.StartsWith(RadioClipType.music.ToString()))
@@ -78,16 +89,37 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
             }
             else if (nameAudioClip.Key.StartsWith(RadioClipType.interlude.ToString()))
             {
-                m_interludeNameList.Add(nameAudioClip.Key);
+                if (!m_firstTimePlaying && nameAudioClip.Key == "interlude1")
+                {
+                    //Do Nothing
+                }
+                else
+                {
+                    m_interludeNameList.Add(nameAudioClip.Key);
+                }
             }
         }
 
         m_musicNameList.Shuffle();
         m_interludeNameList.Shuffle();
 
+        if (m_firstTimePlaying)
+        {
+            m_masterPlaylist.Add("interlude1");
+            _ = m_interludeNameList.Remove("interlude1");
+        }
+
         foreach (var interlude in m_interludeNameList)
         {
-            m_masterPlaylist.Add(interlude);
+            if (m_firstTimePlaying)
+            {
+                m_firstTimePlaying = false;
+            }
+            else
+            {
+                m_masterPlaylist.Add(interlude);
+            }
+
 
             if (m_musicNameList.Count >= 2)
             {
@@ -113,12 +145,23 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
 
     public IEnumerator ShowMusicDataInUI()
     {
-        m_artistNameText.text = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-")[1];
-        m_songNameText.text = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-")[2];
+        Debug.LogError("ShowRadioUI Called");
+        string[] splittedMusicName = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-");
+        m_artistNameText.text = splittedMusicName[1].Replace("/", " ");
+        m_songNameText.text = splittedMusicName[2].Replace("/", " ");
 
-        //Todo :
-        //Call animation to show the radio UI
+        Vector3 uiDisplacement = new Vector3(-529.9f, 0f, 0f); // @TODO : If possible, get rid of this hard-coded value
+
+        //Animation to show the radio UI
+        _ = m_radioUI.DOLocalMove(m_radioUI.localPosition + uiDisplacement, 2f);
         yield return new WaitForSeconds(m_timeRadioUiStay);
-        //Call animation ti hide the radio UI
+        //Animation to hide the radio UI
+        _ = m_radioUI.DOLocalMove(m_radioUI.localPosition - uiDisplacement, 2f);
+    }
+
+    public void HideRadio()
+    {
+        m_radioUI.gameObject.SetActive(false);
+        m_radioStarted = false;
     }
 }

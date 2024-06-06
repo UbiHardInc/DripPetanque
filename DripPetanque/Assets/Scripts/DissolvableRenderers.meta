@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:DripPetanque/Assets/Scripts/Bonuses.meta
-guid: 91e7582ff4d6b6147808855807b876b4
-========
-guid: 5beb231099be07f44a850414f5884656
->>>>>>>> main:DripPetanque/Assets/Scripts/DissolvableRenderers.meta
+guid: 62b78db0503b22e4d8f88da88977a281
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

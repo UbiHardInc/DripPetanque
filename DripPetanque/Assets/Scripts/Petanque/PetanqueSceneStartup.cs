@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Timer;
 using UnityUtility.Utils;
@@ -19,6 +20,10 @@ public class PetanqueSceneStartup : MonoBehaviour
     [SerializeField] private float m_textureDissolveTime;
     [SerializeField] private Material m_dissolveMaterial;
 
+    [SerializeField] private PlayableDirector m_playableDirector;
+
+    private bool m_cinematicPlayed;
+
     private void Awake()
     {
         _ = StartCoroutine(Dissolve());
@@ -26,7 +31,7 @@ public class PetanqueSceneStartup : MonoBehaviour
 
     private void Start()
     {
-        SoundManager.Instance.PlayMusic(true, "battleFull");
+        m_playableDirector.stopped += (_) => m_cinematicPlayed = true;
     }
 
     private IEnumerator Dissolve()
@@ -38,8 +43,14 @@ public class PetanqueSceneStartup : MonoBehaviour
         DissolvableRenderersManager.SetDissolveAmount(m_dissolveHeightRange.x, materialDissolveAmountID);
         DissolvableRenderersManager.SetDissolveAmount(m_dissolveHeightRange.x, materialTextureDissolveAmountID);
 
+        m_playableDirector.Play();
+        m_cinematicPlayed = false;
+
         yield return DissolveProperty(materialDissolveAmountID, m_dissolveTime);
         yield return DissolveProperty(materialTextureDissolveAmountID, m_textureDissolveTime);
+        yield return new WaitUntil(() => m_cinematicPlayed);
+
+        m_playableDirector.gameObject.SetActive(false);
 
         OnSceneReady();
     }

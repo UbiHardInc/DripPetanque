@@ -48,8 +48,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f366db11baf3c1742982ff7dad445cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_startPoint: {fileID: 4264089684880280044}
-  m_endPoint: {fileID: 6324371584207708239}
   m_attractionFactor: 0.502
   m_forceMultiplier: 1
   m_splineComponent: {fileID: 7211873351589569338}
@@ -69,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fc6cc7024e8ce640aff5ad8ff6bbff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_floor: {fileID: 1309955890225520166}
+  m_floor: {fileID: 0}
   m_spline: {fileID: 7211873351589569338}
   m_speedAlongTheSpline:
     serializedVersion: 2
@@ -553,7 +551,6 @@ MonoBehaviour:
   m_targetZoneSize: {x: 10, y: 10}
   m_targetPoint: {fileID: 0}
   m_bonuses: []
-  m_buttonField: 0
 --- !u!1 &1651027561073577325
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,7 +975,7 @@ MonoBehaviour:
     m_camTransitionTime: 1
     m_validateInput: {fileID: -6589083956231380857, guid: 462a9b2de1b64484aa61d3a207013de5,
       type: 3}
-    m_infoPanelText: {fileID: 0}
+    m_infoPanel: {fileID: 0}
   m_forceStep:
     m_data: {fileID: 11400000, guid: 73a30ca34739af24a9d1d162ce7915d7, type: 2}
     m_gauge: {fileID: 0}
@@ -986,7 +983,7 @@ MonoBehaviour:
     m_camTransitionTime: 1
     m_validateInput: {fileID: -6589083956231380857, guid: 462a9b2de1b64484aa61d3a207013de5,
       type: 3}
-    m_infoPanelText: {fileID: 0}
+    m_infoPanel: {fileID: 0}
   m_upDownStep:
     m_data: {fileID: 11400000, guid: f397cdd70a126e34287f082f7aaaec1b, type: 2}
     m_gauge: {fileID: 0}
@@ -994,7 +991,7 @@ MonoBehaviour:
     m_camTransitionTime: 1
     m_validateInput: {fileID: -6589083956231380857, guid: 462a9b2de1b64484aa61d3a207013de5,
       type: 3}
-    m_infoPanelText: {fileID: 0}
+    m_infoPanel: {fileID: 0}
   m_splineController: {fileID: 3127890927343206712}
   m_trajectoryController: {fileID: 976997116147010033}
   m_ballsPool: {fileID: 998528499064534056}
@@ -1595,6 +1592,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7046396299471455936}
     m_Modifications:
+    - target: {fileID: 2413875613642563896, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_shotManager
+      value: 
+      objectReference: {fileID: 2302866037900239050}
     - target: {fileID: 2562394907374142358, guid: dac6cde55f52ef64e8ff1984642d5f07,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1645,6 +1647,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3891807010044299172, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_shotManager
+      value: 
+      objectReference: {fileID: 347976424078341251}
+    - target: {fileID: 4001018568575703612, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_VersionIndex
+      value: 1603
+      objectReference: {fileID: 0}
     - target: {fileID: 5847634602544162214, guid: dac6cde55f52ef64e8ff1984642d5f07,
         type: 3}
       propertyPath: m_Name
@@ -1655,12 +1667,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dac6cde55f52ef64e8ff1984642d5f07, type: 3}
---- !u!1 &1309955890225520166 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2862162839050812352, guid: dac6cde55f52ef64e8ff1984642d5f07,
-    type: 3}
-  m_PrefabInstance: {fileID: 3861154988002698726}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1592832355476612720 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2562394907374142358, guid: dac6cde55f52ef64e8ff1984642d5f07,
