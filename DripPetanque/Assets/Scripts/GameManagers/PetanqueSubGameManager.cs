@@ -145,13 +145,18 @@ public class PetanqueSubGameManager : SubGameManager
     {
         BasePetanquePlayer roundWinner = ComputeRoundResults();
 
-        if (roundWinner.CurrentScore > m_gameSettings.PointsToWin)
+        if (roundWinner.CurrentScore >= m_gameSettings.PointsToWin)
         {
             DisplayGameResult(roundWinner);
             return;
         }
 
         DisplayRoundResults(roundWinner);
+
+        if (roundWinner.CurrentScore >= Math.Round(m_gameSettings.PointsToWin * 0.7))
+        {
+            SoundManager.Instance.SwitchIntenseBattleMusic();
+        }
     }
 
     private BasePetanquePlayer ComputeRoundResults()
@@ -191,9 +196,10 @@ public class PetanqueSubGameManager : SubGameManager
         {
             Winner = gameWinner,
             AllPlayers = m_players,
+            RoundCount = m_currentRound,
         };
 
-        m_resultDisplay.DislayGameResult(result, UnloadScene);
+        m_resultDisplay.DisplayGameResult(result, UnloadScene);
     }
 
 

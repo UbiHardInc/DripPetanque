@@ -88,11 +88,6 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         m_currentStep = 0;
         m_allSteps[m_currentStep].Start();
         m_currentState = ShootState.Steps;
-
-        if (Owner.PlayerType == PetanquePlayerType.Human)
-        {
-            SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.Low);
-        }
     }
 
     private void UpdateSteps(float deltaTime)
@@ -129,10 +124,6 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
 
         m_trajectoryController.StartNewBall(requestedBall.Object);
 
-        if (Owner.PlayerType == PetanquePlayerType.Human)
-        {
-            SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.None);
-        }
         SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop);
     }
 

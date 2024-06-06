@@ -13,4 +13,28 @@ MonoBehaviour:
   m_Name: radioMusicLibrary
   m_EditorClassIdentifier: 
   SoundAudioClips:
-    m_keyValuePairsList: []
+    m_keyValuePairsList:
+    - Key: music-Nihilaeth-The/Rain
+      Value: {fileID: 8300000, guid: 7edea86b446674643ba0c54590ad16dc, type: 3}
+    - Key: music-Nihilaeth-Vacuity
+      Value: {fileID: 8300000, guid: 5ca5abeb20903d54e87e793463339e3e, type: 3}
+    - Key: music-Nihilaeth-To/Shine/Again
+      Value: {fileID: 8300000, guid: 8d591bd3dcf27994eb03d66ac0aed201, type: 3}
+    - Key: music-Nihilaeth-Trap/My/Head
+      Value: {fileID: 8300000, guid: a91c83bbae1c1b9478bedc47f05ec143, type: 3}
+    - Key: music-Benoit/Tapis-Funking/of/Mars/8
+      Value: {fileID: 8300000, guid: 6863cf89ce3384e4bba755f3aeeae866, type: 3}
+    - Key: "music-Les/Triplettes/de/midi-Drop/the/Bass/Peuch\xE8re"
+      Value: {fileID: 8300000, guid: 6f062e49ed636e243ac650b2e7506d42, type: 3}
+    - Key: music-DJDown-Nigh/In/Massilia
+      Value: {fileID: 8300000, guid: debf1414a097c8443a4801a2fc48a806, type: 3}
+    - Key: interlude1
+      Value: {fileID: 8300000, guid: d4c83d92e6ebeb24baec457683496841, type: 3}
+    - Key: interlude2
+      Value: {fileID: 8300000, guid: 16fc1879b6cf82442b10f0fc75f6e1f8, type: 3}
+    - Key: interlude3
+      Value: {fileID: 8300000, guid: c6f58e3fcf2f7634899a6b856be8960c, type: 3}
+    - Key: interlude4
+      Value: {fileID: 8300000, guid: e74df16ad068e5f4ab9f9608dfbb862f, type: 3}
+    - Key: interlude5
+      Value: {fileID: 8300000, guid: 6b57c577e9e1b0d45b38f84a9633daa4, type: 3}

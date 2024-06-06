@@ -1,8 +1,8 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityUtility.Pools;
-using System.Linq;
 
 [Serializable]
 public abstract class PetanquePlayer<TShootStep, TBall> : BasePetanquePlayer
@@ -21,11 +21,11 @@ public abstract class PetanquePlayer<TShootStep, TBall> : BasePetanquePlayer
     [SerializeField] private string m_playerName;
 
     // Thrown balls
-    [NonSerialized] private List<PooledObject<TBall>> m_playerBalls = new List<PooledObject<TBall>>();
+    [NonSerialized] private readonly List<PooledObject<TBall>> m_playerBalls = new List<PooledObject<TBall>>();
     [NonSerialized] private int m_thrownBallsCount;
 
     // Results
-    [NonSerialized] private List<RoundResult> m_roundResults = new List<RoundResult>();
+    [NonSerialized] private readonly List<RoundResult> m_roundResults = new List<RoundResult>();
     [NonSerialized] private int m_currentScore;
 
     [NonSerialized] private bool m_shooting;
