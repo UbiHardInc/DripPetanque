@@ -31,8 +31,6 @@ public class PetanqueSceneStartup : MonoBehaviour
 
     private void Start()
     {
-        SoundManager.Instance.PlayMusic(true, "battleFull");
-
         m_playableDirector.stopped += (_) => m_cinematicPlayed = true;
     }
 

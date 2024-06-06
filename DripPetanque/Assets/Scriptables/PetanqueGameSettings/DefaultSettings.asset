@@ -16,5 +16,5 @@ MonoBehaviour:
     m_sceneAsset: {fileID: 102900000, guid: f0b569dc47fb7054c9ac35e969e21225, type: 3}
     m_scenePath: Assets/Scenes/Proto_Petanque.unity
   m_ballsPerGame: 3
-  m_pointsToWin: 13
+  m_pointsToWin: 6
   m_exitState: 4

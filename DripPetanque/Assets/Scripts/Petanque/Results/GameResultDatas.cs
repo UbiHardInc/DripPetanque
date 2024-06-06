@@ -4,6 +4,7 @@ public struct GameResultDatas
 {
     public BasePetanquePlayer Winner;
     public List<BasePetanquePlayer> AllPlayers;
+    public int RoundCount;
 }
 
 public struct RoundResultDatas

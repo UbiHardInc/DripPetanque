@@ -14,9 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SoundAudioClips:
     m_keyValuePairsList:
-    - Key: battleFull
-      Value: {fileID: 8300000, guid: 5c7f3f504cb62c64e9c15e08fb362403, type: 3}
-    - Key: battleFullLow
-      Value: {fileID: 8300000, guid: 03fb44d8d9926134ea12732143c2f36e, type: 3}
-    - Key: battleFullHigh
-      Value: {fileID: 8300000, guid: c4df8ebf2f3ffd04689ec2e6f9773b1b, type: 3}
+    - Key: battleIntro
+      Value: {fileID: 8300000, guid: 65142a25860b65845a3fbc3b4bf58224, type: 3}
+    - Key: battleIntroLow
+      Value: {fileID: 8300000, guid: 76b4f16217952bb4bbe2b3b333ef48b7, type: 3}
+    - Key: battleSoft
+      Value: {fileID: 8300000, guid: 7f2d27055bfece14b97752024703c363, type: 3}
+    - Key: battleSoftLow
+      Value: {fileID: 8300000, guid: be04305d2597e474394a2e1eba5a73d5, type: 3}
+    - Key: battleIntense
+      Value: {fileID: 8300000, guid: 39281bdf65934dc4f83a634fefc5b7ae, type: 3}
+    - Key: battleIntenseLow
+      Value: {fileID: 8300000, guid: 3bed7a7649107e941bc45d371e082afe, type: 3}
