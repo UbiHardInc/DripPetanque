@@ -94,7 +94,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 508f7d47810e6394081b3ed1f29381c2, type: 2}
+      objectReference: {fileID: 2100000, guid: a148718a97a2259488f59258620a16b6, type: 2}
     - target: {fileID: 919132149155446097, guid: a177c101cfd49b14bbb5eb5632be1ee3,
         type: 3}
       propertyPath: m_Name
@@ -112,6 +112,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5337541721132624099}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a177c101cfd49b14bbb5eb5632be1ee3,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3799764854211556972}
   m_SourcePrefab: {fileID: 100100000, guid: a177c101cfd49b14bbb5eb5632be1ee3, type: 3}
 --- !u!1 &1477968140185238235 stripped
 GameObject:
@@ -147,6 +151,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToTrack: {fileID: 0}
+--- !u!65 &3799764854211556972
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477968140185238235}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.25, y: 2.25, z: 2}
+  m_Center: {x: 0, y: 1.1245944, z: 0}
 --- !u!4 &2290393350351986785 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a177c101cfd49b14bbb5eb5632be1ee3,

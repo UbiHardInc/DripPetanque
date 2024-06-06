@@ -2749,7 +2749,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 274649b0e221539409070ebf6c18918b, type: 3}
   - {fileID: 8300000, guid: a3194b8bbc96ef84fab1f98f4b7dae3e, type: 3}
   m_footstepAudioVolume: 0.3
-  m_jumpHeight: 1.2
+  m_jumpHeight: 0.7
   m_gravity: -15
   m_jumpTimeout: 0.3
   m_fallTimeout: 0.15
