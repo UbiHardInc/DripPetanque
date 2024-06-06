@@ -258,7 +258,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     {
         m_isBattleMusicSwitching = true;
         StopCoroutine(SwitchBattleMusicCoroutine());
-        Debug.LogError("RestartActualMusic with : " + m_actualFilter.ToString() + " " + m_actualBattleVersion);
+        //Debug.LogError("RestartActualMusic with : " + m_actualFilter.ToString() + " " + m_actualBattleVersion);
         if (m_actualBattleVersion == BattleVersions.Intro)
         {
             m_actualBattleVersion = BattleVersions.Soft;
@@ -283,7 +283,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     private IEnumerator SwitchBattleMusicCoroutine()
     {
-        Debug.LogError("SwitchBattleMusic to : " + m_actualFilter.ToString() + " " + m_actualBattleVersion);
+        //Debug.LogError("SwitchBattleMusic to : " + m_actualFilter.ToString() + " " + m_actualBattleVersion);
         while (m_isBattleMusicSwitching)
         {
             yield return null;
@@ -318,7 +318,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         nextSource.volume = 0.0f;
         nextSource.Play();
         nextSource.time = playingSource.time;
-        Debug.LogError("Times when switching : next : " + nextSource.time + " playing : " + playingSource.time);
+        //Debug.LogError("Times when switching : next : " + nextSource.time + " playing : " + playingSource.time);
 
         while (nextSource.volume < musicVolume)
         {
@@ -360,7 +360,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         m_musicSource1.volume = musicVolume;
         m_musicSource1.time = 0.0f;
         m_musicSource1.Play();
-        Debug.LogError("Play time : " + m_musicSource1.time);
+        //Debug.LogError("Play time : " + m_musicSource1.time);
         
     }
 
@@ -470,7 +470,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     public void UpdateState(GameState nextState)
     {
-        Debug.LogError("Sound game state updated with : " + nextState.ToString());
+        //Debug.LogError("Sound game state updated with : " + nextState.ToString());
         switch (nextState)
         {
             case GameState.None:
