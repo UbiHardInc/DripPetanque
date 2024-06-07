@@ -5626,7 +5626,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_upDownStep.m_gauge
       value: 
-      objectReference: {fileID: 83452653}
+      objectReference: {fileID: 1191470453154843849}
     - target: {fileID: 2302866037900239050, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_forceStep.m_infoPanel
@@ -6688,6 +6688,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe2dc5e797d51134890b129fc4c8c05e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1191470453154843849 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1736017614660160535, guid: 9f14adbf4ab13f842b0d48a79306cb99,
+    type: 3}
+  m_PrefabInstance: {fileID: 1191470453154843846}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4a953a858bf564ab0651992ca013cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &2594431462423929094 stripped
