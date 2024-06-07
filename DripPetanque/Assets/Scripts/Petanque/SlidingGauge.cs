@@ -30,7 +30,7 @@ public class SlidingGauge : MonoBehaviour
 
     [SerializeField] private ImageTypeEnum m_imageType = ImageTypeEnum.Slider;
     [SerializeField, ShowIf(nameof(m_imageType), ImageTypeEnum.Rotation)]
-    private float m_rotationAngle = 45;
+    private Vector2 m_rotationAngle  = new Vector2(-45, 45);
 
     [SerializeField] private FillingBehaviourEnum m_fillingBehaviour = FillingBehaviourEnum.BackAndForth;
     [SerializeField] private FillMethod m_fillMethod = FillMethod.Vertical;
@@ -50,6 +50,7 @@ public class SlidingGauge : MonoBehaviour
     [NonSerialized] private float m_inernalCurrentFilling = 0.0f;
     [NonSerialized] private Vector3 m_negativePoint = new Vector3(0f, 0f, 0f);
     [NonSerialized] private Vector3 m_positivePoint = new Vector3(0f, 0f, 0f);
+    [NonSerialized] private float m_originAngle = 0.0f;
 
     private void Start()
     {
@@ -77,11 +78,12 @@ public class SlidingGauge : MonoBehaviour
                 }
                 break;
             case ImageTypeEnum.Rotation:
+                m_originAngle = transform.localRotation.z;
                 //Get current position then add 50 to its Y axis
-                m_positivePoint = new Vector3(0f, 0f, m_rotationAngle);
+                m_positivePoint = new Vector3(0f, 0f, m_rotationAngle.y);
 
                 //Get current position then substract -50 to its Y axis
-                m_negativePoint = new Vector3(0f, 0f, -m_rotationAngle);
+                m_negativePoint = new Vector3(0f, 0f, m_rotationAngle.x);
                 break;
         }
 
@@ -102,7 +104,7 @@ public class SlidingGauge : MonoBehaviour
             default:
                 break;
         }
-        m_currentFilling = Smoothstep(m_currentFilling);
+        m_currentFilling = MathUtils.Smoothstep(m_currentFilling);
         switch (m_imageType)
         {
             case ImageTypeEnum.Slider:
@@ -111,13 +113,10 @@ public class SlidingGauge : MonoBehaviour
             case ImageTypeEnum.Rotation:
                 m_slider.transform.eulerAngles = Vector3.Lerp(m_positivePoint, m_negativePoint, m_currentFilling);
                 break;
+            default:
+                break;
         }
 
-    }
-
-    private static float Smoothstep(float x)
-    {
-        return 3 * x * x - 2 * x * x * x;
     }
 
     public void SetHorizontalFillMethodAndOrigin(OriginHorizontal origin)

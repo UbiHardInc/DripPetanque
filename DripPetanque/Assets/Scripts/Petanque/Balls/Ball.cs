@@ -20,7 +20,14 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     [SerializeField] private Timer m_timerToStop;
     [SerializeField] private float m_stopSoundThreshold = 0.5f;
 
+    [Title("Score")]
+    [SerializeField] private int m_baseBallScore = 1;
 
+    [Title("Bonus Display")]
+    [SerializeField] private float m_distanceToFirstBonus = 1.0f;
+    [SerializeField] private float m_distanceBetweenBonuses = 1.0f;
+
+    // Cache
     [NonSerialized] protected bool m_ballStopped = false;
     [NonSerialized] protected bool m_touchedGround = false;
     [NonSerialized] protected bool m_grounded = false;
@@ -28,11 +35,11 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     [NonSerialized] protected Rigidbody m_rigidbody;
 
     [NonSerialized] private BasePetanquePlayer m_ballOwner;
-    
+
     [NonSerialized] private bool m_alreadyTouchedTheGround = false;
     [NonSerialized] private bool m_ballSoundStopped = false;
 
-    private List<BonusBase> m_bonusBases = new List<BonusBase>();
+    [NonSerialized] private readonly List<BonusBase> m_bonuses = new List<BonusBase>();
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -47,17 +54,32 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
                 SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ballAir);
             }
         }
-        
+
         if (collision.gameObject.layer == m_groundLayer)
         {
             //if not this, the call is made twice
             if (!m_alreadyTouchedTheGround)
             {
-                SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ground);
-                m_alreadyTouchedTheGround = true;
+                OnGroundFirstTouched();
             }
             OnGroundTouched();
         }
+    }
+
+    protected virtual void Update()
+    {
+        for (int i = 0; i < m_bonuses.Count; i++)
+        {
+            BonusBase bonus = m_bonuses[i];
+            bonus.transform.position = transform.position + Vector3.up * (m_distanceToFirstBonus + m_distanceBetweenBonuses * i);
+            bonus.transform.rotation = Quaternion.identity;
+        }
+    }
+
+    protected virtual void OnGroundFirstTouched()
+    {
+        SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ground);
+        m_alreadyTouchedTheGround = true;
     }
 
     protected virtual void FixedUpdate()
@@ -66,7 +88,7 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
         {
             return;
         }
-        
+
         if (m_rigidbody.velocity.magnitude < m_stopSoundThreshold && !m_ballSoundStopped && m_timerToStop.IsRunning)
         {
             SoundManager.Instance.StopBallRolling();
@@ -100,27 +122,20 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
         m_grounded = true;
         m_touchedGround = true;
 
-        if (m_bonusBases.Count > 0)
+        if (m_bonuses.Count > 0)
         {
-            foreach (BonusBase bonus in m_bonusBases)
+            foreach (BonusBase bonus in m_bonuses)
             {
                 bonus.OnTounchGround();
             }
         }
     }
 
-    private void StopBall()
+    public int GetBallScore()
     {
-        m_ballStopped = true;
-        OnBallStopped?.Invoke(this);
-
-        if(m_bonusBases.Count > 0)
-        {
-            foreach(BonusBase bonus in m_bonusBases)
-            {
-                bonus.OnBallStop();
-            }
-        }
+        int score = m_baseBallScore;
+        m_bonuses.ForEach(bonus => bonus.ChangeBallScore(ref score));
+        return score;
     }
 
     public virtual void ResetBall()
@@ -128,6 +143,33 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
         m_touchedGround = false;
         m_ballStopped = false;
         m_ballSoundStopped = false;
+
+        m_alreadyTouchedTheGround = false;
+        m_ballSoundStopped = false;
+
+        m_ballOwner = null;
+
+        m_bonuses.ForEach(bonus => Destroy(bonus.gameObject));
+        m_bonuses.Clear();
+    }
+
+    public virtual void AttachBonus(BonusBase bonus)
+    {
+        m_bonuses.Add(bonus);
+        bonus.gameObject.SetActive(true);
+        bonus.OnBonusAttached(transform);
+    }
+
+    private void StopBall()
+    {
+        m_ballStopped = true;
+
+        foreach (BonusBase bonus in m_bonuses)
+        {
+            bonus.OnBallStop();
+        }
+
+        OnBallStopped?.Invoke(this);
     }
 
     #region IPoolOperationCallbackReciever Implementation

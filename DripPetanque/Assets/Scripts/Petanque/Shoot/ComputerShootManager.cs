@@ -43,6 +43,8 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
             }
         }
 
+        VirtualCamerasManager.SwitchToCamera(m_pintanqueOverviewCam);
+
     }
 
     [ContextMenu(nameof(TestShootDatasComputation))]
