@@ -53,10 +53,25 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
             //if not this, the call is made twice
             if (!m_alreadyTouchedTheGround)
             {
-                SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ground);
-                m_alreadyTouchedTheGround = true;
+                OnGroundFirstTouched();
             }
             OnGroundTouched();
+        }
+    }
+
+    protected virtual void OnGroundFirstTouched()
+    {
+        SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ground);
+        m_alreadyTouchedTheGround = true;
+    }
+
+    protected virtual void Update()
+    {
+        for (int i = 0; i < m_bonuses.Count; i++)
+        {
+            BonusBase bonus = m_bonuses[i];
+            bonus.transform.position = transform.position + Vector3.up * (m_distanceToFirstBonus + m_distanceBetweenBonuses * i);
+            bonus.transform.rotation = Quaternion.identity;
         }
     }
 

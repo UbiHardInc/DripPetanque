@@ -98,7 +98,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
             if (m_currentStep >= m_allSteps.Length)
             {
                 m_splineController.SetSplineParameters(m_leftRightStep.StepOutputValue, m_upDownStep.StepOutputValue, m_forceStep.StepOutputValue);
-                LaunchBall();
+                _ = LaunchBall();
                 return;
             }
             Debug.Log($"{Owner} starts step {m_currentStep} at frame {Time.frameCount}");
@@ -108,7 +108,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         m_splineController.SetSplineParameters(m_leftRightStep.StepOutputValue, m_upDownStep.StepOutputValue, m_forceStep.StepOutputValue);
     }
 
-    protected virtual void LaunchBall()
+    protected virtual PooledObject<TBall> LaunchBall()
     {
         m_currentState = ShootState.LaunchBall;
 
@@ -125,6 +125,8 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         m_trajectoryController.StartNewBall(requestedBall.Object);
 
         SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop);
+
+        return requestedBall;
     }
 
     private void OnBallStopped(Ball ball)
@@ -133,7 +135,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         m_currentState = ShootState.Finished;
     }
 
-    public void Dispose()
+    public virtual void Dispose()
     {
         m_allSteps.ForEach(step => step.Dispose());
     }
