@@ -113,19 +113,21 @@ public class CustomSplineController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Vector3 position = transform.position;
+
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(m_attractionPointPosition, 0.3f);
 
         Gizmos.color = Color.magenta;
-        Gizmos.DrawLine(m_firstKnot.Position, m_firstKnot.Position.ToVector3() + m_tangentStart);
-        Gizmos.DrawLine(m_lastKnot.Position, m_lastKnot.Position.ToVector3() - m_tangentEnd);
+        Gizmos.DrawLine(position + m_firstKnot.Position.ToVector3(), position + m_firstKnot.Position.ToVector3() + m_tangentStart);
+        Gizmos.DrawLine(position + m_lastKnot.Position.ToVector3(), position + m_lastKnot.Position.ToVector3() - m_tangentEnd);
 
         Span<Vector3> splinePoints = stackalloc Vector3[4]
         {
-            m_firstKnot.Position,
-            m_firstKnot.Position.ToVector3() + m_tangentStart,
-            m_lastKnot.Position.ToVector3() - m_tangentEnd,
-            m_lastKnot.Position,
+            position + m_firstKnot.Position.ToVector3(),
+            position + m_firstKnot.Position.ToVector3() + m_tangentStart,
+            position + m_lastKnot.Position.ToVector3() - m_tangentEnd,
+            position + m_lastKnot.Position.ToVector3(),
         };
 
         DrawBezier(splinePoints, m_resolution);

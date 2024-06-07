@@ -16,5 +16,5 @@ MonoBehaviour:
   m_gaugeSpeed: 1
   m_axis: 2
   m_scaleOrRotation: 1
-  m_range: {x: -25, y: 25}
+  m_range: {x: -13, y: 13}
   m_infoPanelMessage: Press A to lock a direction.
