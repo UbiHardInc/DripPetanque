@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityUtility.Singletons;
 using UnityUtility.Utils;
 
-public class VirtualCamerasManager : MonoBehaviourSingleton<VirtualCamerasManager>
+public static class VirtualCamerasManager
 {
     private enum BlendState
     {

@@ -547,6 +547,8 @@ MonoBehaviour:
   m_splineController: {fileID: 3127890927343206712}
   m_trajectoryController: {fileID: 976997116147010033}
   m_ballsPool: {fileID: 7601089680868396040}
+  m_pintanqueOverviewCam: {fileID: 0}
+  m_embutOverviewCam: {fileID: 0}
   m_targetZoneCenterDistance: 25.8
   m_targetZoneSize: {x: 10, y: 10}
   m_targetPoint: {fileID: 0}
@@ -995,6 +997,8 @@ MonoBehaviour:
   m_splineController: {fileID: 3127890927343206712}
   m_trajectoryController: {fileID: 976997116147010033}
   m_ballsPool: {fileID: 998528499064534056}
+  m_pintanqueOverviewCam: {fileID: 0}
+  m_embutOverviewCam: {fileID: 0}
   m_arrow: {fileID: 633186665185554010}
   m_arrowPivot: {fileID: 6132127870105289192}
   m_startShootInput: {fileID: 6234676093525593597, guid: 462a9b2de1b64484aa61d3a207013de5,
@@ -1696,6 +1700,76 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PetanqueField
+      objectReference: {fileID: 0}
+    - target: {fileID: 6297161265092685041, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 16.015177
+      objectReference: {fileID: 0}
+    - target: {fileID: 6297161265092685041, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 91.16064
+      objectReference: {fileID: 0}
+    - target: {fileID: 6297161265092685041, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 231.03987
+      objectReference: {fileID: 0}
+    - target: {fileID: 6297161265092685041, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.0012216896
+      objectReference: {fileID: 0}
+    - target: {fileID: 6297161265092685041, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.00008458231
+      objectReference: {fileID: 0}
+    - target: {fileID: 6297161265092685041, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.94423497
+      objectReference: {fileID: 0}
+    - target: {fileID: 6297161265092685041, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.32927004
+      objectReference: {fileID: 0}
+    - target: {fileID: 7511746961087935728, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7511746961087935728, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 20.299997
+      objectReference: {fileID: 0}
+    - target: {fileID: 7511746961087935728, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 178.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7511746961087935728, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.88278925
+      objectReference: {fileID: 0}
+    - target: {fileID: 7511746961087935728, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.4697694
+      objectReference: {fileID: 0}
+    - target: {fileID: 7511746961087935728, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7511746961087935728, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

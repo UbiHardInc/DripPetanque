@@ -44,6 +44,8 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
             m_allSteps[i].ResetArrow();
         }
 
+        VirtualCamerasManager.SwitchToCamera(m_pintanqueOverviewCam);
+
         SoundManager.Instance.SwitchBattleFilterMusic(SoundManager.BattleFilters.None);
     }
 }

@@ -1085,9 +1085,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5db8f2da96d4d4dbda06cee13c0673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  softBumper: 50
-  mediumBumper: 80
-  hardBumper: 110
+  softBumper: 5
+  mediumBumper: 35
+  hardBumper: 50
 --- !u!43 &213637211
 Mesh:
   m_ObjectHideFlags: 0

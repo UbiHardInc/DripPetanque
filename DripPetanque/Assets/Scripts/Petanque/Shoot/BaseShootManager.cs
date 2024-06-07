@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Pools;
@@ -37,6 +38,10 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
 
     [SerializeField] private CallbackRecieverComponentPool<TBall> m_ballsPool;
 
+    [Header("Cameras")]
+    [SerializeField] protected CinemachineVirtualCamera m_pintanqueOverviewCam;
+    [SerializeField] protected CinemachineVirtualCamera m_embutOverviewCam;
+
     [NonSerialized] protected ShootState m_currentState;
 
     [NonSerialized] protected TShootStep[] m_allSteps;
@@ -46,6 +51,9 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
 
     public virtual void Init(BasePetanquePlayer owner)
     {
+        VirtualCamerasManager.RegisterCamera(m_pintanqueOverviewCam);
+        VirtualCamerasManager.RegisterCamera(m_embutOverviewCam);
+
         m_allSteps = new TShootStep[]
         {
             m_leftRightStep,
