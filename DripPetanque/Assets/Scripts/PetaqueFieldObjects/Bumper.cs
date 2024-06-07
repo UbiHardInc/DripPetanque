@@ -18,6 +18,7 @@ public class Bumper : MonoBehaviour
             ballRigidBody.AddExplosionForce(BumpManager.Instance.GetBumperStrength(bumperForce), collision.GetContact(0).point, 5,0,forceMode);
             //_ = StartCoroutine(ChangeOnBump());
             SpriteRandom.Instance.FlashSprite();
+            SoundManager.Instance.PlayUISFX("bumper");
             Debug.Log("Bumped!");
         }
     }

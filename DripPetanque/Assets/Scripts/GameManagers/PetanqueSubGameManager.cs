@@ -26,7 +26,7 @@ public class PetanqueSubGameManager : SubGameManager
     [SerializeField] private PetanqueGameSettings m_defaultGameSettings;
 
     // Thrown balls
-    [NonSerialized] private List<Ball> m_allBalls = new List<Ball>();
+    [NonSerialized] private readonly List<Ball> m_allBalls = new List<Ball>();
 
     [NonSerialized] private BasePetanquePlayer m_currentPlayer;
     [NonSerialized] private int m_currentRound;
@@ -35,6 +35,9 @@ public class PetanqueSubGameManager : SubGameManager
     [NonSerialized] private PetanqueGameSettings m_gameSettings;
     [NonSerialized] private List<BasePetanquePlayer> m_players;
     [NonSerialized] private Transform m_jack;
+
+    [NonSerialized] private bool m_invertDistances;
+    [NonSerialized] private Comparison<float> m_currentDistanceComparer;
 
     public override void BeginState(GameState previousState)
     {
@@ -46,6 +49,12 @@ public class PetanqueSubGameManager : SubGameManager
 
         m_petanqueSceneLoader.StartLoadTransition(fadeOut: false);
         m_petanqueSceneLoader.OnTransitionEnd += OnSceneLoaded;
+    }
+
+    public void InvertDistances()
+    {
+        m_invertDistances = !m_invertDistances;
+        m_currentDistanceComparer = GetDistanceComparison(m_invertDistances);
     }
 
     private PetanqueGameSettings GetGameSettings()
@@ -145,19 +154,31 @@ public class PetanqueSubGameManager : SubGameManager
     {
         BasePetanquePlayer roundWinner = ComputeRoundResults();
 
-        if (roundWinner.CurrentScore > m_gameSettings.PointsToWin)
+        if (roundWinner.CurrentScore >= m_gameSettings.PointsToWin)
         {
             DisplayGameResult(roundWinner);
             return;
         }
 
         DisplayRoundResults(roundWinner);
+
+        if (roundWinner.CurrentScore >= Math.Round(m_gameSettings.PointsToWin * 0.7))
+        {
+            SoundManager.Instance.SwitchIntenseBattleMusic();
+        }
     }
 
     private BasePetanquePlayer ComputeRoundResults()
     {
-        (List<Ball> closestBalls, BasePetanquePlayer roundWinner) = GetWinningBalls(ClosestBallFirst);
-        roundWinner.AddRoundResult(new RoundResult(closestBalls.Count));
+        (List<Ball> scoringBalls, BasePetanquePlayer roundWinner) = GetScoringBalls(BallDistanceComparison);
+
+        int roundScore = 0;
+        foreach (Ball ball in scoringBalls)
+        {
+            roundScore += ball.GetBallScore();
+        }
+
+        roundWinner.AddRoundResult(new RoundResult(roundScore));
 
         foreach (BasePetanquePlayer player in m_players)
         {
@@ -191,11 +212,11 @@ public class PetanqueSubGameManager : SubGameManager
         {
             Winner = gameWinner,
             AllPlayers = m_players,
+            RoundCount = m_currentRound,
         };
 
-        m_resultDisplay.DislayGameResult(result, UnloadScene);
+        m_resultDisplay.DisplayGameResult(result, UnloadScene);
     }
-
 
     private void UnloadScene()
     {
@@ -227,13 +248,18 @@ public class PetanqueSubGameManager : SubGameManager
         m_players.ForEach(player => player.ResetForRound());
         m_currentPlayer = null;
         m_allBalls.Clear();
+
+        m_invertDistances = false;
+        m_currentDistanceComparer = GetDistanceComparison(m_invertDistances);
     }
 
     private BasePetanquePlayer ComputeNextTurnPlayer()
     {
-        float furthestClosestBallDistance = float.MinValue;
+        float furthestClosestBallDistance = GetBound(m_invertDistances);
+        Comparison<float> distanceComparison = GetDistanceComparison(m_invertDistances);
+
         BasePetanquePlayer nextPlayer = null;
-        foreach (var player in m_players)
+        foreach (BasePetanquePlayer player in m_players)
         {
             if (player.ThownBallsCount == 0)
             {
@@ -245,8 +271,8 @@ public class PetanqueSubGameManager : SubGameManager
                 continue;
             }
 
-            float closestBallDistance = GetBallSqrDistanceToJack(player.GetClosestBall(ClosestBallFirst));
-            if (furthestClosestBallDistance < closestBallDistance)
+            float closestBallDistance = GetBallSqrDistanceToJack(player.GetClosestBall(BallDistanceComparison));
+            if (distanceComparison(furthestClosestBallDistance, closestBallDistance) < 0)
             {
                 nextPlayer = player;
                 furthestClosestBallDistance = closestBallDistance;
@@ -255,13 +281,13 @@ public class PetanqueSubGameManager : SubGameManager
         return nextPlayer;
     }
 
-    private (List<Ball> closestBalls, BasePetanquePlayer ballsOwner) GetWinningBalls(Comparison<Ball> ballsComparer)
+    private (List<Ball> scoringBalls, BasePetanquePlayer ballsOwner) GetScoringBalls(Comparison<Ball> ballsComparer)
     {
         int ballsCount = m_allBalls.Count;
-        List<Ball> closestBalls = new List<Ball>();
+        List<Ball> scoringBalls = new List<Ball>();
         if (ballsCount == 0)
         {
-            return (closestBalls, null);
+            return (scoringBalls, null);
         }
 
         Ball[] sortedBalls = m_allBalls.SortCopy(ballsComparer);
@@ -270,22 +296,36 @@ public class PetanqueSubGameManager : SubGameManager
         int ballIndex = 0;
         while (ballIndex < ballsCount && sortedBalls[ballIndex].BallOwner == ballsOwner)
         {
-            closestBalls.Add(sortedBalls[ballIndex++]);
+            scoringBalls.Add(sortedBalls[ballIndex++]);
         }
 
-        return (closestBalls, ballsOwner);
+        return (scoringBalls, ballsOwner);
     }
 
-    private int ClosestBallFirst(Ball b0, Ball b1)
+    private int BallDistanceComparison(Ball b0, Ball b1)
     {
         float b0Dist = GetBallSqrDistanceToJack(b0);
         float b1Dist = GetBallSqrDistanceToJack(b1);
-        return b0Dist.CompareTo(b1Dist);
+        return m_currentDistanceComparer(b0Dist, b1Dist);
     }
 
-    private int FurthestBallFirst(Ball b0, Ball b1)
+    private static Comparison<float> GetDistanceComparison(bool invertDistances)
     {
-        return -ClosestBallFirst(b0, b1);
+        return invertDistances ? BiggerFirst : SmallerFirst;
+    }
+    private static float GetBound(bool invertDistances)
+    {
+        return invertDistances ? float.MaxValue : float.MinValue;
+    }
+
+    private static int SmallerFirst(float f0, float f1)
+    {
+        return f0.CompareTo(f1);
+    }
+
+    private static int BiggerFirst(float f0, float f1)
+    {
+        return -SmallerFirst(f0, f1);
     }
 
     private float GetBallSqrDistanceToJack(Ball b0)

@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Pools;
@@ -36,6 +37,10 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     [SerializeField] private BallTrajectoryController m_trajectoryController;
 
     [SerializeField] private CallbackRecieverComponentPool<TBall> m_ballsPool;
+
+    [Header("Cameras")]
+    [SerializeField] protected CinemachineVirtualCamera m_pintanqueOverviewCam;
+    [SerializeField] protected CinemachineVirtualCamera m_embutOverviewCam;
 
     [NonSerialized] protected ShootState m_currentState;
 
@@ -88,11 +93,6 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         m_currentStep = 0;
         m_allSteps[m_currentStep].Start();
         m_currentState = ShootState.Steps;
-
-        if (Owner.PlayerType == PetanquePlayerType.Human)
-        {
-            SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.Low);
-        }
     }
 
     private void UpdateSteps(float deltaTime)
@@ -103,7 +103,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
             if (m_currentStep >= m_allSteps.Length)
             {
                 m_splineController.SetSplineParameters(m_leftRightStep.StepOutputValue, m_upDownStep.StepOutputValue, m_forceStep.StepOutputValue);
-                LaunchBall();
+                _ = LaunchBall();
                 return;
             }
             Debug.Log($"{Owner} starts step {m_currentStep} at frame {Time.frameCount}");
@@ -113,7 +113,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         m_splineController.SetSplineParameters(m_leftRightStep.StepOutputValue, m_upDownStep.StepOutputValue, m_forceStep.StepOutputValue);
     }
 
-    protected virtual void LaunchBall()
+    protected virtual PooledObject<TBall> LaunchBall()
     {
         m_currentState = ShootState.LaunchBall;
 
@@ -129,20 +129,18 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
 
         m_trajectoryController.StartNewBall(requestedBall.Object);
 
-        if (Owner.PlayerType == PetanquePlayerType.Human)
-        {
-            SoundManager.Instance.SwitchBattleMusic(SoundManager.BattleFilters.None);
-        }
         SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop);
+
+        return requestedBall;
     }
 
-    private void OnBallStopped(Ball ball)
+    protected virtual void OnBallStopped(Ball ball)
     {
         ball.OnBallStopped -= OnBallStopped;
         m_currentState = ShootState.Finished;
     }
 
-    public void Dispose()
+    public virtual void Dispose()
     {
         m_allSteps.ForEach(step => step.Dispose());
     }

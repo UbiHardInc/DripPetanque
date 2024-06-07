@@ -2,10 +2,9 @@ using UnityEngine;
 
 public abstract class BonusBase : MonoBehaviour
 {
-    [SerializeField] private Sprite m_bonusSprite;
-
-    public Sprite BonusSprite => m_bonusSprite;
-
+    public virtual void OnBonusAttached(Transform ballTransform)
+    {
+    }
 
     public virtual void OnTounchGround()
     {
@@ -17,8 +16,8 @@ public abstract class BonusBase : MonoBehaviour
 
     }
 
-    public virtual int ChangeBallScore(int score)
+    public virtual void ChangeBallScore(ref int score)
     {
-        return score;
     }
+
 }
