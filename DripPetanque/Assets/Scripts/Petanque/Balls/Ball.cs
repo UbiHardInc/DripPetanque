@@ -65,16 +65,6 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
         m_alreadyTouchedTheGround = true;
     }
 
-    protected virtual void Update()
-    {
-        for (int i = 0; i < m_bonuses.Count; i++)
-        {
-            BonusBase bonus = m_bonuses[i];
-            bonus.transform.position = transform.position + Vector3.up * (m_distanceToFirstBonus + m_distanceBetweenBonuses * i);
-            bonus.transform.rotation = Quaternion.identity;
-        }
-    }
-
     protected virtual void FixedUpdate()
     {
         if (m_ballStopped)

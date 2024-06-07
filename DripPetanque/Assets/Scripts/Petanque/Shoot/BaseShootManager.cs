@@ -129,7 +129,7 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
         return requestedBall;
     }
 
-    private void OnBallStopped(Ball ball)
+    protected virtual void OnBallStopped(Ball ball)
     {
         ball.OnBallStopped -= OnBallStopped;
         m_currentState = ShootState.Finished;

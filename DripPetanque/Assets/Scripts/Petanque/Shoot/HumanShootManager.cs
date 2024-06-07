@@ -5,11 +5,10 @@ using UnityUtility.Pools;
 
 public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBall>
 {
-    public event Action<ControllableBall> OnThrownBallControllable;
-
     [SerializeField] private Transform m_arrow;
     [SerializeField] private Transform m_arrowPivot;
     [SerializeField] private InputActionReference m_startShootInput;
+    [SerializeField] private GameObject m_controllerUI;
 
     public override void Init(BasePetanquePlayer owner)
     {
@@ -58,7 +57,13 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
     private void OnLaunchedBallControllable(ControllableBall ball)
     {
         ball.OnBallControllable -= OnLaunchedBallControllable;
-        OnThrownBallControllable?.Invoke(ball);
+        m_controllerUI.SetActive(true);
+    }
+
+    protected override void OnBallStopped(Ball ball)
+    {
+        base.OnBallStopped(ball);
+        m_controllerUI.SetActive(false);
     }
 
     public override void Dispose()

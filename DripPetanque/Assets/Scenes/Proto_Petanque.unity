@@ -5619,6 +5619,11 @@ PrefabInstance:
       objectReference: {fileID: 219486360}
     - target: {fileID: 2302866037900239050, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
+      propertyPath: m_controllerUI
+      value: 
+      objectReference: {fileID: 1191470453154843850}
+    - target: {fileID: 2302866037900239050, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
       propertyPath: m_forceStep.m_gauge
       value: 
       objectReference: {fileID: 83452653}
@@ -6268,6 +6273,7 @@ MonoBehaviour:
   m_arrowPivot: {fileID: 957700691}
   m_startShootInput: {fileID: 6234676093525593597, guid: 462a9b2de1b64484aa61d3a207013de5,
     type: 3}
+  m_controllerUI: {fileID: 0}
 --- !u!1 &2008263959
 GameObject:
   m_ObjectHideFlags: 0
@@ -6702,6 +6708,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4a953a858bf564ab0651992ca013cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1191470453154843850 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3752021109765218768, guid: 9f14adbf4ab13f842b0d48a79306cb99,
+    type: 3}
+  m_PrefabInstance: {fileID: 1191470453154843846}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2594431462423929094 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6811027536891287716, guid: 91434e750c2c9df4e90bbc8772ae77e8,
