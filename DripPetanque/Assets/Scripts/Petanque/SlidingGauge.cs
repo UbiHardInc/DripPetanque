@@ -104,7 +104,7 @@ public class SlidingGauge : MonoBehaviour
             default:
                 break;
         }
-        m_currentFilling = Smoothstep(m_currentFilling);
+        m_currentFilling = MathUtils.Smoothstep(m_currentFilling);
         switch (m_imageType)
         {
             case ImageTypeEnum.Slider:
@@ -117,11 +117,6 @@ public class SlidingGauge : MonoBehaviour
                 break;
         }
 
-    }
-
-    private static float Smoothstep(float x)
-    {
-        return 3 * x * x - 2 * x * x * x;
     }
 
     public void SetHorizontalFillMethodAndOrigin(OriginHorizontal origin)
