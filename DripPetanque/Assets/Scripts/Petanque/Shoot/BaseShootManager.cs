@@ -51,9 +51,6 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
 
     public virtual void Init(BasePetanquePlayer owner)
     {
-        VirtualCamerasManager.RegisterCamera(m_pintanqueOverviewCam);
-        VirtualCamerasManager.RegisterCamera(m_embutOverviewCam);
-
         m_allSteps = new TShootStep[]
         {
             m_leftRightStep,
