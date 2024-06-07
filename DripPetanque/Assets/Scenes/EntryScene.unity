@@ -732,18 +732,18 @@ PrefabInstance:
     - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_startState
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_startScene.m_scenePath
-      value: Assets/Scenes/Proto_Level_Design.unity
+      value: Assets/Scenes/Empty.unity
       objectReference: {fileID: 0}
     - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_startScene.m_sceneAsset
       value: 
-      objectReference: {fileID: 102900000, guid: 91524a1cb2566fe448c30fd09f144d7f,
+      objectReference: {fileID: 102900000, guid: cf506317541d0b141b9613af853298fc,
         type: 3}
     - target: {fileID: 7162645624520431926, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}

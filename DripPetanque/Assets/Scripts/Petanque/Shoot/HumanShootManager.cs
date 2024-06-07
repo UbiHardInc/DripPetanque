@@ -1,11 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityUtility.Pools;
 
 public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBall>
 {
     [SerializeField] private Transform m_arrow;
     [SerializeField] private Transform m_arrowPivot;
     [SerializeField] private InputActionReference m_startShootInput;
+    [SerializeField] private GameObject m_controllerUI;
 
     public override void Init(BasePetanquePlayer owner)
     {
@@ -34,9 +37,11 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
         SoundManager.Instance.SwitchBattleFilterMusic(SoundManager.BattleFilters.Low);
     }
 
-    protected override void LaunchBall()
+    protected override PooledObject<ControllableBall> LaunchBall()
     {
-        base.LaunchBall();
+        PooledObject<ControllableBall> launchedBall = base.LaunchBall();
+
+        launchedBall.Object.OnBallControllable += OnLaunchedBallControllable;
 
         m_arrow.gameObject.SetActive(false);
         for (int i = m_allSteps.Length - 1; i >= 0; i--)
@@ -45,5 +50,24 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
         }
 
         SoundManager.Instance.SwitchBattleFilterMusic(SoundManager.BattleFilters.None);
+
+        return launchedBall;
+    }
+
+    private void OnLaunchedBallControllable(ControllableBall ball)
+    {
+        ball.OnBallControllable -= OnLaunchedBallControllable;
+        m_controllerUI.SetActive(true);
+    }
+
+    protected override void OnBallStopped(Ball ball)
+    {
+        base.OnBallStopped(ball);
+        m_controllerUI.SetActive(false);
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
     }
 }
