@@ -651,6 +651,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3730451550627087199, guid: 74179b3f0414be94995874b0655f40ee,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8401289527292183967, guid: 74179b3f0414be94995874b0655f40ee,
         type: 3}
       propertyPath: m_Name
