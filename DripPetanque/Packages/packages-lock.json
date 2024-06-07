@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.pluneau.unityutility": {
-      "version": "https://github.com/paulluneaug/UnityUtility.git?path=/UnityUtility/Assets/Public#v1.9.1",
+      "version": "https://github.com/paulluneaug/UnityUtility.git?path=/UnityUtility/Assets/Public#v1.9.2",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "24ffbd5bfb5bfea946dfeeb932facf79e0e56aa8"
+      "hash": "17b9050a89661650a972815f7c724d4c8210689b"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",

@@ -94,7 +94,6 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         m_radioManager = RadioManager.Instance;
         UpdateState(GameManager.Instance.CurrentSubGameManager.CorrespondingState);
         GameManager.Instance.OnGameStateEntered += UpdateState;
-        GameManager.Instance.OnGameStateExited += UpdateState;
 
         m_musicSource1.volume = m_musicVolume;
         m_musicSource2.volume = m_musicVolume;
