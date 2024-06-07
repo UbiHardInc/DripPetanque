@@ -11,6 +11,12 @@ public class CameraSwitch : MonoBehaviour
     [SerializeField] protected CinemachineVirtualCamera m_pintanqueOverviewCam;
     [SerializeField] protected CinemachineVirtualCamera m_embutOverviewCam;
 
+    private void Awake()
+    {
+        VirtualCamerasManager.RegisterCamera(m_pintanqueOverviewCam);
+        VirtualCamerasManager.RegisterCamera(m_embutOverviewCam);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == m_whatIsBall)
