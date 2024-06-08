@@ -187,6 +187,7 @@ MonoBehaviour:
     m_duration: 1
     m_repeat: 0
   m_loadMode: 0
+  m_timeScale: 1
 --- !u!1 &5004847768519918988
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,6 +571,7 @@ MonoBehaviour:
     m_duration: 1
     m_repeat: 0
   m_loadMode: 1
+  m_timeScale: 1
 --- !u!1 &8983564864229157459
 GameObject:
   m_ObjectHideFlags: 0

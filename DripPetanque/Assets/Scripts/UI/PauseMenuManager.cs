@@ -29,12 +29,17 @@ public class PauseMenuManager : MonoBehaviour
     //private variables
 
     [NonSerialized] private GameManager m_gameManager;
+    [NonSerialized] private bool m_isActive;
 
 
     // Start is called before the first frame update
     protected void Start()
     {
         m_gameManager = GameManager.Instance;
+
+        m_isActive = false;
+        m_pauseMenu.SetActive(false);
+        m_openMenuInput.action.performed += OpenMenu;
     }
 
     #region InputActionsMethods
@@ -67,9 +72,20 @@ public class PauseMenuManager : MonoBehaviour
     #endregion
 
     #region ButtonMethods
-
     public void OpenPauseMenu(bool fromMainMenu)
     {
+        if (m_isActive)
+        {
+            return;
+        }
+
+        // Prevents from opening the pause menu with the input if we're already on the main menu
+        if (!fromMainMenu && m_gameManager.CurrentGameState == GameState.MainMenu)
+        {
+            return;
+        }
+        
+        m_isActive = true;
         SubscribeToInputEvents();
         m_pauseMenu.SetActive(true);
 
@@ -88,11 +104,17 @@ public class PauseMenuManager : MonoBehaviour
 
     }
 
-    public void ClosePauseMenu()
+    private void ClosePauseMenu()
     {
+        if (!m_isActive)
+        {
+            return;
+        }
+
+        m_isActive = false;
         UnsubscribeToInputEvents();
         m_pauseMenu.SetActive(false);
-        if (m_gameManager.CurrentSubGameManager.CorrespondingState == GameState.MainMenu)
+        if (m_gameManager.CurrentGameState == GameState.MainMenu)
         {
             m_gameManager.MainMenuSubGameManager.SelectStartButton();
         }
@@ -133,22 +155,30 @@ public class PauseMenuManager : MonoBehaviour
         SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop);
     }
 
+    private void BackToMainMenu()
+    {
+        ClosePauseMenu();
+        m_gameManager.GoBackToMainMenu();
+    }
+
     private void SubscribeToInputEvents()
     {
-        m_openMenuInput.action.performed += OpenMenu;
         m_closeMenuInput.action.performed += CloseMenu;
         m_moveInput.action.started += MoveInUI;
         m_submitInput.action.performed += PressSubmit;
         m_cancelInput.action.performed += PressCancel;
+
+        m_backMainMenuButton.onClick.AddListener(BackToMainMenu);
     }
 
     private void UnsubscribeToInputEvents()
     {
-        m_openMenuInput.action.performed -= OpenMenu;
         m_closeMenuInput.action.performed -= CloseMenu;
         m_moveInput.action.started -= MoveInUI;
         m_submitInput.action.performed -= PressSubmit;
         m_cancelInput.action.performed -= PressCancel;
+
+        m_backMainMenuButton.onClick.RemoveListener(BackToMainMenu);
     }
 
     #endregion
