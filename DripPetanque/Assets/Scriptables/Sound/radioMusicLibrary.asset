@@ -26,8 +26,10 @@ MonoBehaviour:
       Value: {fileID: 8300000, guid: 6863cf89ce3384e4bba755f3aeeae866, type: 3}
     - Key: "music-Les/Triplettes/de/midi-Drop/the/Bass/Peuch\xE8re"
       Value: {fileID: 8300000, guid: 6f062e49ed636e243ac650b2e7506d42, type: 3}
-    - Key: music-DJDown-Nigh/In/Massilia
+    - Key: music-Marsinsky-Nigh/In/Massilia
       Value: {fileID: 8300000, guid: debf1414a097c8443a4801a2fc48a806, type: 3}
+    - Key: music-Big/Dew/BigDrill-The/Big/Drill
+      Value: {fileID: 8300000, guid: 6b57c577e9e1b0d45b38f84a9633daa4, type: 3}
     - Key: interlude1
       Value: {fileID: 8300000, guid: d4c83d92e6ebeb24baec457683496841, type: 3}
     - Key: interlude2
