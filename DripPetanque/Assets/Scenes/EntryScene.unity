@@ -732,18 +732,18 @@ PrefabInstance:
     - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_startState
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_startScene.m_scenePath
-      value: Assets/Scenes/Empty.unity
+      value: Assets/Scenes/Proto_Level_Design_Cinematic.unity
       objectReference: {fileID: 0}
     - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_startScene.m_sceneAsset
       value: 
-      objectReference: {fileID: 102900000, guid: cf506317541d0b141b9613af853298fc,
+      objectReference: {fileID: 102900000, guid: e4d18d2e95b097440b3d06326cd4929e,
         type: 3}
     - target: {fileID: 7162645624520431926, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
