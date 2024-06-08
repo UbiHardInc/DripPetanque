@@ -1,23 +1,12 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityUtility.CustomAttributes;
-using UnityUtility.Singletons;
 
-public class MenuManager : MonoBehaviourSingleton<MenuManager>
+public class PauseMenuManager : MonoBehaviour
 {
-    [Title("MainMenuVariables")]
-    [SerializeField] private float m_timeForMenuToAppear = 6.30f;
-    [Title("MainMenuObjects")]
-    [SerializeField] private GameObject m_transitionImage;
-    [SerializeField] private Button m_startButton;
-
     [Title("PauseMenuObjects")]
     [SerializeField] private GameObject m_pauseMenu;
     [SerializeField] private Button m_firstSelectedButton;
@@ -33,15 +22,17 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
     [SerializeField] private InputActionReference m_moveInput;
     [SerializeField] private InputActionReference m_submitInput;
     [SerializeField] private InputActionReference m_cancelInput;
-    
+
     //private variables
     private bool m_isOnUI;
 
+    [NonSerialized] private GameManager m_gameManager;
+
 
     // Start is called before the first frame update
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
+        m_gameManager = GameManager.Instance;
 
         m_openMenuInput.action.performed += OpenMenu;
         m_closeMenuInput.action.performed += CloseMenu;
@@ -49,20 +40,6 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
         m_submitInput.action.performed += PressSubmit;
         m_cancelInput.action.performed += PressCancel;
 
-        if (SceneManager.GetActiveScene().name == "EntryScene")
-        {
-            _ = StartCoroutine(IntroMainMenu());
-            EventSystem.current.SetSelectedGameObject(m_startButton.gameObject);
-            m_startButton.Select();
-            m_startButton.onClick.AddListener(() => StartGame());
-            m_isOnUI = true;
-        }
-    }
-
-    private IEnumerator IntroMainMenu()
-    {
-        yield return new WaitForSeconds(m_timeForMenuToAppear);
-        _ = StartCoroutine(FadeInAndOutGameObject.FadeInAndOut(m_transitionImage, false, 1f));
     }
 
     #region InputActionsMethods
@@ -70,14 +47,14 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
     private void OpenMenu(InputAction.CallbackContext obj)
     {
         Debug.LogError("OpenMenuCalled");
-        OpenPauseMenu();
+        OpenPauseMenu(false);
     }
-    
+
     private void CloseMenu(InputAction.CallbackContext obj)
     {
         ClosePauseMenu();
     }
-    
+
     private void PressCancel(InputAction.CallbackContext obj)
     {
         if (m_isOnUI)
@@ -105,12 +82,12 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
 
     #region ButtonMethods
 
-    public void OpenPauseMenu()
+    public void OpenPauseMenu(bool fromMainMenu)
     {
         //Debug.LogError("OpenPauseMenuCalled");
         m_pauseMenu.SetActive(true);
 
-        if (SceneManager.GetActiveScene().name != "EntryScene")
+        if (!fromMainMenu)
         {
             m_backMainMenuButton.gameObject.SetActive(true);
             Time.timeScale = 0f;
@@ -129,9 +106,9 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
     public void ClosePauseMenu()
     {
         m_pauseMenu.SetActive(false);
-        if (SceneManager.GetActiveScene().name == "EntryScene")
+        if (m_gameManager.CurrentSubGameManager.CorrespondingState == GameState.MainMenu)
         {
-            m_startButton.GetComponent<Button>().Select();
+            m_gameManager.MainMenuSubGameManager.SelectStartButton();
         }
         else
         {
@@ -140,7 +117,7 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
         }
 
     }
-    
+
     public void MusicVolumeChange(bool add)
     {
         if (add)
@@ -170,19 +147,6 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
 
     }
 
-    public void StartGame()
-    {
-        m_isOnUI = false;
-        SoundManager.Instance.PlayUISFX("start");
-        
-        //ToDo : add LoadGame
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
-
     #endregion
-    
+
 }
