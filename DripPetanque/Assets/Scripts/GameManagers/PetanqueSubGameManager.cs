@@ -48,7 +48,7 @@ public class PetanqueSubGameManager : SubGameManager
         m_gameSettings = GetGameSettings();
         m_petanqueSceneLoader.SetScene(m_gameSettings.PetanqueScene);
 
-        m_petanqueSceneLoader.StartLoadTransition(fadeOut: false);
+        m_petanqueSceneLoader.StartLoadTransition(fadeIn: true, fadeOut: false);
         m_petanqueSceneLoader.OnTransitionEnd += OnSceneLoaded;
     }
 
@@ -224,7 +224,7 @@ public class PetanqueSubGameManager : SubGameManager
 
     private void UnloadScene()
     {
-        m_petanqueSceneLoader.StartUnloadTransition(fadeOut: true);
+        m_petanqueSceneLoader.StartUnloadTransition(fadeIn: true, fadeOut: true);
 
         m_players.ForEach(player => player.Dispose());
 

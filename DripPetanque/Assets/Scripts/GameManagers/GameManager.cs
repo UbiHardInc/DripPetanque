@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public DialogueSubGameManager DialogueSubGameManager => m_dialogueSubGameManager;
     public ExplorationSubGameManager ExplorationSubGameManager => m_explorationSubGameManager;
     public PetanqueSubGameManager PetanqueSubGameManager => m_petanqueSubGameManager;
+    public MainMenuSubGameManager MainMenuSubGameManager => m_mainMenuSubGameManager;
+
     public SubGameManager CurrentSubGameManager => m_currentSubGameManager;
 
     public GameManagersSharedDatas SharedDatas => m_sharedDatas;
@@ -26,8 +28,10 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     [SerializeField] private DialogueSubGameManager m_dialogueSubGameManager;
     [SerializeField] private ExplorationSubGameManager m_explorationSubGameManager;
     [SerializeField] private PetanqueSubGameManager m_petanqueSubGameManager;
+    [SerializeField] private MainMenuSubGameManager m_mainMenuSubGameManager;
 
     [Title("Start")]
+    [SerializeField] private bool m_loadSceneOnStart = false;
     [SerializeField] private SceneReference m_startScene;
     [SerializeField] private GameState m_startState;
 
@@ -70,9 +74,13 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
                 m_explorationSubGameManager.CorrespondingState,
                 m_explorationSubGameManager 
             },
-            { 
+            {
                 m_petanqueSubGameManager.CorrespondingState,
-                m_petanqueSubGameManager 
+                m_petanqueSubGameManager
+            },
+            {
+                m_mainMenuSubGameManager.CorrespondingState,
+                m_mainMenuSubGameManager
             },
         };
 
@@ -87,8 +95,15 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         m_currentSubGameManager.BeginState(GameState.None);
         OnGameStateEntered?.Invoke(m_startState);
 
-        AsyncOperation op = SceneManager.LoadSceneAsync(m_startScene, LoadSceneMode.Single);
-        op.completed += OnStartSceneLoaded;
+        if (m_loadSceneOnStart)
+        {
+            AsyncOperation op = SceneManager.LoadSceneAsync(m_startScene, LoadSceneMode.Single);
+            op.completed += OnStartSceneLoaded;
+        }
+        else
+        {
+            m_initialized = true;
+        }
     }
 
     private void OnStartSceneLoaded(AsyncOperation operation)
