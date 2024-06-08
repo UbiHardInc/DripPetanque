@@ -42,6 +42,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     [Title("Parameters")]
     [SerializeField] private float m_musicVolume = 0.5f;
     [SerializeField] private float m_filtersSpeedRate = 0.2f;
+    [SerializeField] private float m_cityAmbianceVolume = 0.4f;
 
     [Title("MusicLibraries")]
     [SerializeField] protected SoundLibrary m_radioLibrary;
@@ -59,6 +60,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     [SerializeField] private AudioSource m_SFXLoopSource1;
     [SerializeField] private AudioSource m_SFXLoopSource2;
     [SerializeField] private AudioSource m_ballSfxSource;
+    [SerializeField] private AudioSource m_cityAmbianceSource;
 
     private RadioManager m_radioManager;
 
@@ -81,6 +83,9 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     private BattleVersions m_oldActualBattleVersion = BattleVersions.Intro;
     private bool m_actualMusicSource = true;
     private bool m_isBattleMusicSwitching = false;
+    
+    //Exploration
+    private bool m_isInCityAmbiance = false;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -89,7 +94,6 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         m_radioManager = RadioManager.Instance;
         UpdateState(GameManager.Instance.CurrentSubGameManager.CorrespondingState);
         GameManager.Instance.OnGameStateEntered += UpdateState;
-        GameManager.Instance.OnGameStateExited += UpdateState;
 
         m_musicSource1.volume = m_musicVolume;
         m_musicSource2.volume = m_musicVolume;
@@ -129,6 +133,12 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                 SwitchBattleMusic();
                 m_oldActualBattleVersion = m_actualBattleVersion;
             }
+        }
+
+        if (m_soundGameState == SoundGameState.Exploration && !m_isInCityAmbiance)
+        {
+            PlayCitySound();
+            m_isInCityAmbiance = true;
         }
 
 
@@ -441,6 +451,22 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             Debug.LogError("This sound isn't in this library.");
         }
     }
+    
+    private void PlayCitySound()
+    {
+        m_UiSFXLibrary.SoundAudioClips.TryGetValue("city", out AudioClip clip);
+        m_cityAmbianceSource.clip = clip;
+        m_cityAmbianceSource.loop = true;
+        m_cityAmbianceSource.volume = m_cityAmbianceVolume;
+        m_cityAmbianceSource.Play();
+        m_cityAmbianceSource.time = Random.Range(0.0f, clip.length);
+    }
+
+    private void StopCitySound()
+    {
+        m_cityAmbianceSource.Stop();
+        m_isInCityAmbiance = false;
+    }
 
     public void StopAllAudioSources()
     {
@@ -451,6 +477,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         m_SFXLoopSource1.Stop();
         m_SFXLoopSource2.Stop();
         m_ballSfxSource.Stop();
+        m_cityAmbianceSource.Stop();
     }
 
     public void StopAllMusicSources()
@@ -466,6 +493,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         m_SFXLoopSource1.Stop();
         m_SFXLoopSource2.Stop();
         m_ballSfxSource.Stop();
+        m_cityAmbianceSource.Stop();
     }
 
     public void StopAllSfxLoopSources()
@@ -484,6 +512,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             case GameState.None:
                 //Technically it's main menu so it is on it's own
                 m_soundGameState = SoundGameState.MainMenu;
+                StopCitySound();
                 StopAllMusicSources();
                 m_radioManager.HideRadio();
                 break;
@@ -495,6 +524,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                 break;
             case GameState.Petanque:
                 m_soundGameState = SoundGameState.Petanque;
+                StopCitySound();
                 InitBattleMusic();
                 break;
             case GameState.Cinematics:

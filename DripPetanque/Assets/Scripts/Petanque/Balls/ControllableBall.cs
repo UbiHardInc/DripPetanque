@@ -5,6 +5,8 @@ using UnityUtility.CustomAttributes;
 
 public class ControllableBall : Ball 
 {
+    public event Action<ControllableBall> OnBallControllable;
+
     [Title("Inputs")]
     [SerializeField] private InputActionReference m_ballDirectionInput;
     [SerializeField] private InputActionReference m_jumpInput;
@@ -57,6 +59,13 @@ public class ControllableBall : Ball
         base.OnGroundTouched();
         m_jumpsLeft = m_jumpsCount;
     }
+
+    protected override void OnGroundFirstTouched()
+    {
+        base.OnGroundFirstTouched();
+        OnBallControllable?.Invoke(this);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

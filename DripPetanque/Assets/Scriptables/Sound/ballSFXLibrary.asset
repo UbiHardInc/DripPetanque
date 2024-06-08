@@ -74,8 +74,6 @@ MonoBehaviour:
       Value: {fileID: 8300000, guid: b240d3cd9f84b164b8a9940286d4fb91, type: 3}
     - Key: swoop12
       Value: {fileID: 8300000, guid: eed1fd4fb64e53541ac55d3013f494df, type: 3}
-    - Key: applaud1
-      Value: {fileID: 8300000, guid: edd384efd3c4db642b511e29b141e420, type: 3}
     - Key: good1
       Value: {fileID: 8300000, guid: 5b164d703df631b41b6e0ada2ee09aed, type: 3}
     - Key: bad1

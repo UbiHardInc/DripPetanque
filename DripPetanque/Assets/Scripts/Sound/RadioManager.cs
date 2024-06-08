@@ -145,7 +145,7 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
 
     public IEnumerator ShowMusicDataInUI()
     {
-        Debug.LogError("ShowRadioUI Called");
+        //Debug.LogError("ShowRadioUI Called");
         string[] splittedMusicName = m_masterPlaylist[m_playlistPlayNumber - 1].Split("-");
         m_artistNameText.text = splittedMusicName[1].Replace("/", " ");
         m_songNameText.text = splittedMusicName[2].Replace("/", " ");
