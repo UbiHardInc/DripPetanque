@@ -16,5 +16,5 @@ MonoBehaviour:
   m_gaugeSpeed: 1
   m_axis: 4
   m_scaleOrRotation: 0
-  m_range: {x: 1, y: 2}
+  m_range: {x: 12, y: 18}
   m_infoPanelMessage: Press A to lock a strenght.

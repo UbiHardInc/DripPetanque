@@ -94,7 +94,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a148718a97a2259488f59258620a16b6, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6d62edcefe5705e49a94232d2c58d57d,
         type: 3}
       propertyPath: m_Name
@@ -111,7 +111,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6d62edcefe5705e49a94232d2c58d57d,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4599024681209861311}
+      addedObject: {fileID: 4209630820506542155}
   m_SourcePrefab: {fileID: 100100000, guid: 6d62edcefe5705e49a94232d2c58d57d, type: 3}
 --- !u!1 &7139618308435046954 stripped
 GameObject:
@@ -132,8 +132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToTrack: {fileID: 0}
---- !u!65 &4599024681209861311
-BoxCollider:
+--- !u!64 &4209630820506542155
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -150,9 +150,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 52.60242, y: 77.709404, z: 60.47841}
-  m_Center: {x: 0, y: 38.91492, z: 0}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 6d62edcefe5705e49a94232d2c58d57d, type: 3}
 --- !u!4 &7520683356704811152 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6d62edcefe5705e49a94232d2c58d57d,

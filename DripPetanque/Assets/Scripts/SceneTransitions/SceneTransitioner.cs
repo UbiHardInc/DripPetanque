@@ -7,6 +7,12 @@ using UnityUtility.Timer;
 
 public class SceneTransitioner : MonoBehaviour
 {
+    public enum TimeScale
+    {
+        Scaled,
+        Unscaled,
+    }
+
     public enum TransitionAction
     {
         LoadScene,
@@ -32,6 +38,7 @@ public class SceneTransitioner : MonoBehaviour
 
     [SerializeField] private Timer m_fadeTimer;
     [SerializeField] private LoadSceneMode m_loadMode = LoadSceneMode.Additive;
+    [SerializeField] private TimeScale m_timeScale;
 
     // Cache
     [NonSerialized] private TransitionAction m_transitionAction = TransitionAction.LoadScene;
@@ -89,18 +96,28 @@ public class SceneTransitioner : MonoBehaviour
             switch (m_currentStep)
             {
                 case TransitionStep.FadeIn:
-                    UpdateFadeIn(Time.deltaTime);
+                    UpdateFadeIn(GetDeltaTime(m_timeScale));
                     break;
                 case TransitionStep.DoTransitionAction:
                     break;
                 case TransitionStep.FadeOut:
-                    UpdateFadeOut(Time.deltaTime);
+                    UpdateFadeOut(GetDeltaTime(m_timeScale));
                     break;
                 case TransitionStep.Done:
                 default:
                     break;
             }
         }
+    }
+
+    private static float GetDeltaTime(TimeScale scale)
+    {
+        return scale switch
+        {
+            TimeScale.Scaled => Time.deltaTime,
+            TimeScale.Unscaled => Time.unscaledDeltaTime,
+            _ => Time.deltaTime,
+        };
     }
 
     private void StartFadeIn()

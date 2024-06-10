@@ -13,10 +13,7 @@ public class CanvasManager : MonoBehaviourSingleton<CanvasManager>
         gameManager.OnGameStateEntered += OnGameStateEntered;
         gameManager.OnGameStateExited += OnGameStateExited;
 
-        if (gameManager.CurrentSubGameManager != null)
-        {
-            OnGameStateEntered(gameManager.CurrentSubGameManager.CorrespondingState);
-        }
+        OnGameStateEntered(gameManager.CurrentGameState);
     }
 
     private void OnGameStateEntered(GameState state)

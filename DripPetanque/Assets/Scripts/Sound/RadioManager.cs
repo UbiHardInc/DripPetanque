@@ -55,7 +55,7 @@ public class RadioManager : MonoBehaviour
             AddAudioToWait();
         }
 
-        if (GameManager.Instance.CurrentSubGameManager.CorrespondingState == GameState.Exploration && !m_radioStarted)
+        if (GameManager.Instance.CurrentGameState == GameState.Exploration && !m_radioStarted)
         {
             StartRadio();
         }

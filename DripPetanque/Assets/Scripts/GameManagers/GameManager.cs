@@ -18,6 +18,18 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     public SubGameManager CurrentSubGameManager => m_currentSubGameManager;
 
+    public GameState CurrentGameState
+    {
+        get
+        {
+            if (m_currentSubGameManager == null)
+            {
+                return GameState.None;
+            }
+            return m_currentSubGameManager.CorrespondingState;
+        }
+    }
+
     public GameManagersSharedDatas SharedDatas => m_sharedDatas;
 
     public event Action<GameState> OnGameStateEntered;
@@ -62,17 +74,17 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
         m_subGameManagers = new Dictionary<GameState, SubGameManager>()
         {
-            { 
+            {
                 m_cinematicsSubGameManager.CorrespondingState,
-                m_cinematicsSubGameManager 
+                m_cinematicsSubGameManager
             },
-            { 
+            {
                 m_dialogueSubGameManager.CorrespondingState,
-                m_dialogueSubGameManager 
+                m_dialogueSubGameManager
             },
-            { 
+            {
                 m_explorationSubGameManager.CorrespondingState,
-                m_explorationSubGameManager 
+                m_explorationSubGameManager
             },
             {
                 m_petanqueSubGameManager.CorrespondingState,
@@ -104,6 +116,11 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         {
             m_initialized = true;
         }
+    }
+
+    public void GoBackToMainMenu()
+    {
+        StartState(GameState.MainMenu);
     }
 
     private void OnStartSceneLoaded(AsyncOperation operation)

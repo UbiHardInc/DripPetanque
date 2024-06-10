@@ -94,10 +94,8 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     {
         base.Start();
         GameManager gameManager = GameManager.Instance;
-        if (gameManager.CurrentSubGameManager != null)
-        {
-            UpdateState(gameManager.CurrentSubGameManager.CorrespondingState);
-        }
+
+        UpdateState(gameManager.CurrentGameState);
         gameManager.OnGameStateEntered += UpdateState;
 
         m_musicSource1.volume = m_musicVolume;
@@ -528,8 +526,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         //Debug.LogError("Sound game state updated with : " + nextState.ToString());
         switch (nextState)
         {
-            case GameState.None:
-                //Technically it's main menu so it is on it's own
+            case GameState.MainMenu:
                 m_soundGameState = SoundGameState.MainMenu;
                 StopCitySound();
                 StopAllMusicSources();
@@ -538,17 +535,15 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             case GameState.Exploration:
                 m_soundGameState = SoundGameState.Exploration;
                 break;
-            case GameState.Dialogue:
-                //do nothing
-                break;
             case GameState.Petanque:
                 m_soundGameState = SoundGameState.Petanque;
                 StopCitySound();
                 InitBattleMusic();
                 break;
+
+            case GameState.Dialogue:
             case GameState.Cinematics:
-                //Do nothing
-                break;
+            case GameState.None:
             default:
                 break;
         }
