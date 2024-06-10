@@ -273,6 +273,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
         m_radioManager.HideRadio();
         StopAllMusicSources();
+        UnmuteMusic();
         PlayMusic(true, "battleIntro");
     }
 
@@ -395,6 +396,16 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     public void PlayMusicAndWaitEnd(bool isBattle, string soundName)
     {
         _ = StartCoroutine(PlayMusicAndWaitEndCoroutine(isBattle, soundName));
+    }
+
+    public void MuteMusic()
+    {
+        m_musicSource1.volume = 0f;
+    }
+
+    public void UnmuteMusic()
+    {
+        m_musicSource1.volume = m_musicVolume;
     }
 
     public IEnumerator PlayMusicAndWaitEndCoroutine(bool isBattle, string soundName)
