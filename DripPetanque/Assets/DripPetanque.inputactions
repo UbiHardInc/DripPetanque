@@ -449,10 +449,10 @@
                 {
                     "name": "",
                     "id": "1d7de22a-6e4a-47ce-853d-ae9b4d6edf8b",
-                    "path": "",
-                    "interactions": "Hold",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Xbox",
                     "action": "ZenithalView",
                     "isComposite": false,
                     "isPartOfComposite": false
