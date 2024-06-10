@@ -15,6 +15,7 @@ public class PetanqueSubGameManager : SubGameManager
 
     public event Action<bool> OnBallLauched;
     public event Action<bool> OnNextTurn;
+    public event Action OnNextRound;
 
     [SerializeField] private PetanqueSceneDatas m_petanqueSceneDatas;
 
@@ -110,6 +111,7 @@ public class PetanqueSubGameManager : SubGameManager
     {
         ResetRound();
         m_currentRound++;
+        OnNextRound?.Invoke();
         NextTurn();
     }
 
