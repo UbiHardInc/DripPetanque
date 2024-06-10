@@ -1,23 +1,12 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityUtility.CustomAttributes;
-using UnityUtility.Singletons;
 
-public class MenuManager : MonoBehaviourSingleton<MenuManager>
+public class PauseMenuManager : MonoBehaviour
 {
-    [Title("MainMenuVariables")]
-    [SerializeField] private float m_timeForMenuToAppear = 6.30f;
-    [Title("MainMenuObjects")]
-    [SerializeField] private GameObject m_transitionImage;
-    [SerializeField] private Button m_startButton;
-
     [Title("PauseMenuObjects")]
     [SerializeField] private GameObject m_pauseMenu;
     [SerializeField] private Button m_firstSelectedButton;
@@ -33,36 +22,24 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
     [SerializeField] private InputActionReference m_moveInput;
     [SerializeField] private InputActionReference m_submitInput;
     [SerializeField] private InputActionReference m_cancelInput;
-    
+
+    [Title("Misc")]
+    [SerializeField] private float m_sliderStep = 0.1f;
+
     //private variables
-    private bool m_isOnUI;
+
+    [NonSerialized] private GameManager m_gameManager;
+    [NonSerialized] private bool m_isActive;
 
 
     // Start is called before the first frame update
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
+        m_gameManager = GameManager.Instance;
 
+        m_isActive = false;
+        m_pauseMenu.SetActive(false);
         m_openMenuInput.action.performed += OpenMenu;
-        m_closeMenuInput.action.performed += CloseMenu;
-        m_moveInput.action.started += MoveInUI;
-        m_submitInput.action.performed += PressSubmit;
-        m_cancelInput.action.performed += PressCancel;
-
-        if (SceneManager.GetActiveScene().name == "EntryScene")
-        {
-            _ = StartCoroutine(IntroMainMenu());
-            EventSystem.current.SetSelectedGameObject(m_startButton.gameObject);
-            m_startButton.Select();
-            m_startButton.onClick.AddListener(() => StartGame());
-            m_isOnUI = true;
-        }
-    }
-
-    private IEnumerator IntroMainMenu()
-    {
-        yield return new WaitForSeconds(m_timeForMenuToAppear);
-        _ = StartCoroutine(FadeInAndOutGameObject.FadeInAndOut(m_transitionImage, false, 1f));
     }
 
     #region InputActionsMethods
@@ -70,47 +47,49 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
     private void OpenMenu(InputAction.CallbackContext obj)
     {
         Debug.LogError("OpenMenuCalled");
-        OpenPauseMenu();
+        OpenPauseMenu(false);
     }
-    
+
     private void CloseMenu(InputAction.CallbackContext obj)
     {
         ClosePauseMenu();
     }
-    
+
     private void PressCancel(InputAction.CallbackContext obj)
     {
-        if (m_isOnUI)
-        {
-            SoundManager.Instance.PlayUISFX("cancel");
-        }
+        SoundManager.Instance.PlayUISFX("cancel");
     }
 
     private void PressSubmit(InputAction.CallbackContext obj)
     {
-        if (m_isOnUI)
-        {
-            //SoundManager.Instance.PlayUISFX("submit");
-        }
+        //SoundManager.Instance.PlayUISFX("submit");
     }
 
     private void MoveInUI(InputAction.CallbackContext obj)
     {
-        if (m_isOnUI)
-        {
-            SoundManager.Instance.PlayUISFX("move");
-        }
+        SoundManager.Instance.PlayUISFX("move");
     }
     #endregion
 
     #region ButtonMethods
-
-    public void OpenPauseMenu()
+    public void OpenPauseMenu(bool fromMainMenu)
     {
-        //Debug.LogError("OpenPauseMenuCalled");
+        if (m_isActive)
+        {
+            return;
+        }
+
+        // Prevents from opening the pause menu with the input if we're already on the main menu
+        if (!fromMainMenu && m_gameManager.CurrentGameState == GameState.MainMenu)
+        {
+            return;
+        }
+        
+        m_isActive = true;
+        SubscribeToInputEvents();
         m_pauseMenu.SetActive(true);
 
-        if (SceneManager.GetActiveScene().name != "EntryScene")
+        if (!fromMainMenu)
         {
             m_backMainMenuButton.gameObject.SetActive(true);
             Time.timeScale = 0f;
@@ -119,70 +98,89 @@ public class MenuManager : MonoBehaviourSingleton<MenuManager>
         else
         {
             SoundManager.Instance.PlayUISFX("submit");
-            m_isOnUI = true;
             m_backMainMenuButton.gameObject.SetActive(false);
         }
         m_firstSelectedButton.Select();
 
     }
 
-    public void ClosePauseMenu()
+    private void ClosePauseMenu()
     {
-        m_pauseMenu.SetActive(false);
-        if (SceneManager.GetActiveScene().name == "EntryScene")
+        if (!m_isActive)
         {
-            m_startButton.GetComponent<Button>().Select();
+            return;
+        }
+
+        m_isActive = false;
+        UnsubscribeToInputEvents();
+        m_pauseMenu.SetActive(false);
+        if (m_gameManager.CurrentGameState == GameState.MainMenu)
+        {
+            m_gameManager.MainMenuSubGameManager.SelectStartButton();
         }
         else
         {
-            m_isOnUI = false;
             Time.timeScale = 1f;
         }
 
     }
-    
+
+    // Called by buttons
     public void MusicVolumeChange(bool add)
     {
         if (add)
         {
-            m_musicSlider.value += 0.1f;
+            m_musicSlider.value += m_sliderStep;
         }
         else
         {
-            m_musicSlider.value -= 0.1f;
+            m_musicSlider.value -= m_sliderStep;
         }
         _ = m_musicMixerGroup.audioMixer.SetFloat("musicVol", Mathf.Log10(m_musicSlider.value) * 20);
 
     }
 
+    // Called by buttons
     public void SfxVolumeChange(bool add)
     {
         if (add)
         {
-            m_sfxSlider.value += 0.1f;
+            m_sfxSlider.value += m_sliderStep;
         }
         else
         {
-            m_sfxSlider.value -= 0.1f;
+            m_sfxSlider.value -= m_sliderStep;
         }
         _ = m_sfxMixerGroup.audioMixer.SetFloat("sfxVol", Mathf.Log10(m_sfxSlider.value) * 20);
         SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.swoop);
-
     }
 
-    public void StartGame()
+    private void BackToMainMenu()
     {
-        m_isOnUI = false;
-        SoundManager.Instance.PlayUISFX("start");
-        
-        //ToDo : add LoadGame
+        ClosePauseMenu();
+        m_gameManager.GoBackToMainMenu();
     }
 
-    public void QuitGame()
+    private void SubscribeToInputEvents()
     {
-        Application.Quit();
+        m_closeMenuInput.action.performed += CloseMenu;
+        m_moveInput.action.started += MoveInUI;
+        m_submitInput.action.performed += PressSubmit;
+        m_cancelInput.action.performed += PressCancel;
+
+        m_backMainMenuButton.onClick.AddListener(BackToMainMenu);
+    }
+
+    private void UnsubscribeToInputEvents()
+    {
+        m_closeMenuInput.action.performed -= CloseMenu;
+        m_moveInput.action.started -= MoveInUI;
+        m_submitInput.action.performed -= PressSubmit;
+        m_cancelInput.action.performed -= PressCancel;
+
+        m_backMainMenuButton.onClick.RemoveListener(BackToMainMenu);
     }
 
     #endregion
-    
+
 }

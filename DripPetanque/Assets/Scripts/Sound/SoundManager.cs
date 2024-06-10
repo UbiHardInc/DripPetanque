@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Singletons;
 using Random = UnityEngine.Random;
@@ -62,7 +63,8 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     [SerializeField] private AudioSource m_ballSfxSource;
     [SerializeField] private AudioSource m_cityAmbianceSource;
 
-    private RadioManager m_radioManager;
+    [Title("Misc")]
+    [SerializeField] private RadioManager m_radioManager;
 
     private bool m_isMusicWaiting = false;
     private SoundGameState m_soundGameState;
@@ -91,9 +93,10 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     protected override void Start()
     {
         base.Start();
-        m_radioManager = RadioManager.Instance;
-        UpdateState(GameManager.Instance.CurrentSubGameManager.CorrespondingState);
-        GameManager.Instance.OnGameStateEntered += UpdateState;
+        GameManager gameManager = GameManager.Instance;
+
+        UpdateState(gameManager.CurrentGameState);
+        gameManager.OnGameStateEntered += UpdateState;
 
         m_musicSource1.volume = m_musicVolume;
         m_musicSource2.volume = m_musicVolume;
@@ -102,10 +105,12 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     private void Update()
     {
+        Profiler.BeginSample("SoundManager::Update");
         if (m_soundGameState == SoundGameState.Petanque)
         {
             if (!m_isBattleMusicSwitching)
             {
+                Profiler.BeginSample("SoundManager::RestartActualBattleMusic");
                 if (m_actualMusicSource)
                 {
                     if (!m_musicSource1.isPlaying)
@@ -120,8 +125,10 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                         RestartActualBattleMusic();
                     }
                 }
+                Profiler.EndSample();
             }
 
+            Profiler.BeginSample("SoundManager::SwitchBattleMusic");
             if (m_actualFilter != m_oldActualFilter)
             {
                 SwitchBattleMusic();
@@ -133,14 +140,17 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                 SwitchBattleMusic();
                 m_oldActualBattleVersion = m_actualBattleVersion;
             }
+            Profiler.EndSample();
         }
 
         if (m_soundGameState == SoundGameState.Exploration && !m_isInCityAmbiance)
         {
+            Profiler.BeginSample("SoundManager::CitySounds");
             PlayCitySound();
             m_isInCityAmbiance = true;
+            Profiler.EndSample();
         }
-
+        Profiler.EndSample();
 
     }
 
@@ -454,12 +464,19 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     
     private void PlayCitySound()
     {
+        Profiler.BeginSample("PlayCitySound::GetFromDict");
         m_UiSFXLibrary.SoundAudioClips.TryGetValue("city", out AudioClip clip);
+        Profiler.EndSample();
         m_cityAmbianceSource.clip = clip;
         m_cityAmbianceSource.loop = true;
         m_cityAmbianceSource.volume = m_cityAmbianceVolume;
+        Profiler.BeginSample("PlayCitySound::Play");
         m_cityAmbianceSource.Play();
+        Profiler.EndSample();
+        Profiler.BeginSample("PlayCitySound::SetRandomTime");
         m_cityAmbianceSource.time = Random.Range(0.0f, clip.length);
+
+        Profiler.EndSample();
     }
 
     private void StopCitySound()
@@ -509,8 +526,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         //Debug.LogError("Sound game state updated with : " + nextState.ToString());
         switch (nextState)
         {
-            case GameState.None:
-                //Technically it's main menu so it is on it's own
+            case GameState.MainMenu:
                 m_soundGameState = SoundGameState.MainMenu;
                 StopCitySound();
                 StopAllMusicSources();
@@ -519,17 +535,15 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
             case GameState.Exploration:
                 m_soundGameState = SoundGameState.Exploration;
                 break;
-            case GameState.Dialogue:
-                //do nothing
-                break;
             case GameState.Petanque:
                 m_soundGameState = SoundGameState.Petanque;
                 StopCitySound();
                 InitBattleMusic();
                 break;
+
+            case GameState.Dialogue:
             case GameState.Cinematics:
-                //Do nothing
-                break;
+            case GameState.None:
             default:
                 break;
         }

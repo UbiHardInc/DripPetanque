@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Proto_Level_Design.unity
     guid: 91524a1cb2566fe448c30fd09f144d7f
   - enabled: 1
-    path: Assets/Scenes/Empty.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: cf506317541d0b141b9613af853298fc
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7,

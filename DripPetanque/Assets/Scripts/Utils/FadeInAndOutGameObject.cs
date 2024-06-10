@@ -3,23 +3,23 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FadeInAndOutGameObject : MonoBehaviour
+public static class FadeInAndOutGameObject
 {
     public static IEnumerator FadeInAndOut(GameObject objectToFade, bool fadeIn, float duration)
     {
         float counter = 0f;
 
         //Set Values depending on if fadeIn or fadeOut
-        float a, b;
+        float startAlpha, targetAlpha;
         if (fadeIn)
         {
-            a = 0;
-            b = 1;
+            startAlpha = 0;
+            targetAlpha = 1;
         }
         else
         {
-            a = 1;
-            b = 0;
+            startAlpha = 1;
+            targetAlpha = 0;
         }
 
 
@@ -74,7 +74,7 @@ public class FadeInAndOutGameObject : MonoBehaviour
         while (counter < duration)
         {
             counter += Time.deltaTime;
-            float alpha = Mathf.Lerp(a, b, counter / duration);
+            float alpha = Mathf.Lerp(startAlpha, targetAlpha, counter / duration);
 
             changeAlphaAction(alpha);
             yield return null;
