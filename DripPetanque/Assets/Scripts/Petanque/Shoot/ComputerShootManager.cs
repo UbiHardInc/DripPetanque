@@ -11,7 +11,7 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
     [SerializeField] private Transform m_targetPoint;
 
     [Title("Possible Targets")]
-    [SerializeField] private Transform[] m_bonuses;
+    [SerializeField] private BonusRoulette[] m_bonuses;
 
     protected override void StartSteps()
     {
@@ -19,9 +19,9 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
 
         bool found = false;
 
-        foreach (Transform bonus in m_bonuses.ShuffleCopy())
+        foreach (BonusRoulette bonus in m_bonuses.ShuffleCopy())
         {
-            if (TryComputeSplineDatas(bonus.position, out SplineDatas splineDatas))
+            if (TryComputeSplineDatas(bonus.transform.position, out SplineDatas splineDatas))
             {
                 Debug.Log($"The Bonus {bonus.name} was chosen", bonus);
                 found = true;
@@ -52,6 +52,7 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
     {
         if (TryComputeSplineDatas(m_targetPoint.position, out SplineDatas splineDatas))
         {
+            Debug.LogError($"X : {splineDatas.XAngle}\nY : {splineDatas.YAngle}\nF : {splineDatas.Force}");
             m_splineController.SetSplineParameters(splineDatas);
         }
         else
@@ -60,22 +61,43 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
         }
     }
 
+    private struct GizmosDatas
+    {
+        public Vector3 StartPosition;
+        public Vector3 Forward;
+        public Vector3 SplineUp;
+        public Vector3 MPrime;
+        public Vector3 SplineForward;
+    }
+
+    [NonSerialized] private GizmosDatas m_gizmosDatas = default;
+
     // The code in this class may not be really clear but don't worry, I did the maths
-    private bool TryComputeSplineDatas(Vector3 m, out SplineDatas splineDatas)
+    private bool TryComputeSplineDatas(Vector3 targetPoint, out SplineDatas splineDatas)
     {
         splineDatas = default;
+
+        Vector3 m = m_splineController.transform.InverseTransformPoint(targetPoint);
 
         Vector3 startPosition = Vector3.zero;
 
         float attractionFactor = m_splineController.AttractionFactor;
         Transform slineControllerTransform = m_splineController.transform;
 
-
         Vector3 forward = slineControllerTransform.forward;
         Vector3 splineUp = slineControllerTransform.up;
 
         Vector3 mPrime = Vector3.ProjectOnPlane(m - startPosition, splineUp);
         Vector3 splineForward = mPrime.normalized;
+
+        m_gizmosDatas = new GizmosDatas()
+        {
+            StartPosition = startPosition,
+            Forward = forward,
+            SplineUp = splineUp,
+            MPrime = mPrime,
+            SplineForward = splineForward,
+        };
 
         float yAngle = Vector3.SignedAngle(forward, splineForward, splineUp);
 
@@ -169,6 +191,8 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
         dr1 = Mathf.Clamp(dr1, forceRange.x, forceRange.y);
         dr2 = Mathf.Clamp(dr2, forceRange.x, forceRange.y);
 
+        Debug.Log($"ForceMin : {dr1}, ForceMax : {dr2}");
+
         force = Mathf.Lerp(dr1, dr2, UnityEngine.Random.value);
         return true;
     }
@@ -236,6 +260,24 @@ public class ComputerShootManager : BaseShootManager<ComputerShootStep, Ball>
         Gizmos.DrawLine(prb, prt);
         Gizmos.DrawLine(plb, prb);
         Gizmos.DrawLine(plt, prt);
+
+
+
+        Vector3 startPosition = m_splineController.transform.position + m_gizmosDatas.StartPosition;
+        float len = 5.0f;
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(startPosition, startPosition + m_gizmosDatas.Forward * len);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(startPosition, startPosition + m_gizmosDatas.SplineForward * len);
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(startPosition + m_gizmosDatas.MPrime, 1);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(startPosition, startPosition + m_gizmosDatas.SplineUp * len);
+
     }
 
     private Vector3 X0Y(Vector2 v)

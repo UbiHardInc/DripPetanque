@@ -5,4 +5,5 @@ public enum GameState
     Petanque,
     Cinematics,
     Exploration,
+    MainMenu,
 }
