@@ -21,6 +21,7 @@ public class PetanqueSubGameManager : SubGameManager
     [SerializeField] private SceneTransitioner m_petanqueSceneLoader;
     [SerializeField] private ResultDisplay m_resultDisplay;
     [SerializeField] private TurnChangeDisplay m_turnChangeDisplay;
+    [SerializeField] private ScoreDisplay m_scoreDisplayUI;
 
     [Title("Default values")]
     [SerializeField] private PetanqueGameSettings m_defaultGameSettings;
@@ -78,6 +79,8 @@ public class PetanqueSubGameManager : SubGameManager
 
         m_jack = m_petanqueSceneDatas.Field.JackPosition;
         m_players = m_petanqueSceneDatas.PetanquePlayers;
+        //activate score ui
+        m_scoreDisplayUI.ActivateScoreDisplay(m_players);
 
         StartPetanque(m_petanqueSceneDatas.Field);
     }
@@ -201,6 +204,7 @@ public class PetanqueSubGameManager : SubGameManager
         };
 
         m_resultDisplay.DislayRoundResult(result, StartRound);
+        m_scoreDisplayUI.UpdateScore(result);
     }
 
     private void DisplayGameResult(BasePetanquePlayer gameWinner)
@@ -223,6 +227,8 @@ public class PetanqueSubGameManager : SubGameManager
         m_petanqueSceneLoader.StartUnloadTransition(fadeIn: true, fadeOut: true);
 
         m_players.ForEach(player => player.Dispose());
+
+        m_scoreDisplayUI.DeactivateScoreUI();
 
         m_petanqueSceneLoader.OnFadeInOver += EndPetanqueState;
     }
