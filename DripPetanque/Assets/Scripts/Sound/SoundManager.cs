@@ -21,7 +21,10 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         rolling,
         ballAir,
         ball,
-        swoop
+        swoop,
+        good,
+        bad,
+        cheer,
     }
 
     public enum BattleFilters
@@ -75,6 +78,9 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     private int m_ballRollingNumber;
     private int m_ballToBallAirNumber;
     private int m_ballToBallGroundNumber;
+    private int m_goodNumber;
+    private int m_badNumber;
+    private int m_cheerNumber;
     private int m_swoopNumber;
     private bool m_ballStillRolling = false;
 
@@ -180,6 +186,15 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                     case BallSFXType.swoop:
                         m_swoopNumber++;
                         break;
+                    case BallSFXType.good:
+                        m_goodNumber++;
+                        break;
+                    case BallSFXType.bad:
+                        m_badNumber++;
+                        break;
+                    case BallSFXType.cheer:
+                        m_cheerNumber++;
+                        break;
                     default:
                         break;
                 }
@@ -221,6 +236,18 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                 break;
             case BallSFXType.swoop:
                 rndClip = Random.Range(1, m_swoopNumber + 1);
+                _ = m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
+                break;
+            case BallSFXType.bad:
+                rndClip = Random.Range(1, m_badNumber + 1);
+                _ = m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
+                break;
+            case BallSFXType.good:
+                rndClip = Random.Range(1, m_goodNumber + 1);
+                _ = m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
+                break;
+            case BallSFXType.cheer:
+                rndClip = Random.Range(1, m_cheerNumber + 1);
                 _ = m_ballSFXLibrary.SoundAudioClips.TryGetValue(sfxType.ToString() + rndClip.ToString(), out clip);
                 break;
             default:
@@ -477,21 +504,6 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         m_cityAmbianceSource.time = Random.Range(0.0f, clip.length);
 
         Profiler.EndSample();
-    }
-
-    public void PlaySoundBeforeShoot()
-    {
-
-    }
-
-    public void PlayCheers()
-    {
-
-    }
-
-    public void PlayBoos()
-    {
-
     }
 
     private void StopCitySound()

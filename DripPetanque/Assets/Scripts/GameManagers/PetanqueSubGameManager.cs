@@ -295,12 +295,12 @@ public class PetanqueSubGameManager : SubGameManager
 
     private void PlayReactionSound(Ball ball)
     {
-        if (m_allBalls.Count < m_players.Count)
+        if (m_allBalls.Count <= m_players.Count)
         {
             return;
         }
 
-        if (Random.value < m_crowdReactionProbability)
+        if (Random.value > m_crowdReactionProbability)
         {
             return;
         }
@@ -309,13 +309,13 @@ public class PetanqueSubGameManager : SubGameManager
 
         if (ballRank == 0)
         {
-            SoundManager.Instance.PlayCheers();
+            SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.good);
             return;
         }
 
         if (ballRank == m_allBalls.Count - 1)
         {
-            SoundManager.Instance.PlayBoos();
+            SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.bad);
             return;
         }
     }

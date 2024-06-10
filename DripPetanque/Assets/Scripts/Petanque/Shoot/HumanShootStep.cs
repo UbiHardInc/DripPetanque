@@ -136,7 +136,7 @@ public class HumanShootStep : BaseShootStep
 
         if (Random.value < m_cheersProbability)
         {
-            SoundManager.Instance.PlaySoundBeforeShoot();
+            SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.cheer);
         }
     }
 
