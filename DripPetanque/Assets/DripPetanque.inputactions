@@ -302,6 +302,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ZenithalView",
+                    "type": "Button",
+                    "id": "91222d2f-64b1-4742-9b7d-f2bf890d3887",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "HoldAndRelease",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -434,6 +443,17 @@
                     "processors": "",
                     "groups": "MouseKeyboard",
                     "action": "JumpBall",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d7de22a-6e4a-47ce-853d-ae9b4d6edf8b",
+                    "path": "",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ZenithalView",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

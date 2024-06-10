@@ -1,14 +1,25 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityUtility.CustomAttributes;
 using UnityUtility.Pools;
 
 public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBall>
 {
     [SerializeField] private Transform m_arrow;
     [SerializeField] private Transform m_arrowPivot;
-    [SerializeField] private InputActionReference m_startShootInput;
     [SerializeField] private GameObject m_controllerUI;
+
+    [Title("Inputs")]
+    [SerializeField] private InputActionReference m_startShootInput;
+    [SerializeField] private InputActionReference m_zenithalViewInput;
+
+    [Title("Zenithal View")]
+    [SerializeField] private CinemachineVirtualCamera m_zenithalCamera;
+
+    // Zenithal View
+    [NonSerialized] private bool m_zenithalViewEnabled = false;
 
     public override void Init(BasePetanquePlayer owner)
     {
@@ -20,7 +31,8 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
         m_forceStep.Init(m_arrow);
         m_upDownStep.Init(m_arrowPivot);
 
-        //m_startShootInput.action.performed += StartShoot;
+        VirtualCamerasManager.RegisterCamera(m_zenithalCamera);
+
     }
 
     public void StartShoot(InputAction.CallbackContext _)
@@ -35,6 +47,14 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
         m_arrow.gameObject.SetActive(true);
 
         SoundManager.Instance.SwitchBattleFilterMusic(SoundManager.BattleFilters.Low);
+
+        m_zenithalViewEnabled = false;
+        if (m_zenithalViewInput.action.ReadValue<float>() > 0.9f)
+        {
+            ToggleZenithalView();
+        }
+
+        m_zenithalViewInput.action.performed += OnZenithalViewPerformed;
     }
 
     protected override PooledObject<ControllableBall> LaunchBall()
@@ -50,6 +70,7 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
         }
 
         VirtualCamerasManager.SwitchToCamera(m_pintanqueOverviewCam);
+        m_zenithalViewInput.action.performed -= OnZenithalViewPerformed;
 
         SoundManager.Instance.SwitchBattleFilterMusic(SoundManager.BattleFilters.None);
 
@@ -71,5 +92,19 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
     public override void Dispose()
     {
         base.Dispose();
+    }
+
+    private void OnZenithalViewPerformed(InputAction.CallbackContext context)
+    {
+        ToggleZenithalView();
+    }
+
+    private void ToggleZenithalView()
+    {
+        m_zenithalViewEnabled ^= true;
+
+        CinemachineVirtualCamera cameraToSwitchTo = m_zenithalViewEnabled ? m_zenithalCamera : m_pintanqueOverviewCam;
+
+        VirtualCamerasManager.SwitchToCamera(cameraToSwitchTo);
     }
 }

@@ -64,10 +64,6 @@ public static class VirtualCamerasManager
     private static void SwitchToCamera_Impl(CinemachineVirtualCamera virtualCamera)
     {
         s_allVirtualCameras.ForEach(cam => cam.gameObject.SetActive(false));
-        foreach (CinemachineVirtualCamera cam in s_allVirtualCameras)
-        {
-            cam.gameObject.SetActive(false);
-        }
         s_currentTarget = virtualCamera;
         virtualCamera.gameObject.SetActive(true);
     }
