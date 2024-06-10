@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5683192765831561041
+--- !u!114 &-4512896495133301124
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PinballLoad
+  m_Name: RampLoad
   m_Shader: {fileID: -6465566751694194690, guid: 61487b705e9ce5e458de8c36406dcf6b,
     type: 3}
   m_Parent: {fileID: 0}
@@ -82,7 +82,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2D:
-        m_Texture: {fileID: 2800000, guid: c4aa15e4f663ce74582ddc1d941bdcde, type: 3}
+        m_Texture: {fileID: 2800000, guid: 19206f25f11a47c429218648947c15b6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -111,7 +111,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DissolveAmount: 32.9
+    - _DissolveAmount: 31
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -134,7 +134,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _TextureDissolveAmount: 20.39
+    - _TextureDissolveAmount: 31.1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
