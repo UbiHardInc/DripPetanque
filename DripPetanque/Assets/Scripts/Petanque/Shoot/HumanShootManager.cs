@@ -103,7 +103,7 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
     {
         m_zenithalViewEnabled ^= true;
 
-        CinemachineVirtualCamera cameraToSwitchTo = m_zenithalViewEnabled ? m_zenithalCamera : m_pintanqueOverviewCam;
+        CinemachineVirtualCamera cameraToSwitchTo = m_zenithalViewEnabled ? m_zenithalCamera : m_allSteps[m_currentStep].CameraPosition;
 
         VirtualCamerasManager.SwitchToCamera(cameraToSwitchTo);
     }
