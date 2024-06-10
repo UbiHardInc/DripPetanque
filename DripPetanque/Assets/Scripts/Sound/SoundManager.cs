@@ -479,6 +479,21 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         Profiler.EndSample();
     }
 
+    public void PlaySoundBeforeShoot()
+    {
+
+    }
+
+    public void PlayCheers()
+    {
+
+    }
+
+    public void PlayBoos()
+    {
+
+    }
+
     private void StopCitySound()
     {
         m_cityAmbianceSource.Stop();

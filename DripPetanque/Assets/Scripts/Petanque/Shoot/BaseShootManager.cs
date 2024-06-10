@@ -26,11 +26,11 @@ public abstract class BaseShootManager<TShootStep, TBall> : MonoBehaviour
     [Separator]
 
     [Label(bold: true)]
-    [SerializeField] protected TShootStep m_forceStep;
+    [SerializeField] protected TShootStep m_upDownStep;
     [Separator]
 
     [Label(bold: true)]
-    [SerializeField] protected TShootStep m_upDownStep;
+    [SerializeField] protected TShootStep m_forceStep;
     [Separator]
 
     [SerializeField] protected CustomSplineController m_splineController;
