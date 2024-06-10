@@ -94,6 +94,7 @@ public class BonusRoulette : MonoBehaviour
         if (other.TryGetComponent(out Ball ball))
         {
             ball.AttachBonus(Instantiate(m_bonusToAttachToBall, other.transform));
+            SoundManager.Instance.PlayUISFX("bonus");
         }
     }
 }

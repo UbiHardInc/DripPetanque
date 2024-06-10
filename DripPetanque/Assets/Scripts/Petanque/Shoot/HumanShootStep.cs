@@ -136,6 +136,8 @@ public class HumanShootStep : BaseShootStep
         m_gauge.transform.parent.gameObject.SetActive(false);
         m_infoPanel.Activate(false);
         m_currentState = StepState.Finished;
+
+        SoundManager.Instance.PlayUISFX("submit");
     }
 
     private void UpdateGauge(float deltaTime)

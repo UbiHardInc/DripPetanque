@@ -502,6 +502,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "19123114-eeb9-44f4-bb91-ef45b21949fd",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "WASD",
                     "id": "443359b9-3a3d-438f-bd08-4c7a55c7ae57",
                     "path": "2DVector(mode=1)",

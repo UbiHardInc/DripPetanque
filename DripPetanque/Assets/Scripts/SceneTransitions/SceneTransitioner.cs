@@ -7,6 +7,12 @@ using UnityUtility.Timer;
 
 public class SceneTransitioner : MonoBehaviour
 {
+    public enum TimeScale
+    {
+        Scaled,
+        Unscaled,
+    }
+
     public enum TransitionAction
     {
         LoadScene,
@@ -26,10 +32,13 @@ public class SceneTransitioner : MonoBehaviour
     public event Action<SceneReference> OnTransitionStart;
     public event Action<SceneReference> OnTransitionEnd;
 
+    [SerializeField] private bool m_fadeIn;
     [SerializeField] private bool m_fadeOut;
     [SerializeField] private ScreenCache m_cache;
 
     [SerializeField] private Timer m_fadeTimer;
+    [SerializeField] private LoadSceneMode m_loadMode = LoadSceneMode.Additive;
+    [SerializeField] private TimeScale m_timeScale;
 
     // Cache
     [NonSerialized] private TransitionAction m_transitionAction = TransitionAction.LoadScene;
@@ -46,17 +55,19 @@ public class SceneTransitioner : MonoBehaviour
     }
 
     [ContextMenu("Load Transition")]
-    public void StartLoadTransition(bool fadeOut = true)
+    public void StartLoadTransition(bool fadeIn = true, bool fadeOut = true)
     {
         m_transitionAction = TransitionAction.LoadScene;
+        m_fadeIn = fadeIn;
         m_fadeOut = fadeOut;
         StartTransition();
     }
 
     [ContextMenu("Unload Transition")]
-    public void StartUnloadTransition(bool fadeOut = false)
+    public void StartUnloadTransition(bool fadeIn = true, bool fadeOut = false)
     {
         m_transitionAction = TransitionAction.UnloadScene;
+        m_fadeIn = fadeIn;
         m_fadeOut = fadeOut;
         StartTransition();
     }
@@ -67,7 +78,15 @@ public class SceneTransitioner : MonoBehaviour
         m_recorder.BeginEvent("SceneTransition");
         m_isTransitioning = true;
         OnTransitionStart?.Invoke(m_sceneToTransitionTo);
-        StartFadeIn();
+
+        if (m_fadeIn)
+        {
+            StartFadeIn();
+        }
+        else
+        {
+            EndFadeIn();
+        }
     }
 
     private void Update()
@@ -77,18 +96,28 @@ public class SceneTransitioner : MonoBehaviour
             switch (m_currentStep)
             {
                 case TransitionStep.FadeIn:
-                    UpdateFadeIn(Time.deltaTime);
+                    UpdateFadeIn(GetDeltaTime(m_timeScale));
                     break;
                 case TransitionStep.DoTransitionAction:
                     break;
                 case TransitionStep.FadeOut:
-                    UpdateFadeOut(Time.deltaTime);
+                    UpdateFadeOut(GetDeltaTime(m_timeScale));
                     break;
                 case TransitionStep.Done:
                 default:
                     break;
             }
         }
+    }
+
+    private static float GetDeltaTime(TimeScale scale)
+    {
+        return scale switch
+        {
+            TimeScale.Scaled => Time.deltaTime,
+            TimeScale.Unscaled => Time.unscaledDeltaTime,
+            _ => Time.deltaTime,
+        };
     }
 
     private void StartFadeIn()
@@ -105,13 +134,20 @@ public class SceneTransitioner : MonoBehaviour
     {
         if (m_fadeTimer.Update(deltaTime))
         {
-            m_fadeTimer.Stop();
-            m_cache.UpdateCache(1.0f);
-            DoTransitionAction();
-            OnFadeInOver?.Invoke();
+            m_recorder.EndEvent();
+            EndFadeIn();
             return;
         }
         m_cache.UpdateCache(m_fadeTimer.Progress);
+    }
+
+    private void EndFadeIn()
+    {
+        m_fadeTimer.Stop();
+        m_cache.gameObject.SetActive(true);
+        m_cache.UpdateCache(1.0f);
+        DoTransitionAction();
+        OnFadeInOver?.Invoke();
     }
 
     private void DoTransitionAction()
@@ -132,15 +168,13 @@ public class SceneTransitioner : MonoBehaviour
 
     private void LoadScene()
     {
-        m_recorder.EndEvent();
         m_recorder.BeginEvent("Scene loading");
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(m_sceneToTransitionTo, LoadSceneMode.Additive);
+        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(m_sceneToTransitionTo, m_loadMode);
         loadOperation.completed += OnSceneActionOver;
     }
 
     private void UnloadScene()
     {
-        m_recorder.EndEvent();
         m_recorder.BeginEvent("Scene unloading");
         AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(m_sceneToTransitionTo);
         unloadOperation.completed += OnSceneActionOver;

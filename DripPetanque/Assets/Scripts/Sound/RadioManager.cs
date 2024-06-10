@@ -8,7 +8,7 @@ using UnityUtility.CustomAttributes;
 using UnityUtility.Singletons;
 using UnityUtility.Utils;
 
-public class RadioManager : MonoBehaviourSingleton<RadioManager>
+public class RadioManager : MonoBehaviour
 {
     public enum RadioClipType
     {
@@ -38,9 +38,8 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
 
     [NonSerialized] private SoundManager m_soundManager;
 
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
         m_soundManager = SoundManager.Instance;
     }
 
@@ -56,7 +55,7 @@ public class RadioManager : MonoBehaviourSingleton<RadioManager>
             AddAudioToWait();
         }
 
-        if (GameManager.Instance.CurrentSubGameManager.CorrespondingState == GameState.Exploration && !m_radioStarted)
+        if (GameManager.Instance.CurrentGameState == GameState.Exploration && !m_radioStarted)
         {
             StartRadio();
         }
