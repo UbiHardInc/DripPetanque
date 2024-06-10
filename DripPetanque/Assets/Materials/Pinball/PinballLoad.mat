@@ -111,7 +111,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DissolveAmount: 21.5
+    - _DissolveAmount: 32.9
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -134,7 +134,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _TextureDissolveAmount: 19.3
+    - _TextureDissolveAmount: 20.39
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
@@ -145,6 +145,6 @@ Material:
     - _EmissiveColor: {r: 5.340313, g: 2.817774, b: 0.8312753, a: 0}
     - _GridColor: {r: 0.16753921, g: 0.7466443, b: 1.9999999, a: 0}
     - _GridOffset: {r: 0, g: 0, b: 0, a: 0}
-    - _GridTilling: {r: 40, g: 40, b: 0, a: 0}
+    - _GridTilling: {r: 42.2, g: 39.3, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
