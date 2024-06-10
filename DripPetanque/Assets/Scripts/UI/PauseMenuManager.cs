@@ -18,7 +18,6 @@ public class PauseMenuManager : MonoBehaviour
 
     [Title("InputActionReferences")]
     [SerializeField] private InputActionReference m_openMenuInput;
-    [SerializeField] private InputActionReference m_closeMenuInput;
     [SerializeField] private InputActionReference m_moveInput;
     [SerializeField] private InputActionReference m_submitInput;
     [SerializeField] private InputActionReference m_cancelInput;
@@ -55,20 +54,6 @@ public class PauseMenuManager : MonoBehaviour
         ClosePauseMenu();
     }
 
-    private void PressCancel(InputAction.CallbackContext obj)
-    {
-        SoundManager.Instance.PlayUISFX("cancel");
-    }
-
-    private void PressSubmit(InputAction.CallbackContext obj)
-    {
-        //SoundManager.Instance.PlayUISFX("submit");
-    }
-
-    private void MoveInUI(InputAction.CallbackContext obj)
-    {
-        SoundManager.Instance.PlayUISFX("move");
-    }
     #endregion
 
     #region ButtonMethods
@@ -163,20 +148,28 @@ public class PauseMenuManager : MonoBehaviour
 
     private void SubscribeToInputEvents()
     {
-        m_closeMenuInput.action.performed += CloseMenu;
-        m_moveInput.action.started += MoveInUI;
-        m_submitInput.action.performed += PressSubmit;
-        m_cancelInput.action.performed += PressCancel;
+        m_cancelInput.action.performed += CloseMenu;
+
+        if (m_gameManager.CurrentGameState != GameState.MainMenu)
+        {
+            m_moveInput.action.started += UiSFXUtils.MoveInUI;
+            m_submitInput.action.performed += UiSFXUtils.PressSubmit;
+            m_cancelInput.action.performed += UiSFXUtils.PressCancel;
+        }
 
         m_backMainMenuButton.onClick.AddListener(BackToMainMenu);
     }
 
     private void UnsubscribeToInputEvents()
     {
-        m_closeMenuInput.action.performed -= CloseMenu;
-        m_moveInput.action.started -= MoveInUI;
-        m_submitInput.action.performed -= PressSubmit;
-        m_cancelInput.action.performed -= PressCancel;
+        m_cancelInput.action.performed -= CloseMenu;
+
+        if (m_gameManager.CurrentGameState != GameState.MainMenu)
+        {
+            m_moveInput.action.started -= UiSFXUtils.MoveInUI;
+            m_submitInput.action.performed -= UiSFXUtils.PressSubmit;
+            m_cancelInput.action.performed -= UiSFXUtils.PressCancel;
+        }
 
         m_backMainMenuButton.onClick.RemoveListener(BackToMainMenu);
     }

@@ -1297,6 +1297,7 @@ MonoBehaviour:
     type: 3}
   m_cancelInput: {fileID: -3577774520684478504, guid: 462a9b2de1b64484aa61d3a207013de5,
     type: 3}
+  m_sliderStep: 0.1
 --- !u!1 &2180273451635673099
 GameObject:
   m_ObjectHideFlags: 0
@@ -3016,6 +3017,12 @@ MonoBehaviour:
   m_startButton: {fileID: 4520308071992053095}
   m_quitButton: {fileID: 8522516204296435078}
   m_optionsButton: {fileID: 5584967071187817009}
+  m_moveInput: {fileID: -8856316137334229449, guid: 462a9b2de1b64484aa61d3a207013de5,
+    type: 3}
+  m_submitInput: {fileID: 410174088193336342, guid: 462a9b2de1b64484aa61d3a207013de5,
+    type: 3}
+  m_cancelInput: {fileID: -3577774520684478504, guid: 462a9b2de1b64484aa61d3a207013de5,
+    type: 3}
 --- !u!1 &4662754892733427852
 GameObject:
   m_ObjectHideFlags: 0
