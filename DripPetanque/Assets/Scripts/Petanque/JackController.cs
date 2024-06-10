@@ -16,6 +16,10 @@ public class JackController : MonoBehaviour
     }
     private void OnDestroy()
     {
+        if (GameManager.ApplicationIsQuitting)
+        {
+            return;
+        }
         GameManager.Instance.PetanqueSubGameManager.OnNextRound -= MoveJack;
     }
 
