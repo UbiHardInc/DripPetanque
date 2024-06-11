@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
 
+using Random = UnityEngine.Random;
+
 public class MovingBonusRoulette : BonusRoulette
 {
     [Title("Movement parameters")]
@@ -14,12 +16,13 @@ public class MovingBonusRoulette : BonusRoulette
 
     protected virtual void Start()
     {
-        m_currentProgress = 0.0f;
+        m_currentProgress = Random.value;
     }
 
     protected override void Update()
     {
         base.Update();
+
 
         if (!m_ballLaunched)
         {
