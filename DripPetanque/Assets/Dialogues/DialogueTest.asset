@@ -86,4 +86,9 @@ MonoBehaviour:
   nbSentences: 3
   showDialogueElements: 1
   textType: 1
-  NextGameState: 2
+  IsCinematicDialogue: 0
+  NextStateDatas:
+    m_nextGameState: 2
+    m_dialogueToStart: {fileID: 0}
+    m_petanqueGameToStart: {fileID: 11400000, guid: 43a5056ccb4b29044821e1fa3015a879,
+      type: 2}
