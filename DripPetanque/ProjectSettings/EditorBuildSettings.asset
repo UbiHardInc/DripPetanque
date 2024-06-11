@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/DissloveMask.unity
     guid: 4c25d6d82d2aedf4c8a040f74e974697
   - enabled: 1
-    path: Assets/Scenes/Proto_Petanque.unity
+    path: Assets/Scenes/PinTanque.unity
     guid: f0b569dc47fb7054c9ac35e969e21225
   - enabled: 1
     path: Assets/Scenes/Proto_Level_Design.unity
