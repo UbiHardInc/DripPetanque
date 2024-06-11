@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
 using UnityUtility.SceneReference;
@@ -25,6 +26,7 @@ public class PetanqueSubGameManager : SubGameManager
     [SerializeField] private ResultDisplay m_resultDisplay;
     [SerializeField] private TurnChangeDisplay m_turnChangeDisplay;
     [SerializeField] private ScoreDisplay m_scoreDisplayUI;
+    [SerializeField] private GameObject m_invertedRulesText;
 
     [SerializeField] private float m_crowdReactionProbability = 0.25f;
 
@@ -60,6 +62,7 @@ public class PetanqueSubGameManager : SubGameManager
     public void InvertDistances()
     {
         m_invertDistances = !m_invertDistances;
+        m_invertedRulesText.SetActive(m_invertDistances);
         m_currentDistanceComparer = GetDistanceComparison(m_invertDistances);
     }
 
@@ -269,6 +272,7 @@ public class PetanqueSubGameManager : SubGameManager
         m_allBalls.Clear();
 
         m_invertDistances = false;
+        m_invertedRulesText.SetActive(false);
         m_currentDistanceComparer = GetDistanceComparison(m_invertDistances);
     }
 

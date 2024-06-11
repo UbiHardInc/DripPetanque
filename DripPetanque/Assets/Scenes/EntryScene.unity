@@ -338,9 +338,9 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1066087075 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2214380531773717761, guid: 74179b3f0414be94995874b0655f40ee,
+--- !u!1 &1389765699 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7414665049956429597, guid: 74179b3f0414be94995874b0655f40ee,
     type: 3}
   m_PrefabInstance: {fileID: 3864234717316683070}
   m_PrefabAsset: {fileID: 0}
@@ -521,17 +521,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1858531516666583206, guid: 74179b3f0414be94995874b0655f40ee,
-        type: 3}
-      propertyPath: m_vinylAnimator
-      value: 
-      objectReference: {fileID: 1066087075}
-    - target: {fileID: 1858531516666583206, guid: 74179b3f0414be94995874b0655f40ee,
-        type: 3}
-      propertyPath: m_pauseRadioInput
-      value: 
-      objectReference: {fileID: 6294883659929434300, guid: 462a9b2de1b64484aa61d3a207013de5,
-        type: 3}
     - target: {fileID: 8401289527292183967, guid: 74179b3f0414be94995874b0655f40ee,
         type: 3}
       propertyPath: m_Name
@@ -634,6 +623,11 @@ PrefabInstance:
       propertyPath: m_scoreDisplayUI
       value: 
       objectReference: {fileID: 3864234717316683072}
+    - target: {fileID: 3573455257882393289, guid: 84a690e815500154b91b5af419cd0578,
+        type: 3}
+      propertyPath: m_invertedRulesText
+      value: 
+      objectReference: {fileID: 1389765699}
     - target: {fileID: 3573455257882393289, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_turnChangeDisplay

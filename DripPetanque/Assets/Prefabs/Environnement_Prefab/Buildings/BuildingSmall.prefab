@@ -111,10 +111,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a177c101cfd49b14bbb5eb5632be1ee3,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5337541721132624099}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a177c101cfd49b14bbb5eb5632be1ee3,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3799764854211556972}
   m_SourcePrefab: {fileID: 100100000, guid: a177c101cfd49b14bbb5eb5632be1ee3, type: 3}
 --- !u!1 &1477968140185238235 stripped
@@ -138,19 +134,6 @@ MonoBehaviour:
   topColor: {r: 0, g: 0.7856536, b: 1, a: 0}
   bottomColor: {r: 0, g: 0.45512936, b: 0.5188679, a: 0}
   textureMap: {fileID: 2800000, guid: 5fe8255eef8f07d42984c210c43ea1b9, type: 3}
---- !u!114 &5337541721132624099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1477968140185238235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8d5e6a383f3c9040ac638d34dac7d5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectToTrack: {fileID: 0}
 --- !u!65 &3799764854211556972
 BoxCollider:
   m_ObjectHideFlags: 0
