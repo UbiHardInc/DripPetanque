@@ -3440,12 +3440,12 @@ PrefabInstance:
     - target: {fileID: 1736017614660160535, guid: 9f14adbf4ab13f842b0d48a79306cb99,
         type: 3}
       propertyPath: m_rotationAngle.x
-      value: -30
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 1736017614660160535, guid: 9f14adbf4ab13f842b0d48a79306cb99,
         type: 3}
       propertyPath: m_rotationAngle.y
-      value: -95
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 3096769411799194244, guid: 9f14adbf4ab13f842b0d48a79306cb99,
         type: 3}
@@ -3570,12 +3570,12 @@ PrefabInstance:
     - target: {fileID: 5992719243540552744, guid: 9f14adbf4ab13f842b0d48a79306cb99,
         type: 3}
       propertyPath: m_rotationAngle.x
-      value: -25
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 5992719243540552744, guid: 9f14adbf4ab13f842b0d48a79306cb99,
         type: 3}
       propertyPath: m_rotationAngle.y
-      value: 25
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3732,11 +3732,6 @@ PrefabInstance:
       propertyPath: m_leftRightStep.m_infoPanel
       value: 
       objectReference: {fileID: 1191470453154843851}
-    - target: {fileID: 3126795031411027753, guid: 7afd78c4c7f802e4f84c6b069980b466,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b8417b935c2824c48b9fdc11ee692ee9, type: 2}
     - target: {fileID: 4287659220348721635, guid: 7afd78c4c7f802e4f84c6b069980b466,
         type: 3}
       propertyPath: m_Mesh
