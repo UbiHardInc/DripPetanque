@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4026635139655712}
   - component: {fileID: 33868926441212540}
   - component: {fileID: 23676360945825458}
-  - component: {fileID: 64897946827267812}
+  - component: {fileID: 6371516178225184891}
   m_Layer: 6
   m_Name: SM_Prop_Bridge_01
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64897946827267812
+--- !u!64 &6371516178225184891
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,6 +103,6 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 43652139594097826, guid: 1f1f40344ace3fe41be85f2f9d273362, type: 2}
+  m_Mesh: {fileID: 4300000, guid: 0f98afe18bb8d9546b5c7d659cb33e05, type: 3}
