@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
-using UnityUtility.Singletons;
 using UnityUtility.Utils;
 
 public static class VirtualCamerasManager

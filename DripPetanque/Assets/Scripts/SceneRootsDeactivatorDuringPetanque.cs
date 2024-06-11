@@ -9,6 +9,10 @@ public class SceneRootsDeactivatorDuringPetanque : SceneRootsDeactivator
 
     private void OnDestroy()
     {
+        if (GameManager.ApplicationIsQuitting)
+        {
+            return;
+        }
         PetanqueSubGameManager petanqueSubGameManager = GameManager.Instance.PetanqueSubGameManager;
         petanqueSubGameManager.OnPetanqueSceneLoaded -= OnPetanqueSceneLoaded;
         petanqueSubGameManager.ReactivateMainScene -= ReactivateScene;

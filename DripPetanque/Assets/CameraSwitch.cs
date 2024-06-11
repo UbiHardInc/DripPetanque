@@ -17,6 +17,12 @@ public class CameraSwitch : MonoBehaviour
         VirtualCamerasManager.RegisterCamera(m_embutOverviewCam);
     }
 
+    private void OnDestroy()
+    {
+        VirtualCamerasManager.UnRegisterCamera(m_pintanqueOverviewCam);
+        VirtualCamerasManager.UnRegisterCamera(m_embutOverviewCam);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == m_whatIsBall)
