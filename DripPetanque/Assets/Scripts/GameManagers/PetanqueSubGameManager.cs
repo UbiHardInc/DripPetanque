@@ -6,6 +6,8 @@ using UnityUtility.CustomAttributes;
 using UnityUtility.SceneReference;
 using UnityUtility.Utils;
 
+using Random = UnityEngine.Random;
+
 public class PetanqueSubGameManager : SubGameManager
 {
     public override GameState CorrespondingState => GameState.Petanque;
@@ -15,6 +17,7 @@ public class PetanqueSubGameManager : SubGameManager
 
     public event Action<bool> OnBallLauched;
     public event Action<bool> OnNextTurn;
+    public event Action OnNextRound;
 
     [SerializeField] private PetanqueSceneDatas m_petanqueSceneDatas;
 
@@ -22,6 +25,8 @@ public class PetanqueSubGameManager : SubGameManager
     [SerializeField] private ResultDisplay m_resultDisplay;
     [SerializeField] private TurnChangeDisplay m_turnChangeDisplay;
     [SerializeField] private ScoreDisplay m_scoreDisplayUI;
+
+    [SerializeField] private float m_crowdReactionProbability = 0.25f;
 
     [Title("Default values")]
     [SerializeField] private PetanqueGameSettings m_defaultGameSettings;
@@ -56,6 +61,11 @@ public class PetanqueSubGameManager : SubGameManager
     {
         m_invertDistances = !m_invertDistances;
         m_currentDistanceComparer = GetDistanceComparison(m_invertDistances);
+    }
+
+    public void DisplayScoringBalls(bool display)
+    {
+        m_allBalls.ForEach(ball => ball.SetHaloActive(display));
     }
 
     private PetanqueGameSettings GetGameSettings()
@@ -110,6 +120,7 @@ public class PetanqueSubGameManager : SubGameManager
     {
         ResetRound();
         m_currentRound++;
+        OnNextRound?.Invoke();
         NextTurn();
     }
 
@@ -245,6 +256,8 @@ public class PetanqueSubGameManager : SubGameManager
 
     private void OnBallStopped(Ball ball)
     {
+        PlayReactionSound(ball);
+
         ball.OnBallStopped -= OnBallStopped;
         NextTurn();
     }
@@ -283,8 +296,56 @@ public class PetanqueSubGameManager : SubGameManager
                 nextPlayer = player;
                 furthestClosestBallDistance = closestBallDistance;
             }
+
+            NotifyScoringBalls();
         }
         return nextPlayer;
+    }
+
+    private void PlayReactionSound(Ball ball)
+    {
+        if (m_allBalls.Count <= m_players.Count)
+        {
+            return;
+        }
+
+        if (Random.value > m_crowdReactionProbability)
+        {
+            return;
+        }
+
+        int ballRank = GetBallRank(ball, BallDistanceComparison);
+
+        if (ballRank == 0)
+        {
+            SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.good);
+            return;
+        }
+
+        if (ballRank == m_allBalls.Count - 1)
+        {
+            SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.bad);
+            return;
+        }
+    }
+
+    private int GetBallRank(Ball ball, Comparison<Ball> ballsComparer)
+    {
+        if (!m_allBalls.Contains(ball))
+        {
+            Debug.LogError("The given ball is not in all the balls");
+            return -1;
+        }
+
+        Ball[] sortedBalls = m_allBalls.SortCopy(ballsComparer);
+        return sortedBalls.IndexOf(ball);
+    }
+
+    private void NotifyScoringBalls()
+    {
+        m_allBalls.ForEach(b => b.BallScores = false);
+        (List<Ball> scoringBalls, _) = GetScoringBalls(BallDistanceComparison);
+        scoringBalls.ForEach(b => b.BallScores = true);
     }
 
     private (List<Ball> scoringBalls, BasePetanquePlayer ballsOwner) GetScoringBalls(Comparison<Ball> ballsComparer)

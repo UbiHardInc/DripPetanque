@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 5943694060064402073}
   - component: {fileID: 31985922506004690}
   - component: {fileID: 6914500131196107897}
-  - component: {fileID: 1923322940520599946}
+  - component: {fileID: 6872473499328682471}
   - component: {fileID: 5317635965271324392}
   m_Layer: 0
   m_Name: Bloc
@@ -196,9 +196,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3103136647204622004}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.38268343, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: -1.4, y: 0, z: 1.1}
-  m_LocalScale: {x: 20, y: 20, z: 2}
+  m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: -1.043, y: 3.5, z: 1.037}
+  m_LocalScale: {x: 0.84574205, y: 6.4, z: 1.391}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3857228917407604085}
@@ -210,7 +210,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3103136647204622004}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4038690875602809323, guid: 04474ebaad9a7ec47be7798e34776a96, type: 3}
 --- !u!23 &6914500131196107897
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -231,7 +231,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c0535b11d84233944ab321c286eaa301, type: 2}
+  - {fileID: 2100000, guid: 4f05d15aab171e24c9d4a3d587826e83, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -253,7 +253,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1923322940520599946
+--- !u!65 &6872473499328682471
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -272,8 +272,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 24.536448, y: 2.1430511, z: 1.519412}
+  m_Center: {x: 0.0000014305118, y: 0, z: -0.0000076293945}
 --- !u!114 &5317635965271324392
 MonoBehaviour:
   m_ObjectHideFlags: 0
