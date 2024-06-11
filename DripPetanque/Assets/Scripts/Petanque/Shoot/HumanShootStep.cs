@@ -1,9 +1,11 @@
 using Cinemachine;
 using System;
-using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityUtility.Utils;
+
+using Random = UnityEngine.Random;
+
 using static ShootStepData;
 
 [Serializable]
@@ -27,6 +29,9 @@ public class HumanShootStep : BaseShootStep
     [SerializeField] private InputActionReference m_validateInput;
     [SerializeField] private InfoPanel m_infoPanel;
 
+    [SerializeField] private float m_cheersProbability = 0.0f;
+
+    // Cache
     [NonSerialized] private StepState m_currentState;
     [NonSerialized] private Transform m_arrow;
 
@@ -128,6 +133,11 @@ public class HumanShootStep : BaseShootStep
         m_infoPanel.Activate(true);
 
         m_validateInput.action.performed += OnValidateInput;
+
+        if (Random.value < m_cheersProbability)
+        {
+            SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.cheer);
+        }
     }
 
     private void OnValidateInput(InputAction.CallbackContext context)

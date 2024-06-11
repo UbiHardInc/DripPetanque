@@ -76,7 +76,31 @@ MonoBehaviour:
       Value: {fileID: 8300000, guid: eed1fd4fb64e53541ac55d3013f494df, type: 3}
     - Key: good1
       Value: {fileID: 8300000, guid: 5b164d703df631b41b6e0ada2ee09aed, type: 3}
+    - Key: good2
+      Value: {fileID: 8300000, guid: 7869647ef9800a648a19eb5d43bc7281, type: 3}
+    - Key: good3
+      Value: {fileID: 8300000, guid: dcb7426ed45677c4aa9f4336b4260dc4, type: 3}
+    - Key: good4
+      Value: {fileID: 8300000, guid: e253ba47ce5d56447b1ea8b6b38eeb6e, type: 3}
+    - Key: good5
+      Value: {fileID: 8300000, guid: 4745121abf1c0c843b4c65a72567bc15, type: 3}
     - Key: bad1
-      Value: {fileID: 8300000, guid: dd6495360ed0b68408fb28c0b05e64b3, type: 3}
-    - Key: bad2
       Value: {fileID: 8300000, guid: 11dcca7e21c5b7b408317e1ca7f1c941, type: 3}
+    - Key: bad2
+      Value: {fileID: 8300000, guid: 7869647ef9800a648a19eb5d43bc7281, type: 3}
+    - Key: bad3
+      Value: {fileID: 8300000, guid: 2376fd8fd519f0d499175ec38d9f3a2d, type: 3}
+    - Key: bad4
+      Value: {fileID: 8300000, guid: 9b19041722938a04da342d521fb1772f, type: 3}
+    - Key: bad5
+      Value: {fileID: 8300000, guid: e253ba47ce5d56447b1ea8b6b38eeb6e, type: 3}
+    - Key: cheer1
+      Value: {fileID: 8300000, guid: 11dcca7e21c5b7b408317e1ca7f1c941, type: 3}
+    - Key: cheer2
+      Value: {fileID: 8300000, guid: dd6495360ed0b68408fb28c0b05e64b3, type: 3}
+    - Key: cheer3
+      Value: {fileID: 8300000, guid: 224ff81ef3cedf141a270df49e1d2579, type: 3}
+    - Key: cheer4
+      Value: {fileID: 8300000, guid: f2e73e8e223761442a57b70bf9c9c205, type: 3}
+    - Key: cheer5
+      Value: {fileID: 8300000, guid: 257918c7d91b6764ca23663ffe5e1f08, type: 3}

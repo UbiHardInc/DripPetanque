@@ -502,7 +502,7 @@
                 {
                     "name": "",
                     "id": "43b31302-4ae1-4d47-8422-c5fcd5d2456b",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Xbox",
@@ -693,6 +693,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Xbox",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5ff0c13-dd29-4596-a96a-aed40680f513",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
