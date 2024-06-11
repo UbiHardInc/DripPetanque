@@ -44,7 +44,7 @@ public abstract class SubGameManager : MonoBehaviour
         return m_requestedGameState != GameState.None;
     }
 
-    protected void ActivateInput()
+    public void ActivateInput()
     {
         foreach (InputActionMap map in m_specificActionMaps)
         {
@@ -52,7 +52,7 @@ public abstract class SubGameManager : MonoBehaviour
         }
     }
 
-    protected void DeactivateInput()
+    public void DeactivateInput()
     {
         foreach (InputActionMap map in m_specificActionMaps)
         {
