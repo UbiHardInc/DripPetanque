@@ -910,9 +910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: befbf734d8b9d4c41ad85b323b731749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_whatIsBall:
-    serializedVersion: 2
-    m_Bits: 256
+  m_whatIsBall: 0
   m_pintanqueOverviewCam: {fileID: 6526074030123499702}
   m_embutOverviewCam: {fileID: 5413739112021250882}
 --- !u!1 &3780259248256317574
@@ -2538,7 +2536,7 @@ MonoBehaviour:
   m_forceStep:
     m_data: {fileID: 11400000, guid: 73a30ca34739af24a9d1d162ce7915d7, type: 2}
     m_gauge: {fileID: 0}
-    m_cameraPosition: {fileID: 7932830104355632271}
+    m_cameraPosition: {fileID: 4854056106197936237}
     m_camTransitionTime: 1
     m_validateInput: {fileID: -6589083956231380857, guid: 462a9b2de1b64484aa61d3a207013de5,
       type: 3}
