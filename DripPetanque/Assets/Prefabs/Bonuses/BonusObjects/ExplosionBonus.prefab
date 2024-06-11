@@ -161,7 +161,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   m_explosionRadius: 2.45
-  m_explosionForce: 2.45
+  m_explosionForce: 20
+  m_explosionEffect: {fileID: 1137617566507960866}
 --- !u!1001 &7684949016688619528
 PrefabInstance:
   m_ObjectHideFlags: 0

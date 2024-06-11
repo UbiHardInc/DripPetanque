@@ -21,20 +21,23 @@ public class ExplosionBonus : BonusBase
     public override void OnBonusAttached(Transform ballTransform)
     {
         base.OnBonusAttached(ballTransform);
-        m_ballTransform = ballTransform;       
-        m_explosionEffect.transform.position = m_ballTransform.position;
+        m_ballTransform = ballTransform;
     }
 
     private void Explose()
     {
+        m_explosionEffect.transform.position = m_ballTransform.position;
+
         Collider[] colliders = Physics.OverlapSphere(m_ballTransform.position, m_explosionRadius, m_whatIsBall);
 
         foreach (Collider collider in colliders)
         {
             collider.GetComponent<Rigidbody>().AddExplosionForce(m_explosionForce, m_ballTransform.position, m_explosionRadius);
         }
-        m_explosionEffect.SendEvent("PlayExplosionRing");
-        m_explosionEffect.SendEvent("PlayExplosionCone");
+        //m_explosionEffect.SendEvent("PlayExplosionRing");
+        //m_explosionEffect.SendEvent("PlayExplosionCone");
+        //m_explosionEffect.Play();
+        m_explosionEffect.SendEvent("PlayExplosion");
     }
 
     private void OnDrawGizmos()
