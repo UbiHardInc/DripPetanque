@@ -188,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 7654599155432275329}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -215,7 +215,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: db4c94adf401b154fb67d8ab1ef7e062, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5973,6 +5973,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed54e2d2fa71d8c498ae37d8b1b4777a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_onTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  m_onTriggerStay:
+    m_PersistentCalls:
+      m_Calls: []
+  m_onTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8503649772566768529
 GameObject:
   m_ObjectHideFlags: 0
