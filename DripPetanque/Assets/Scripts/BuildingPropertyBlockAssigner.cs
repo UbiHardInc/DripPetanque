@@ -16,12 +16,16 @@ public class BuildingPropertyBlockAssigner : MonoBehaviour
         m_material = GetComponent<Material>();
         m_block = new UnityEngine.MaterialPropertyBlock();
     }
-    void Start()
+
+    private void Start()
     {
         m_meshRenderer.GetPropertyBlock(m_block);
         m_block.SetColor("_TopColor", topColor);
         m_block.SetColor("_BottomColor", bottomColor);
-        m_block.SetTexture("_HeightMapPattern", textureMap);
+        if (textureMap != null)
+        {
+            m_block.SetTexture("_HeightMapPattern", textureMap);
+        }
         m_meshRenderer.SetPropertyBlock(m_block);
     }
 }

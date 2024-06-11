@@ -20,6 +20,7 @@ public class HumanShootStep : BaseShootStep
         Gauge = 2,
         Finished = 3,
     }
+    public CinemachineVirtualCamera CameraPosition => m_cameraPosition;
 
     [SerializeField] private SlidingGauge m_gauge;
 

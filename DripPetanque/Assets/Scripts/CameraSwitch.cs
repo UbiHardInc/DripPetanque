@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityUtility.CustomAttributes;
 
 public class CameraSwitch : MonoBehaviour
 {
-    [SerializeField] private LayerMask m_whatIsBall;
+    [SerializeField, Layer] private int m_whatIsBall;
 
     [Header("Cameras")]
     [SerializeField] protected CinemachineVirtualCamera m_pintanqueOverviewCam;
@@ -17,9 +18,16 @@ public class CameraSwitch : MonoBehaviour
         VirtualCamerasManager.RegisterCamera(m_embutOverviewCam);
     }
 
+    private void OnDestroy()
+    {
+        VirtualCamerasManager.UnRegisterCamera(m_pintanqueOverviewCam);
+        VirtualCamerasManager.UnRegisterCamera(m_embutOverviewCam);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == m_whatIsBall)
+        Debug.Log("DETECTION TRIGGER");
+        if (other.gameObject.layer == m_whatIsBall)
         {
             VirtualCamerasManager.SwitchToCamera(m_embutOverviewCam);
         }

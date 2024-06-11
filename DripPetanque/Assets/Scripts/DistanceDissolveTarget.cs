@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityUtility.Utils;
 
 //[ExecuteInEditMode]
 public class DistanceDissolveTarget : MonoBehaviour
@@ -52,7 +53,7 @@ public class DistanceDissolveTarget : MonoBehaviour
         m_renderer = null;
         if(m_materialRef != null)
         {
-            Destroy(m_materialRef);
+            m_materialRef.Destroy();
         }
         m_materialRef = null;
     }

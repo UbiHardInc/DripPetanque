@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityUtility.CustomAttributes;
 using UnityUtility.SceneReference;
@@ -154,7 +155,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         Debug.LogWarning($"[{nameof(GameManager)}] Exiting GameState {m_currentSubGameManager.CorrespondingState} and entering GameState {nextState}");
 
         m_currentSubGameManager = m_subGameManagers[nextState];
-        m_currentSubGameManager.BeginState(nextState);
+        m_currentSubGameManager.BeginState(m_currentSubGameManager.CorrespondingState);
         OnGameStateEntered?.Invoke(nextState);
     }
 }

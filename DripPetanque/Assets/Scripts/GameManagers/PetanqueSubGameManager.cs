@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
 using UnityUtility.SceneReference;
@@ -17,6 +18,7 @@ public class PetanqueSubGameManager : SubGameManager
 
     public event Action<bool> OnBallLauched;
     public event Action<bool> OnNextTurn;
+    public event Action OnNextRound;
 
     [SerializeField] private PetanqueSceneDatas m_petanqueSceneDatas;
 
@@ -24,6 +26,7 @@ public class PetanqueSubGameManager : SubGameManager
     [SerializeField] private ResultDisplay m_resultDisplay;
     [SerializeField] private TurnChangeDisplay m_turnChangeDisplay;
     [SerializeField] private ScoreDisplay m_scoreDisplayUI;
+    [SerializeField] private GameObject m_invertedRulesText;
 
     [SerializeField] private float m_crowdReactionProbability = 0.25f;
 
@@ -59,7 +62,13 @@ public class PetanqueSubGameManager : SubGameManager
     public void InvertDistances()
     {
         m_invertDistances = !m_invertDistances;
+        m_invertedRulesText.SetActive(m_invertDistances);
         m_currentDistanceComparer = GetDistanceComparison(m_invertDistances);
+    }
+
+    public void DisplayScoringBalls(bool display)
+    {
+        m_allBalls.ForEach(ball => ball.SetHaloActive(display));
     }
 
     private PetanqueGameSettings GetGameSettings()
@@ -114,6 +123,7 @@ public class PetanqueSubGameManager : SubGameManager
     {
         ResetRound();
         m_currentRound++;
+        OnNextRound?.Invoke();
         NextTurn();
     }
 
@@ -262,6 +272,7 @@ public class PetanqueSubGameManager : SubGameManager
         m_allBalls.Clear();
 
         m_invertDistances = false;
+        m_invertedRulesText.SetActive(false);
         m_currentDistanceComparer = GetDistanceComparison(m_invertDistances);
     }
 
@@ -289,6 +300,8 @@ public class PetanqueSubGameManager : SubGameManager
                 nextPlayer = player;
                 furthestClosestBallDistance = closestBallDistance;
             }
+
+            NotifyScoringBalls();
         }
         return nextPlayer;
     }
@@ -330,6 +343,13 @@ public class PetanqueSubGameManager : SubGameManager
 
         Ball[] sortedBalls = m_allBalls.SortCopy(ballsComparer);
         return sortedBalls.IndexOf(ball);
+    }
+
+    private void NotifyScoringBalls()
+    {
+        m_allBalls.ForEach(b => b.BallScores = false);
+        (List<Ball> scoringBalls, _) = GetScoringBalls(BallDistanceComparison);
+        scoringBalls.ForEach(b => b.BallScores = true);
     }
 
     private (List<Ball> scoringBalls, BasePetanquePlayer ballsOwner) GetScoringBalls(Comparison<Ball> ballsComparer)

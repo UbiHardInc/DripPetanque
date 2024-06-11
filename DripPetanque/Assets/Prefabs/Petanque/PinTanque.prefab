@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 6864686679274104629}
   - component: {fileID: 111856756587219907}
   - component: {fileID: 584857766265848746}
+  - component: {fileID: 494070763878031429}
   m_Layer: 0
   m_Name: CameraSwitcher
   m_TagString: Untagged
@@ -254,8 +255,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 179.41235, y: 23.491762, z: 9.426463}
-  m_Center: {x: 16.00775, y: -11.245799, z: -4.2132}
+  m_Size: {x: 179.41237, y: 23.491762, z: 19.847956}
+  m_Center: {x: 16.007748, y: -11.245794, z: 0.99754786}
 --- !u!114 &584857766265848746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,11 +269,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: befbf734d8b9d4c41ad85b323b731749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_whatIsBall:
-    serializedVersion: 2
-    m_Bits: 256
+  m_whatIsBall: 8
   m_pintanqueOverviewCam: {fileID: 8197472265507097394}
   m_embutOverviewCam: {fileID: 551193817484910700}
+--- !u!54 &494070763878031429
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2355249909760420402}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2418034277303405700
 GameObject:
   m_ObjectHideFlags: 0
@@ -4660,7 +4686,7 @@ GameObject:
   - component: {fileID: 1622777627136239854}
   - component: {fileID: 7641839388932782850}
   - component: {fileID: 2272664462550075020}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PinballArena
   m_TagString: Untagged
   m_Icon: {fileID: 0}
