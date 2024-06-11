@@ -59,6 +59,11 @@ public class PetanqueSubGameManager : SubGameManager
         m_currentDistanceComparer = GetDistanceComparison(m_invertDistances);
     }
 
+    public void DisplayScoringBalls(bool display)
+    {
+        m_allBalls.ForEach(ball => ball.SetHaloActive(display));
+    }
+
     private PetanqueGameSettings GetGameSettings()
     {
         if (m_sharedDatas.NextPetanqueGameSettings == null)
@@ -285,8 +290,17 @@ public class PetanqueSubGameManager : SubGameManager
                 nextPlayer = player;
                 furthestClosestBallDistance = closestBallDistance;
             }
+
+            NotifyScoringBalls();
         }
         return nextPlayer;
+    }
+
+    private void NotifyScoringBalls()
+    {
+        m_allBalls.ForEach(b => b.BallScores = false);
+        (List<Ball> scoringBalls, _) = GetScoringBalls(BallDistanceComparison);
+        scoringBalls.ForEach(b => b.BallScores = true);
     }
 
     private (List<Ball> scoringBalls, BasePetanquePlayer ballsOwner) GetScoringBalls(Comparison<Ball> ballsComparer)

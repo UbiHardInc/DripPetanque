@@ -92,6 +92,7 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
     public override void Dispose()
     {
         base.Dispose();
+        VirtualCamerasManager.UnRegisterCamera(m_zenithalCamera);
     }
 
     private void OnZenithalViewPerformed(InputAction.CallbackContext context)
@@ -106,5 +107,7 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
         CinemachineVirtualCamera cameraToSwitchTo = m_zenithalViewEnabled ? m_zenithalCamera : m_allSteps[m_currentStep].CameraPosition;
 
         VirtualCamerasManager.SwitchToCamera(cameraToSwitchTo);
+
+        GameManager.Instance.PetanqueSubGameManager.DisplayScoringBalls(m_zenithalViewEnabled);
     }
 }
