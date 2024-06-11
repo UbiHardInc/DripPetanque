@@ -4660,7 +4660,7 @@ GameObject:
   - component: {fileID: 1622777627136239854}
   - component: {fileID: 7641839388932782850}
   - component: {fileID: 2272664462550075020}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PinballArena
   m_TagString: Untagged
   m_Icon: {fileID: 0}
