@@ -438,8 +438,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_roundNumber: {fileID: 9123965165367970703}
-  m_humanScore: {fileID: 6423864813663182662}
-  m_computerScore: {fileID: 7595414959630039942}
+  m_scoreTexts:
+  - {fileID: 6423864813663182662}
+  - {fileID: 7595414959630039942}
   m_colorWinText: {r: 0.9803922, g: 0.7176471, b: 0, a: 1}
 --- !u!1 &5466421728843253031
 GameObject:

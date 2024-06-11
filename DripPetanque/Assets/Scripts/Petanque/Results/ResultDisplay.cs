@@ -50,29 +50,23 @@ public class ResultDisplay : MonoBehaviour
 
     private void CreateRoundDisplay(List<BasePetanquePlayer> allPlayers, int roundIndex, BasePetanquePlayer winner)
     {
-        BasePetanquePlayer humanPlayer = null;
-        BasePetanquePlayer computerPlayer = null;
+        Span<int> scores = stackalloc int[allPlayers.Count];
+        int winnerIndex = -1;
 
-        foreach (var player in allPlayers)
+        for (int i = 0; i < allPlayers.Count; i++)
         {
-            switch (player.PlayerType)
+            BasePetanquePlayer player = allPlayers[i];
+            if (player == winner)
             {
-                case PetanquePlayerType.Human:
-                    humanPlayer = player;
-                    break;
-                case PetanquePlayerType.Computer:
-                    computerPlayer = player;
-                    break;
-                case PetanquePlayerType.None:
-                    break;
-                default:
-                    break;
+                winnerIndex = i;
             }
+
+            scores[i] = player.CurrentScore;
         }
 
         GameObject scorePanel = Instantiate(m_scorePanelPrefab, m_scorePanelLayout.transform);
-        scorePanel.GetComponent<RoundScorePanel>().InitializeRoundScorePanel(roundIndex, humanPlayer.CurrentScore,
-            computerPlayer.CurrentScore, winner.PlayerType);
+
+        scorePanel.GetComponent<RoundScorePanel>().InitializeRoundScorePanel(roundIndex, scores, winnerIndex);
     }
 
     private void OnEndResultInputPerformed(InputAction.CallbackContext context)
