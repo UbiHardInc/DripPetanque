@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1540060852626754130}
   - component: {fileID: 8878948588525582537}
   - component: {fileID: 6584926733794127752}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RoundBumper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,9 +106,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2.072008
-  m_Height: 6.421488
+  m_Height: 5.174465
   m_Direction: 1
-  m_Center: {x: -0.071270704, y: -0.35819477, z: 0.15155457}
+  m_Center: {x: -0.071270764, y: -0.9817004, z: 0.15155464}
 --- !u!114 &8878948588525582537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_whatIsBall: 8
-  bumperForce: 1
+  bumperForce: 0
   bumpColor: {r: 1, g: 0, b: 0, a: 0}
   forceMode: 2
 --- !u!114 &6584926733794127752

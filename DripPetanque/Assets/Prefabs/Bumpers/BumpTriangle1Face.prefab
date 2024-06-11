@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8638948183898884317}
   - component: {fileID: 8020922978044247460}
   - component: {fileID: 6701312794078899729}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 4809049998833571559}
   - component: {fileID: 4106135360398417019}
   - component: {fileID: 670011713817851020}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BumpFace (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5622743486910817990}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BumpTriangle1Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}

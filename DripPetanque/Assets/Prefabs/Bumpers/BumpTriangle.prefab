@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_whatIsBall: 8
-  bumperForce: 1
+  bumperForce: 0
   bumpColor: {r: 1, g: 0, b: 0, a: 0}
   forceMode: 2
 --- !u!114 &5209985585715985592
