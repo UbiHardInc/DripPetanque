@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5816936495289864006}
   - component: {fileID: 7672942924646334172}
   - component: {fileID: 4757299927169096749}
-  - component: {fileID: 3210854752982234865}
+  - component: {fileID: 6066506288931305433}
   - component: {fileID: 4040857010285356945}
   - component: {fileID: 5392843223402118641}
   m_Layer: 8
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6960039743453392101}
@@ -88,7 +88,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3210854752982234865
+--- !u!135 &6066506288931305433
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,8 +107,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 1
+  m_Center: {x: 0, y: -0.0000019073486, z: 0}
 --- !u!54 &4040857010285356945
 Rigidbody:
   m_ObjectHideFlags: 0
