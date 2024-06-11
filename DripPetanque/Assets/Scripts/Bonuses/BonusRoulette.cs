@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityUtility.Timer;
 using UnityUtility.Utils;
 
+using Random = UnityEngine.Random;
+
 public class BonusRoulette : MonoBehaviour
 {
     [SerializeField] private List<BonusBase> m_bonuses = new List<BonusBase>();
@@ -30,13 +32,14 @@ public class BonusRoulette : MonoBehaviour
             instanciatedBonus.gameObject.SetActive(false);
             m_instanciatedBonuses[i] = instanciatedBonus;
         }
+        m_instanciatedBonuses.Shuffle();
 
         PetanqueSubGameManager petanqueSubGameManager = GameManager.Instance.PetanqueSubGameManager;
         petanqueSubGameManager.OnBallLauched += BonusRouletteStarter;
         petanqueSubGameManager.OnNextTurn += BonusRouletteStarter;
         m_trigger.OnTriggerEnterEvent += OnEnteredTrigger;
 
-        m_cycleTimer = new Timer(m_timeBetweenBonus, true);
+        m_cycleTimer = new Timer(m_timeBetweenBonus, true, Random.value.RemapFrom01(0.0f, m_timeBetweenBonus * 0.5f));
     }
 
     private void OnDestroy()

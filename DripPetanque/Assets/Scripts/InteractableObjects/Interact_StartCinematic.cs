@@ -14,6 +14,7 @@ public class Interact_StartCinematic : InteractableObject
     public override void Interact(PlayerController playerController)
     {
         m_cinematicToLaunch.gameObject.SetActive(true);
+        GameManager.Instance.ExplorationSubGameManager.DeactivateInput();
         //m_cinematicToLaunch.Play();
     }
 }

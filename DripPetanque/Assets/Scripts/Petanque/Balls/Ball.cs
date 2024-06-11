@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Pools;
 using UnityUtility.Timer;
@@ -12,6 +13,7 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     public Rigidbody Rigidbody => m_rigidbody;
 
     public BasePetanquePlayer BallOwner { get => m_ballOwner; set => m_ballOwner = value; }
+    public bool BallScores { get => m_ballScores; set => m_ballScores = value; }
 
     [SerializeField, Layer] private int m_groundLayer;
 
@@ -27,6 +29,9 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     [SerializeField] private float m_distanceToFirstBonus = 1.0f;
     [SerializeField] private float m_distanceBetweenBonuses = 1.0f;
 
+    [Title("Misc")]
+    [SerializeField] private DecalProjector m_haloProjector;
+
     // Cache
     [NonSerialized] protected bool m_ballStopped = false;
     [NonSerialized] protected bool m_touchedGround = false;
@@ -40,6 +45,18 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     [NonSerialized] private bool m_ballSoundStopped = false;
 
     [NonSerialized] private readonly List<BonusBase> m_bonuses = new List<BonusBase>();
+
+    /// <summary>
+    /// Wether the ball is currently scoring
+    /// </summary>
+    [NonSerialized] private bool m_ballScores;
+    [NonSerialized] private Quaternion m_projectorStartRotation;
+
+    protected virtual void Start()
+    {
+        m_projectorStartRotation = m_haloProjector.transform.rotation; 
+        m_haloProjector.gameObject.SetActive(false);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -74,6 +91,8 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
             bonus.transform.position = transform.position + Vector3.up * (m_distanceToFirstBonus + m_distanceBetweenBonuses * i);
             bonus.transform.rotation = Quaternion.identity;
         }
+
+        m_haloProjector.transform.rotation = m_projectorStartRotation;
     }
 
     protected virtual void OnGroundFirstTouched()
@@ -151,6 +170,8 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
 
         m_bonuses.ForEach(bonus => Destroy(bonus.gameObject));
         m_bonuses.Clear();
+
+        m_ballScores = false;
     }
 
     public virtual void AttachBonus(BonusBase bonus)
@@ -158,6 +179,16 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
         m_bonuses.Add(bonus);
         bonus.gameObject.SetActive(true);
         bonus.OnBonusAttached(transform);
+    }
+
+    public virtual void SetHaloActive(bool activate)
+    {
+        if (!m_ballScores)
+        {
+            return;
+        }
+
+        m_haloProjector.gameObject.SetActive(activate);
     }
 
     private void StopBall()
