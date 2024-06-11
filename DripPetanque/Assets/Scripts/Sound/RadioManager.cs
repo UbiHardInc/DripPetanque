@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Singletons;
 using UnityUtility.Utils;
@@ -20,12 +21,14 @@ public class RadioManager : MonoBehaviour
     [SerializeField] private TMP_Text m_artistNameText;
     [SerializeField] private TMP_Text m_songNameText;
     [SerializeField] private RectTransform m_radioUI;
+    [SerializeField] private Animator m_vinylAnimator;
 
     [Title("Parameters")]
     [SerializeField] private float m_timeRadioUiStay = 2f;
 
     [Title("Misc")]
     [SerializeField] private bool m_firstTimePlaying = true;
+    [SerializeField] private InputActionReference m_pauseRadioInput;
 
     [NonSerialized] private readonly string m_musicTitle;
     [NonSerialized] private readonly string m_musicArtist;
@@ -35,12 +38,14 @@ public class RadioManager : MonoBehaviour
     [NonSerialized] private int m_playlistPlayNumber;
 
     [NonSerialized] private bool m_radioStarted;
+    [NonSerialized] private bool m_isMute;
 
     [NonSerialized] private SoundManager m_soundManager;
 
     protected void Start()
     {
         m_soundManager = SoundManager.Instance;
+        m_pauseRadioInput.action.performed += MuteOrUnmuteRadio;
     }
 
     private void Update()
@@ -67,7 +72,28 @@ public class RadioManager : MonoBehaviour
         m_radioUI.gameObject.SetActive(true);
         ResetMasterPlaylist();
         m_soundManager.StopAllMusicSources();
+        MuteOrUnmuteRadio();
         AddAudioToWait();
+    }
+
+    public void MuteOrUnmuteRadio(InputAction.CallbackContext context)
+    {
+        MuteOrUnmuteRadio(!m_isMute);
+    }
+
+    public void MuteOrUnmuteRadio(bool isMute = false)
+    {
+        m_isMute = isMute;
+        if (!isMute)
+        {
+            m_soundManager.UnmuteMusic();
+            m_vinylAnimator.enabled = true;
+        }
+        else
+        {
+            m_soundManager.MuteMusic();
+            m_vinylAnimator.enabled = false;
+        }
     }
 
     private void AddAudioToWait()

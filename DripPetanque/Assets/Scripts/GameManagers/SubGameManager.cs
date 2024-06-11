@@ -29,25 +29,35 @@ public abstract class SubGameManager : MonoBehaviour
     public virtual void BeginState(GameState previousState)
     {
         m_requestedGameState = GameState.None;
-        foreach (InputActionMap map in m_specificActionMaps)
-        {
-            map.Enable();
-        }
+        ActivateInput();
     }
 
     public virtual void EndState(GameState nextState)
     {
         m_requestedGameState = GameState.None;
-        foreach (InputActionMap map in m_specificActionMaps)
-        {
-            map.Disable();
-        }
+        DeactivateInput();
     }
 
     public virtual bool RequestStateChange(out GameState nextState)
     {
         nextState = m_requestedGameState;
         return m_requestedGameState != GameState.None;
+    }
+
+    protected void ActivateInput()
+    {
+        foreach (InputActionMap map in m_specificActionMaps)
+        {
+            map.Enable();
+        }
+    }
+
+    protected void DeactivateInput()
+    {
+        foreach (InputActionMap map in m_specificActionMaps)
+        {
+            map.Disable();
+        }
     }
 
     public virtual void UpdateState(float deltaTime)

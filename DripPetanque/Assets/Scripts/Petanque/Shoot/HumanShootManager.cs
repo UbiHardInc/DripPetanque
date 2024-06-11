@@ -19,8 +19,6 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
         m_leftRightStep.Init(m_arrowPivot);
         m_forceStep.Init(m_arrow);
         m_upDownStep.Init(m_arrowPivot);
-
-        //m_startShootInput.action.performed += StartShoot;
     }
 
     public void StartShoot(InputAction.CallbackContext _)

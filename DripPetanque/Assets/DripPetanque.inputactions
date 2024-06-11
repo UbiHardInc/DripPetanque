@@ -487,13 +487,22 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "PauseRadio",
+                    "type": "Button",
+                    "id": "b01a276e-620c-4a21-8d2a-b9b20f28d7b8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "43b31302-4ae1-4d47-8422-c5fcd5d2456b",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Xbox",
@@ -685,6 +694,39 @@
                     "processors": "",
                     "groups": "Xbox",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5ff0c13-dd29-4596-a96a-aed40680f513",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "37b289f0-4b0e-435e-aee6-43cfc05b3fe2",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox",
+                    "action": "PauseRadio",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bdedd765-1a6d-4e7e-903c-54d0cfc4923f",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseRadio",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

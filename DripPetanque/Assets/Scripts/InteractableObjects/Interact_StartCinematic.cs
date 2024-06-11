@@ -13,6 +13,7 @@ public class Interact_StartCinematic : InteractableObject
 
     public override void Interact(PlayerController playerController)
     {
-        m_cinematicToLaunch.Play();
+        m_cinematicToLaunch.gameObject.SetActive(true);
+        //m_cinematicToLaunch.Play();
     }
 }
