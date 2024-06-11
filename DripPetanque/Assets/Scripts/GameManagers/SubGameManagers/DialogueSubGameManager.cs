@@ -31,13 +31,13 @@ public class DialogueSubGameManager : SubGameManager
     {
         m_dialogueManager.OnDialogueEnded -= OnDialogueEnded;
 
-        if (m_currentDialogue.NextGameState == GameState.None)
+        if (m_currentDialogue.NextStateDatas.NextGameState == GameState.None)
         {
             Debug.LogError($"The next game state of the current dialogue ({m_currentDialogue.name}) is equals to {GameState.None}\nCan't exit the current game state");
             return;
         }
 
-        m_requestedGameState = m_currentDialogue.NextGameState;
+        m_requestedGameState = m_currentDialogue.NextStateDatas.ApplyDatas(m_sharedDatas);
         m_currentDialogue = null;
     }
 }
