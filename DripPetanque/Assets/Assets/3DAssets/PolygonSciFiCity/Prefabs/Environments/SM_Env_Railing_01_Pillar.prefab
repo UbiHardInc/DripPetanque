@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4578892771931834}
   - component: {fileID: 33038940244537236}
   - component: {fileID: 23249617729085558}
-  - component: {fileID: 64044037007781764}
+  - component: {fileID: 2053943882280392357}
   m_Layer: 6
   m_Name: SM_Env_Railing_01_Pillar
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64044037007781764
-MeshCollider:
+--- !u!65 &2053943882280392357
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,7 +102,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43321143851620462, guid: 3a2d235ca8331eb4b8ac408912fbdb5c, type: 2}
+  serializedVersion: 3
+  m_Size: {x: 0.40160942, y: 1.3040265, z: 0.40054703}
+  m_Center: {x: 0.0034856796, y: 0.54876643, z: 0.0029468536}
