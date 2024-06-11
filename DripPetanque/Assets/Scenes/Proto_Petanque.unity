@@ -443,6 +443,7 @@ Transform:
   - {fileID: 538960056}
   - {fileID: 595401217}
   - {fileID: 976711876}
+  - {fileID: 2087740124}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!320 &92960863
@@ -490,6 +491,8 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: 276322574566431007, guid: 8ec115046d64f7545bdbbab6498096a3, type: 2}
     value: {fileID: 1070771775}
+  - key: {fileID: 2906439570777541767, guid: 8ec115046d64f7545bdbbab6498096a3, type: 2}
+    value: {fileID: 2087740122}
   m_ExposedReferences:
     m_References:
     - 3eb542155f46fbb49b6e97f3f229d8bf: {fileID: 1669299311}
@@ -3741,6 +3744,55 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &2087740122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2087740124}
+  - component: {fileID: 2087740123}
+  m_Layer: 0
+  m_Name: CinematicVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2087740123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087740122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: ea3409fb90d01db44bc70f00812ace99, type: 2}
+--- !u!4 &2087740124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087740122}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 92960862}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &2146898605
 Mesh:
   m_ObjectHideFlags: 0
