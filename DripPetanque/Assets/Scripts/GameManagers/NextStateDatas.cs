@@ -9,10 +9,10 @@ public class NextStateDatas
 
     [SerializeField] private GameState m_nextGameState;
 
-    [SerializeField, ShowIf(nameof(m_nextGameState), GameState.Dialogue)]
-    private DialogueData m_dialogueToStart;
-    [SerializeField, ShowIf(nameof(m_nextGameState), GameState.Petanque)]
-    private PetanqueGameSettings m_petanqueGameToStart;
+    //[SerializeField, ShowIf(nameof(m_nextGameState), GameState.Dialogue)]
+    [SerializeField] private DialogueData m_dialogueToStart;
+    //[SerializeField, ShowIf(nameof(m_nextGameState), GameState.Petanque)]
+    [SerializeField] private PetanqueGameSettings m_petanqueGameToStart;
 
     public GameState ApplyDatas(GameManagersSharedDatas sharedDatas)
     {
