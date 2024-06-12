@@ -9,6 +9,11 @@ public class CinematicsFunctions : MonoBehaviour
         GameManager.Instance.ExplorationSubGameManager.StartDialogue(dialogueData);
     }
 
+    public void DeactivateInput()
+    {
+        GameManager.Instance.ExplorationSubGameManager.DeactivateInput();
+    }
+
     public void ActiveInfoPanel(bool value)
     {
         CanvasManager.Instance.InfoPanel.gameObject.SetActive(value);
