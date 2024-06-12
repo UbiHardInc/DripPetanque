@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityUtility.Utils;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class DistanceDissolveTarget : MonoBehaviour
 {
     public Transform ObjectToTrack;

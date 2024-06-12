@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4247531794298980}
   - component: {fileID: 33626406058006048}
   - component: {fileID: 23558376987685744}
-  - component: {fileID: 64945335385690916}
+  - component: {fileID: 2550536511230360803}
   m_Layer: 6
   m_Name: SM_Prop_Overhang_01
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64945335385690916
+--- !u!64 &2550536511230360803
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,6 +103,6 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 43879418949885872, guid: 78bb647f446f98246a6fc72f4677e107, type: 2}
+  m_Mesh: {fileID: 4300000, guid: a23d657620bef9b4cace866fa602b581, type: 3}
