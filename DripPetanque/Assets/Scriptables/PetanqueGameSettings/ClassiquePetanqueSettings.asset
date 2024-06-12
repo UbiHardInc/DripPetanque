@@ -16,7 +16,7 @@ MonoBehaviour:
     m_sceneAsset: {fileID: 102900000, guid: accedf7b4563ef44d88166d2daffeeeb, type: 3}
     m_scenePath: Assets/Scenes/ClassicPetanque.unity
   m_ballsPerGame: 3
-  m_pointsToWin: 6
+  m_pointsToWin: 13
   m_humanWonNextStateDatas:
     m_nextGameState: 1
     m_dialogueToStart: {fileID: 11400000, guid: 5c5806a1657ebb5479678d1c703e4264,
@@ -27,3 +27,4 @@ MonoBehaviour:
     m_dialogueToStart: {fileID: 11400000, guid: 3d675687a45f74f41ab284fc0d9b87bc,
       type: 2}
     m_petanqueGameToStart: {fileID: 0}
+  m_isTutorial: 0
