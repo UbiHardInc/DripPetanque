@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.VFX;
 using UnityUtility.CustomAttributes;
 using UnityUtility.Pools;
 using UnityUtility.Timer;
@@ -31,6 +32,9 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
 
     [Title("Misc")]
     [SerializeField] private DecalProjector m_haloProjector;
+
+    [Title("Visual Effect")]
+    [SerializeField] private VisualEffect m_sparksEffect;
 
     // Cache
     [NonSerialized] protected bool m_ballStopped = false;
@@ -70,6 +74,9 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
             {
                 SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.ballAir);
             }
+
+            m_sparksEffect.transform.position = collision.transform.position;
+            m_sparksEffect.SendEvent("PlaySparkEffect");
         }
 
         if (collision.gameObject.layer == m_groundLayer)
