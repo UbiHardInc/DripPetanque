@@ -2288,8 +2288,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2679930b771fcfb41b46e0e6adeace87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_velocityMultiplier: 0.95
-  m_angularVelocityMultiplier: 0.95
+  m_velocityMultiplier: 0.97
+  m_angularVelocityMultiplier: 0.97
 --- !u!1 &6632370563642810858
 GameObject:
   m_ObjectHideFlags: 0

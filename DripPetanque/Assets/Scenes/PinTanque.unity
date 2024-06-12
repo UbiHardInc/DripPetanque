@@ -585,6 +585,7 @@ MonoBehaviour:
   m_textureDissolveTime: 7
   m_dissolveMaterial: {fileID: 2100000, guid: db4c94adf401b154fb67d8ab1ef7e062, type: 2}
   m_playableDirector: {fileID: 92960863}
+  m_cinematicNeeded: 0
 --- !u!4 &217178860
 Transform:
   m_ObjectHideFlags: 0
