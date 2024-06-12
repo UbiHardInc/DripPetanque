@@ -36,8 +36,8 @@ public class Interact_Talk : InteractableObject
         for (int i = 0; i < transformsCount; i++)
         {
             Transform transform = transformsToRotate[i];
-            Vector3 transformToTarget = playerPosition - transform.position;
-            transformsRotations[i] = (transform.rotation.eulerAngles.y, (Quaternion.FromToRotation(transform.forward, transformToTarget).eulerAngles.y - 360) % 360);
+            Vector3 transformToTarget = Vector3.ProjectOnPlane(playerPosition - transform.position, transform.up);
+            transformsRotations[i] = (transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.y + Vector3.SignedAngle(transform.forward, transformToTarget, transform.up));
         }
 
         Timer rotationTimer = new Timer(duration, false);
