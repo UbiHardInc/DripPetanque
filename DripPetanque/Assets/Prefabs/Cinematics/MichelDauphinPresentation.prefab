@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Waypoints:
   - position: {x: -1.1547345, y: -0.7465928, z: -3.4660847}
     roll: 0
-  - position: {x: -0.91245246, y: 0.9311178, z: -3.5552928}
+  - position: {x: -0.9089627, y: 0.64414054, z: -3.5548892}
     roll: 0
 --- !u!1 &1957622304197596561
 GameObject:
