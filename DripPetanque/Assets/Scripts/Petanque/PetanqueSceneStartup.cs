@@ -22,6 +22,7 @@ public class PetanqueSceneStartup : MonoBehaviour
 
     [SerializeField] private PlayableDirector m_playableDirector;
 
+    [SerializeField] private bool m_cinematicNeeded;
     private bool m_cinematicPlayed;
 
     private void Awake()
@@ -48,7 +49,11 @@ public class PetanqueSceneStartup : MonoBehaviour
 
         yield return DissolveProperty(materialDissolveAmountID, m_dissolveTime);
         yield return DissolveProperty(materialTextureDissolveAmountID, m_textureDissolveTime);
-        yield return new WaitUntil(() => m_cinematicPlayed);
+
+        if (m_cinematicNeeded)
+        {
+            yield return new WaitUntil(() => m_cinematicPlayed);
+        }
 
         m_playableDirector.gameObject.SetActive(false);
 
