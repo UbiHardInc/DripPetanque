@@ -15,7 +15,7 @@ public class StartBossCinematicBehaviour : MonoBehaviour
             m_cinematicToLaunch.gameObject.SetActive(true);
         }
 
-        if (m_disableTrigger)
+        if (m_disableAfterTrigger)
         {
             gameObject.SetActive(false);
         }
