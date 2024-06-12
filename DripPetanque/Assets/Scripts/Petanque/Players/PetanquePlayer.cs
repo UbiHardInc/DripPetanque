@@ -10,7 +10,7 @@ public abstract class PetanquePlayer<TShootStep, TBall> : BasePetanquePlayer
     where TBall : Ball
 {
     public override event Action<Ball> OnBallThrown;
-    public override event Action OnShootOver;
+    public override event Action<Ball> OnShootOver;
 
     public override string PlayerName => m_playerName;
     public override int ThownBallsCount => m_thrownBallsCount;
@@ -24,6 +24,8 @@ public abstract class PetanquePlayer<TShootStep, TBall> : BasePetanquePlayer
     [NonSerialized] private readonly List<PooledObject<TBall>> m_playerBalls = new List<PooledObject<TBall>>();
     [NonSerialized] private int m_thrownBallsCount;
 
+    [NonSerialized] private Ball m_lastThrownBall;
+
     // Results
     [NonSerialized] private readonly List<RoundResult> m_roundResults = new List<RoundResult>();
     [NonSerialized] private int m_currentScore;
@@ -34,12 +36,14 @@ public abstract class PetanquePlayer<TShootStep, TBall> : BasePetanquePlayer
     {
         m_shotManager.Init(this);
         m_shotManager.OnBallSpawned += OnBallSpawned;
+        m_lastThrownBall = null;
     }
 
     public override void StartShoot()
     {
         m_shooting = true;
         m_shotManager.StartShoot();
+        m_lastThrownBall = null;
     }
 
     public override void ResetForRound()
@@ -100,6 +104,8 @@ public abstract class PetanquePlayer<TShootStep, TBall> : BasePetanquePlayer
         m_thrownBallsCount++;
         spawnedBall.Object.OnBallStopped += OnBallStopped;
 
+        m_lastThrownBall = spawnedBall.Object;
+
         OnBallThrown?.Invoke(spawnedBall.Object);
     }
 
@@ -107,6 +113,7 @@ public abstract class PetanquePlayer<TShootStep, TBall> : BasePetanquePlayer
     {
         ball.OnBallStopped -= OnBallStopped;
         m_shooting = false;
-        //OnShootOver?.Invoke();
+        OnShootOver?.Invoke(m_lastThrownBall);
+        m_lastThrownBall = null;
     }
 }
