@@ -16,7 +16,8 @@ public class DialogueData : ScriptableObject
     public enum TextType { Text, Dialogue }
     public TextType textType;
     public bool IsCinematicDialogue;
-    public GameState NextGameState;
+
+    public NextStateDatas NextStateDatas;
 }
 
 [System.Serializable]

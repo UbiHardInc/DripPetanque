@@ -7,10 +7,16 @@ public class PetanqueGameSettings : ScriptableObject
     public SceneReference PetanqueScene => m_petanqueScene;
     public int BallsPerRounds => m_ballsPerGame;
     public int PointsToWin => m_pointsToWin;
-    public GameState ExitGameState => m_exitState;
 
     [SerializeField] private SceneReference m_petanqueScene;
     [SerializeField] private int m_ballsPerGame = 3;
     [SerializeField] private int m_pointsToWin = 13;
-    [SerializeField] private GameState m_exitState = GameState.Exploration;
+
+    [SerializeField] private NextStateDatas m_humanWonNextStateDatas;
+    [SerializeField] private NextStateDatas m_humanLostNextStateDatas;
+
+    public NextStateDatas GetNextStateDatas(PetanquePlayerType winner)
+    {
+        return winner == PetanquePlayerType.Human ? m_humanWonNextStateDatas : m_humanLostNextStateDatas;
+    }
 }

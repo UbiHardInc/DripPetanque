@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityUtility.SerializedDictionary;
 
 public class ResultDisplay : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class ResultDisplay : MonoBehaviour
     [SerializeField] private TMP_Text m_text;
 
     [SerializeField] private GameObject m_scorePanelLayout;
-    [SerializeField] private GameObject m_scorePanelPrefab;
+    [SerializeField] private SerializedDictionary<int, GameObject> m_scorePanelPrefabs;
 
     [NonSerialized] private Action m_resultDisplayEndCallback;
 
@@ -50,29 +51,29 @@ public class ResultDisplay : MonoBehaviour
 
     private void CreateRoundDisplay(List<BasePetanquePlayer> allPlayers, int roundIndex, BasePetanquePlayer winner)
     {
-        BasePetanquePlayer humanPlayer = null;
-        BasePetanquePlayer computerPlayer = null;
+        int playersCount = allPlayers.Count;
+        Span<int> scores = stackalloc int[playersCount];
+        int winnerIndex = -1;
 
-        foreach (var player in allPlayers)
+        for (int i = 0; i < playersCount; i++)
         {
-            switch (player.PlayerType)
+            BasePetanquePlayer player = allPlayers[i];
+            if (player == winner)
             {
-                case PetanquePlayerType.Human:
-                    humanPlayer = player;
-                    break;
-                case PetanquePlayerType.Computer:
-                    computerPlayer = player;
-                    break;
-                case PetanquePlayerType.None:
-                    break;
-                default:
-                    break;
+                winnerIndex = i;
             }
+
+            scores[i] = player.CurrentScore;
         }
 
-        GameObject scorePanel = Instantiate(m_scorePanelPrefab, m_scorePanelLayout.transform);
-        scorePanel.GetComponent<RoundScorePanel>().InitializeRoundScorePanel(roundIndex, humanPlayer.CurrentScore,
-            computerPlayer.CurrentScore, winner.PlayerType);
+        if (m_scorePanelPrefabs.TryGetValue(playersCount, out GameObject scorePanelPrefab))
+        {
+            GameObject scorePanel = Instantiate(scorePanelPrefab, m_scorePanelLayout.transform);
+
+            scorePanel.GetComponent<RoundScorePanel>().InitializeRoundScorePanel(roundIndex, scores, winnerIndex);
+            return;
+        }
+        Debug.LogError($"No prefab to diplay the score of {playersCount} players", this);
     }
 
     private void OnEndResultInputPerformed(InputAction.CallbackContext context)

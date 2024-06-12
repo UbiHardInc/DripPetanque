@@ -555,6 +555,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf6592faf926e845a2ee60f923f9512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3864234717316683073 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8209250923180819536, guid: 74179b3f0414be94995874b0655f40ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 3864234717316683070}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc3027c5bce2aad4980c21adf6cc887d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8245841616386460991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -625,6 +637,11 @@ PrefabInstance:
       objectReference: {fileID: 3864234717316683072}
     - target: {fileID: 3573455257882393289, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
+      propertyPath: m_bonusTutoDisplay
+      value: 
+      objectReference: {fileID: 3864234717316683073}
+    - target: {fileID: 3573455257882393289, guid: 84a690e815500154b91b5af419cd0578,
+        type: 3}
       propertyPath: m_invertedRulesText
       value: 
       objectReference: {fileID: 1389765699}
@@ -633,12 +650,6 @@ PrefabInstance:
       propertyPath: m_turnChangeDisplay
       value: 
       objectReference: {fileID: 360320245}
-    - target: {fileID: 3573455257882393289, guid: 84a690e815500154b91b5af419cd0578,
-        type: 3}
-      propertyPath: m_defaultGameSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: 39615e0fed9fc4e4a8ac444cfc59d558,
-        type: 2}
     - target: {fileID: 3707578762293871561, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_dialogueManager
@@ -651,19 +662,14 @@ PrefabInstance:
       objectReference: {fileID: 3864234717316683071}
     - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
-      propertyPath: m_startState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
-        type: 3}
       propertyPath: m_startScene.m_scenePath
-      value: Assets/Scenes/ClassicPetanque.unity
+      value: Assets/Scenes/PinTanque.unity
       objectReference: {fileID: 0}
     - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_startScene.m_sceneAsset
       value: 
-      objectReference: {fileID: 102900000, guid: accedf7b4563ef44d88166d2daffeeeb,
+      objectReference: {fileID: 102900000, guid: cabe2bc0b5afd3d49b6dc8fddc9a4a18,
         type: 3}
     - target: {fileID: 7162645624520431926, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}

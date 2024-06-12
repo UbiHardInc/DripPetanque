@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.VFX;
 using UnityUtility.CustomAttributes;
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -80,6 +81,10 @@ public class ThirdPersonController : MonoBehaviour
     [Title("Animation")]
     [SerializeField] private Animator m_animator;
     [SerializeField] private AnimationEventReciever m_animationEventReciever;
+
+    [Title("Visual Effect")]
+    [SerializeField] private VisualEffect m_dustTrail;
+    [SerializeField] private VisualEffect m_dustJump;
 
 
     // cinemachine
@@ -316,6 +321,7 @@ public class ThirdPersonController : MonoBehaviour
 
 
                 m_animator.SetBool(m_animIDJump, true);
+                m_dustJump.SendEvent("PlayDustJump");
             }
         }
         else
@@ -389,6 +395,7 @@ public class ThirdPersonController : MonoBehaviour
                 var index = Random.Range(0, m_footstepAudioClips.Length);
                 AudioSource.PlayClipAtPoint(m_footstepAudioClips[index], transform.TransformPoint(m_controller.center), m_footstepAudioVolume);
             }
+            m_dustTrail.SendEvent("PlayDustTrail");
         }
     }
 

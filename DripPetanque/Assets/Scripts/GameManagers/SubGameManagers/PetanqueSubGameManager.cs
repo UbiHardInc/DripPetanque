@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityUtility.CustomAttributes;
 using UnityUtility.SceneReference;
@@ -24,6 +23,7 @@ public class PetanqueSubGameManager : SubGameManager
 
     [SerializeField] private SceneTransitioner m_petanqueSceneLoader;
     [SerializeField] private ResultDisplay m_resultDisplay;
+    [SerializeField] private BonusTutoDisplay m_bonusTutoDisplay;
     [SerializeField] private TurnChangeDisplay m_turnChangeDisplay;
     [SerializeField] private ScoreDisplay m_scoreDisplayUI;
     [SerializeField] private GameObject m_invertedRulesText;
@@ -39,6 +39,8 @@ public class PetanqueSubGameManager : SubGameManager
     [NonSerialized] private BasePetanquePlayer m_currentPlayer;
     [NonSerialized] private int m_currentRound;
 
+    [NonSerialized] private PetanquePlayerType m_winningPlayerType;
+
     // Petanque Scene's data
     [NonSerialized] private PetanqueGameSettings m_gameSettings;
     [NonSerialized] private List<BasePetanquePlayer> m_players;
@@ -47,12 +49,15 @@ public class PetanqueSubGameManager : SubGameManager
     [NonSerialized] private bool m_invertDistances;
     [NonSerialized] private Comparison<float> m_currentDistanceComparer;
 
+    [NonSerialized] private bool m_bonusTutoHasBeenDisplayed = false;
+
     public override void BeginState(GameState previousState)
     {
         base.BeginState(previousState);
         m_petanqueSceneDatas.OnDatasFilled += OnPetanqueDatasFilled;
 
         m_gameSettings = GetGameSettings();
+        m_sharedDatas.NextPetanqueGameSettings = null;
         m_petanqueSceneLoader.SetScene(m_gameSettings.PetanqueScene);
 
         m_petanqueSceneLoader.StartLoadTransition(fadeIn: true, fadeOut: false);
@@ -75,6 +80,7 @@ public class PetanqueSubGameManager : SubGameManager
     {
         if (m_sharedDatas.NextPetanqueGameSettings == null)
         {
+            Debug.LogError("No PetanqueGameSettings in the shared datas");
             return m_defaultGameSettings;
         }
         return m_sharedDatas.NextPetanqueGameSettings;
@@ -110,7 +116,15 @@ public class PetanqueSubGameManager : SubGameManager
         m_jack.position = field.JackPosition.position;
 
         ResetGame();
-        StartRound();
+        if (!m_bonusTutoHasBeenDisplayed)
+        {
+            DisplayBonusTuto();
+        }
+        else
+        {
+            StartRound(); 
+        }
+        
     }
 
     private void ResetGame()
@@ -223,8 +237,9 @@ public class PetanqueSubGameManager : SubGameManager
 
     private void DisplayGameResult(BasePetanquePlayer gameWinner)
     {
-
         Debug.LogError($"{gameWinner.PlayerName} won the game with {gameWinner.CurrentScore} points");
+
+        m_winningPlayerType = gameWinner.PlayerType;
 
         GameResultDatas result = new GameResultDatas()
         {
@@ -234,6 +249,12 @@ public class PetanqueSubGameManager : SubGameManager
         };
 
         m_resultDisplay.DisplayGameResult(result, UnloadScene);
+    }
+
+    private void DisplayBonusTuto()
+    {
+        m_bonusTutoDisplay.DislayBonusTuto(StartRound);
+        m_bonusTutoHasBeenDisplayed = true;
     }
 
     private void UnloadScene()
@@ -254,7 +275,7 @@ public class PetanqueSubGameManager : SubGameManager
         m_petanqueSceneLoader.OnFadeInOver -= EndPetanqueState;
         ReactivateMainScene?.Invoke();
 
-        m_requestedGameState = m_gameSettings.ExitGameState;
+        m_requestedGameState = m_gameSettings.GetNextStateDatas(m_winningPlayerType).ApplyDatas(m_sharedDatas);
     }
 
     private void OnBallStopped(Ball ball)

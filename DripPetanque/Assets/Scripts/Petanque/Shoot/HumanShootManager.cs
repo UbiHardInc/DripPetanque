@@ -17,6 +17,7 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
 
     [Title("Zenithal View")]
     [SerializeField] private CinemachineVirtualCamera m_zenithalCamera;
+    [SerializeField] private RectTransform m_shootUI;
 
     // Zenithal View
     [NonSerialized] private bool m_zenithalViewEnabled = false;
@@ -103,6 +104,10 @@ public class HumanShootManager : BaseShootManager<HumanShootStep, ControllableBa
     private void ToggleZenithalView()
     {
         m_zenithalViewEnabled ^= true;
+
+        // Pauses shoot
+        m_shootUI.gameObject.SetActive(!m_zenithalViewEnabled);
+        m_allSteps[m_currentStep].Pause(m_zenithalViewEnabled);
 
         CinemachineVirtualCamera cameraToSwitchTo = m_zenithalViewEnabled ? m_zenithalCamera : m_allSteps[m_currentStep].CameraPosition;
 
