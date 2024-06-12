@@ -146,6 +146,8 @@ public class PetanqueSubGameManager : SubGameManager
     {
         m_players.ForEach(player => player.ResetForGame());
         ResetRound();
+
+        m_resultDisplay.ResetPanel();
     }
 
     private void StartRound()
