@@ -124,8 +124,11 @@ MonoBehaviour:
   bumpColor: {r: 1, g: 0, b: 0, a: 0}
   forceMode: 2
   m_vfxBump: {fileID: 9035745687510235477}
+  transformsToShake:
+  - {fileID: 8157324631476224686}
+  - {fileID: 5943694060064402073}
   shakeDuration: 0.2
-  shakeStrenght: 1.5
+  shakeStrenght: {x: 0, y: 1.5, z: 1.5}
   shakeVibrato: 3
 --- !u!114 &6083017622128252841
 MonoBehaviour:

@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.VFX;
 using UnityUtility.CustomAttributes;
 using DG.Tweening;
+using UnityUtility.Utils;
+using System.Linq;
+using System.Collections.Generic;
 
 public class Bumper : MonoBehaviour
 {
@@ -12,9 +15,11 @@ public class Bumper : MonoBehaviour
     public ForceMode forceMode = ForceMode.VelocityChange;
     [Title ("Visual effect")]
     [SerializeField] private VisualEffect m_vfxBump;
+    [SerializeField] private Transform[] transformsToShake;
     public float shakeDuration;
-    public float shakeStrenght;
+    public Vector3 shakeStrenght;
     public int shakeVibrato;
+    private IEnumerable<Tween> m_shakes;
 
     public void OnCollisionEnter(Collision collision)
     {
@@ -25,7 +30,7 @@ public class Bumper : MonoBehaviour
             //_ = StartCoroutine(ChangeOnBump());
             m_vfxBump.transform.position = collision.transform.position;
             m_vfxBump.SendEvent("PlayBumpEffect");
-            transform.DOShakeScale(shakeDuration, shakeStrenght, shakeVibrato, 90f, true);
+            ShakeTransforms();
             SpriteRandom.Instance.FlashSprite();
             SoundManager.Instance.PlayUISFX("bumper");
             Debug.Log("Bumped!");
@@ -49,5 +54,15 @@ public class Bumper : MonoBehaviour
         
         matPro.SetColor(basecolor,lastColor);
         meshCollider.SetPropertyBlock(matPro);
+    }
+
+    private void ShakeTransforms()
+    {
+        if (m_shakes != null)
+        {
+            m_shakes.ForEach(tween => { if (tween != null) { tween.Complete(); } });
+        }
+        m_shakes = transformsToShake.Select(transform => transform.DOShakeScale(shakeDuration, shakeStrenght, shakeVibrato, 90f, true)).ToArray();
+        
     }
 }
