@@ -28,10 +28,13 @@ public class ExplosionBonus : BonusBase
     {
         m_explosionEffect.transform.position = m_ballTransform.position;
 
+        Collider ballCollider = m_ballTransform.GetComponent<Collider>();
+
         Collider[] colliders = Physics.OverlapSphere(m_ballTransform.position, m_explosionRadius, m_whatIsBall);
 
         foreach (Collider collider in colliders)
         {
+            if (collider == ballCollider) { continue; }
             collider.GetComponent<Rigidbody>().AddExplosionForce(m_explosionForce, m_ballTransform.position, m_explosionRadius);
         }
         //m_explosionEffect.SendEvent("PlayExplosionRing");
