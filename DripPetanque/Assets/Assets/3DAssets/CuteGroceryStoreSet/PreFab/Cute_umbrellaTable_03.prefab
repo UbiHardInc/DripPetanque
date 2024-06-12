@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5974073816081399395}
   - component: {fileID: 131911779817456282}
   - component: {fileID: 4407227039650077009}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cute_umbrellaTable_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}

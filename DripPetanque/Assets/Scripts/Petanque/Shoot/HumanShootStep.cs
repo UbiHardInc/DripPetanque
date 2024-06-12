@@ -37,14 +37,19 @@ public class HumanShootStep : BaseShootStep
     [NonSerialized] private Transform m_arrow;
 
     [NonSerialized] private Vector3 m_startScaleOrRotation;
+    [NonSerialized] private bool m_isPaused;
 
     public void Init(Transform arrow)
     {
         m_currentState = StepState.NotStarted;
         m_arrow = arrow;
+
         VirtualCamerasManager.RegisterCamera(m_cameraPosition);
+
         m_gauge.transform.parent.gameObject.SetActive(false);
         m_infoPanel.Activate(false);
+
+        m_isPaused = false;
     }
 
     public override void Start()
@@ -58,6 +63,11 @@ public class HumanShootStep : BaseShootStep
 
     public override void Update(float deltaTime)
     {
+        if (m_isPaused)
+        {
+            return;
+        }
+
         switch (m_currentState)
         {
             case StepState.NotStarted:
@@ -107,6 +117,24 @@ public class HumanShootStep : BaseShootStep
     public override void Reset()
     {
         base.Reset();
+        m_isPaused = false;
+    }
+
+    public void Pause(bool pause)
+    {
+        m_isPaused = pause;
+
+        if (m_currentState == StepState.Gauge)
+        {
+            if (pause)
+            {
+                m_validateInput.action.performed -= OnValidateInput;
+            }
+            else
+            {
+                m_validateInput.action.performed += OnValidateInput;
+            }
+        }
     }
 
     private void MoveCamera(float deltaTime)

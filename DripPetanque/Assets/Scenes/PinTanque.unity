@@ -2701,6 +2701,11 @@ PrefabInstance:
       objectReference: {fileID: 418823538}
     - target: {fileID: 2302866037900239050, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
+      propertyPath: m_shootUI
+      value: 
+      objectReference: {fileID: 1191470453154843847}
+    - target: {fileID: 2302866037900239050, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
       propertyPath: m_controllerUI
       value: 
       objectReference: {fileID: 1191470453154843848}
