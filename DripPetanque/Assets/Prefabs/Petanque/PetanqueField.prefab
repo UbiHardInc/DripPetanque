@@ -702,8 +702,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_effectDirection: {x: 0, y: -0.09, z: 1}
-  m_effectForce: 7
-  m_maxBallSpeed: 7
+  m_effectForce: 9
+  m_maxBallSpeed: 9
   m_ballLayer: 8
 --- !u!1 &3454988221667712740
 GameObject:

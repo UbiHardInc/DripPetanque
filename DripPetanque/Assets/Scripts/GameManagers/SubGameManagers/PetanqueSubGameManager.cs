@@ -23,6 +23,7 @@ public class PetanqueSubGameManager : SubGameManager
 
     [SerializeField] private SceneTransitioner m_petanqueSceneLoader;
     [SerializeField] private ResultDisplay m_resultDisplay;
+    [SerializeField] private BonusTutoDisplay m_bonusTutoDisplay;
     [SerializeField] private TurnChangeDisplay m_turnChangeDisplay;
     [SerializeField] private ScoreDisplay m_scoreDisplayUI;
     [SerializeField] private GameObject m_invertedRulesText;
@@ -47,6 +48,8 @@ public class PetanqueSubGameManager : SubGameManager
 
     [NonSerialized] private bool m_invertDistances;
     [NonSerialized] private Comparison<float> m_currentDistanceComparer;
+
+    [NonSerialized] private bool m_bonusTutoHasBeenDisplayed = false;
 
     public override void BeginState(GameState previousState)
     {
@@ -113,7 +116,15 @@ public class PetanqueSubGameManager : SubGameManager
         m_jack.position = field.JackPosition.position;
 
         ResetGame();
-        StartRound();
+        if (!m_bonusTutoHasBeenDisplayed)
+        {
+            DisplayBonusTuto();
+        }
+        else
+        {
+            StartRound(); 
+        }
+        
     }
 
     private void ResetGame()
@@ -238,6 +249,12 @@ public class PetanqueSubGameManager : SubGameManager
         };
 
         m_resultDisplay.DisplayGameResult(result, UnloadScene);
+    }
+
+    private void DisplayBonusTuto()
+    {
+        m_bonusTutoDisplay.DislayBonusTuto(StartRound);
+        m_bonusTutoHasBeenDisplayed = true;
     }
 
     private void UnloadScene()
