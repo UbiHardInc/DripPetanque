@@ -4362,6 +4362,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_messageToShow: START DIALOGUE
   m_dialogueToLaunch: {fileID: 11400000, guid: e6654a03a4d5d574a82c3ddc24b2e9e9, type: 2}
+  m_transformsToRotate: []
+  m_rotationDuration: 1
+  m_changeState: 0
+  m_controlState: {fileID: 0}
+  m_talingState: 0
 --- !u!43 &520764294
 Mesh:
   m_ObjectHideFlags: 0
@@ -17225,6 +17230,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1559917803}
+    - target: {fileID: 2719451535339535931, guid: 8705b2d39716fe447ae5c6dec4722abc,
+        type: 3}
+      propertyPath: m_cinematicToLaunch
+      value: 
+      objectReference: {fileID: 765428589}
     - target: {fileID: 2752231176317569107, guid: 8705b2d39716fe447ae5c6dec4722abc,
         type: 3}
       propertyPath: m_Mesh
@@ -17480,6 +17490,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 34410301}
+    - target: {fileID: 6596081520933618985, guid: 8705b2d39716fe447ae5c6dec4722abc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6784905775480230108, guid: 8705b2d39716fe447ae5c6dec4722abc,
         type: 3}
       propertyPath: m_Mesh
@@ -18381,6 +18396,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_messageToShow: START CINEMATIC
   m_cinematicToLaunch: {fileID: 765428589}
+  m_dialogueToStart: {fileID: 0}
+  m_transformsToRotate: []
+  m_rotationDuration: 1
 --- !u!43 &2127344356
 Mesh:
   m_ObjectHideFlags: 0
