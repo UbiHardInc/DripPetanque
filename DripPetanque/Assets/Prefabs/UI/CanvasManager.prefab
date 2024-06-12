@@ -5290,8 +5290,14 @@ MonoBehaviour:
     type: 3}
   m_text: {fileID: 871324139341088994}
   m_scorePanelLayout: {fileID: 598257479909404523}
-  m_scorePanelPrefab: {fileID: 3965233731381568321, guid: 6b52dc733b1fe104aaa26e8bda40177a,
-    type: 3}
+  m_scorePanelPrefabs:
+    m_keyValuePairsList:
+    - Key: 1
+      Value: {fileID: 3965233731381568321, guid: fc785c3f095c3ae48aacbf572270f46c,
+        type: 3}
+    - Key: 2
+      Value: {fileID: 3965233731381568321, guid: 6b52dc733b1fe104aaa26e8bda40177a,
+        type: 3}
 --- !u!1 &5378596146131097142
 GameObject:
   m_ObjectHideFlags: 0
