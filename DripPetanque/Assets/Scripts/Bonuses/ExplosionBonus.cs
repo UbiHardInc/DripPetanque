@@ -43,6 +43,7 @@ public class ExplosionBonus : BonusBase
         //m_explosionEffect.SendEvent("PlayExplosionCone");
         //m_explosionEffect.Play();
         m_explosionEffect.SendEvent("PlayExplosion");
+        SoundManager.Instance.PlayUISFX("bomb");
     }
 
     private void OnDrawGizmos()

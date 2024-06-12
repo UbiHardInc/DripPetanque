@@ -30,3 +30,5 @@ MonoBehaviour:
       Value: {fileID: 8300000, guid: d0c73784296bb6a468139ebb34136d55, type: 3}
     - Key: bonus
       Value: {fileID: 8300000, guid: 42573d3652c5cc842a1edf66f2096b69, type: 3}
+    - Key: bomb
+      Value: {fileID: 8300000, guid: a4dc5af328e94a442b1bd4d4f8a48b77, type: 3}
