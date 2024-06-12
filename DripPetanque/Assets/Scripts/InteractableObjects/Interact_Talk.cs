@@ -13,6 +13,11 @@ public class Interact_Talk : InteractableObject
     [SerializeField] private Transform[] m_transformsToRotate;
     [SerializeField] private float m_rotationDuration = 1.0f;
 
+    [Title("Animation")]
+    [SerializeField] private bool m_changeState;
+    [SerializeField] private NPCAnimationControlState m_controlState;
+    [SerializeField] private NPCAnimationControlState.StateSwitcher m_talingState;
+
     public override string GetInteractionMessage()
     {
         return m_messageToShow;
@@ -21,6 +26,11 @@ public class Interact_Talk : InteractableObject
     public override void Interact(PlayerController playerController)
     {
         GameManager.Instance.ExplorationSubGameManager.StartDialogue(m_dialogueToLaunch);
+
+        if (m_changeState)
+        {
+            m_controlState.StateSwitch(m_talingState);
+        }
 
         if (m_transformsToRotate.Length > 0)
         {

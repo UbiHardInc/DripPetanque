@@ -5,6 +5,8 @@ public class DialogueSubGameManager : SubGameManager
 {
     public override GameState CorrespondingState => GameState.Dialogue;
 
+    public event Action OnDialogueEndedEvent;
+
     [SerializeField] private DialogueManager m_dialogueManager;
 
     [NonSerialized] private DialogueData m_currentDialogue;
@@ -29,6 +31,8 @@ public class DialogueSubGameManager : SubGameManager
 
     private void OnDialogueEnded()
     {
+        OnDialogueEndedEvent?.Invoke();
+
         m_dialogueManager.OnDialogueEnded -= OnDialogueEnded;
 
         if (m_currentDialogue.NextStateDatas.NextGameState == GameState.None)
