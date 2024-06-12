@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: DefaultSettings
   m_EditorClassIdentifier: 
   m_petanqueScene:
-    m_sceneAsset: {fileID: 102900000, guid: 61ff70244328ea94c84a576ad0142533, type: 3}
-    m_scenePath: Assets/Scenes/TutoPetanque.unity
+    m_sceneAsset: {fileID: 102900000, guid: accedf7b4563ef44d88166d2daffeeeb, type: 3}
+    m_scenePath: Assets/Scenes/ClassicPetanque.unity
   m_ballsPerGame: 3
-  m_pointsToWin: 3
+  m_pointsToWin: 13
   m_humanWonNextStateDatas:
     m_nextGameState: 4
     m_dialogueToStart: {fileID: 0}

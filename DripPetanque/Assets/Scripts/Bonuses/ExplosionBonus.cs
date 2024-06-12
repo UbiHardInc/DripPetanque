@@ -8,14 +8,16 @@ public class ExplosionBonus : BonusBase
     [SerializeField] private float m_explosionRadius;
     [SerializeField] private float m_explosionForce;
     [SerializeField] private VisualEffect m_explosionEffect;
+    [SerializeField] private float m_explosionDelay = 2.0f;
 
     [NonSerialized] private Transform m_ballTransform;
 
-    public override void OnBallStop()
+    public override float OnBallStop()
     {
-        base.OnBallStop();
+        _ = base.OnBallStop();
 
         Explose();
+        return m_explosionDelay;
     }
 
     public override void OnBonusAttached(Transform ballTransform)

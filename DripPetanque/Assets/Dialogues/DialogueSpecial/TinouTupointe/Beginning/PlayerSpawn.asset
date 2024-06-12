@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15abe0ae04ab1cc4cae44a8012b8d8d6, type: 3}
+  m_Name: PlayerSpawn
+  m_EditorClassIdentifier: 
+  sentenceDisplayStyle: 1
+  transitionStartTime: 0.5
+  transitionEndTime: 0.5
+  typingDelay: 0.02
+  sentenceDatas:
+  - isSkippable: 0
+    NPCName: Tinou Tupointe
+    NPCSprite: {fileID: 0}
+    sentence: Hello young one, happy eighteenth anniversary!
+    showData: 0
+    audioClipData:
+      audioClip: {fileID: 0}
+      audioLoop: 0
+      startType: 0
+      fadeInTime: 0
+      delay: 0
+      stopType: 0
+      fadeOutTime: 0
+      maxVolume: 0
+      showaudioClipElements: 0
+    showSfxElements: 0
+    withSFX: 0
+    typingIsComplete: 1
+    withCustomEvent: 0
+    startOfEvent: 0
+    eventIDToLaunch:
+      m_iD: 
+  - isSkippable: 0
+    NPCName: Tinou Tupointe
+    NPCSprite: {fileID: 0}
+    sentence: To gain your rightful place in the Neo Massilian Society you must learn
+      the WAY of the PETANQUE
+    showData: 0
+    audioClipData:
+      audioClip: {fileID: 0}
+      audioLoop: 0
+      startType: 0
+      fadeInTime: 0
+      delay: 0
+      stopType: 0
+      fadeOutTime: 0
+      maxVolume: 0
+      showaudioClipElements: 0
+    showSfxElements: 0
+    withSFX: 0
+    typingIsComplete: 1
+    withCustomEvent: 0
+    startOfEvent: 0
+    eventIDToLaunch:
+      m_iD: 
+  - isSkippable: 0
+    NPCName: Tinou Tupointe
+    NPCSprite: {fileID: 0}
+    sentence: I will teach you the basics, meet me near the last tree on the Bernard
+      Carpet Place
+    showData: 0
+    audioClipData:
+      audioClip: {fileID: 0}
+      audioLoop: 0
+      startType: 0
+      fadeInTime: 0
+      delay: 0
+      stopType: 0
+      fadeOutTime: 0
+      maxVolume: 0
+      showaudioClipElements: 0
+    showSfxElements: 0
+    withSFX: 0
+    typingIsComplete: 1
+    withCustomEvent: 0
+    startOfEvent: 0
+    eventIDToLaunch:
+      m_iD: 
+  nbSentences: 3
+  showDialogueElements: 1
+  textType: 1
+  IsCinematicDialogue: 0
+  NextStateDatas:
+    m_nextGameState: 4
+    m_dialogueToStart: {fileID: 0}
+    m_petanqueGameToStart: {fileID: 0}

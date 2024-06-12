@@ -285,11 +285,16 @@ MonoBehaviour:
     type: 2}
   m_petanqueSceneLoader: {fileID: 7162645624520431926}
   m_resultDisplay: {fileID: 0}
+  m_bonusTutoDisplay: {fileID: 0}
   m_turnChangeDisplay: {fileID: 0}
   m_scoreDisplayUI: {fileID: 0}
+  m_invertedRulesText: {fileID: 0}
   m_crowdReactionProbability: 1
+  m_reactionSoundDelay: 1
   m_defaultGameSettings: {fileID: 11400000, guid: 43a5056ccb4b29044821e1fa3015a879,
     type: 2}
+  m_winGameInput: {fileID: 5362482229080128720, guid: 462a9b2de1b64484aa61d3a207013de5,
+    type: 3}
 --- !u!1 &6521977095962087902
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,7 +514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda631e5ee6e6e440bce9d6583a7e9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainVolume: {fileID: 0}
   m_cinematicsSubGameManager: {fileID: 6414406314130020103}
   m_dialogueSubGameManager: {fileID: 3707578762293871561}
   m_explorationSubGameManager: {fileID: 8531854692067118445}
@@ -519,7 +523,7 @@ MonoBehaviour:
   m_startScene:
     m_sceneAsset: {fileID: 102900000, guid: cf506317541d0b141b9613af853298fc, type: 3}
     m_scenePath: Assets/Scenes/MainMenu.unity
-  m_startState: 2
+  m_startState: 5
   m_mainCamera: {fileID: 7564619528680852679}
   m_actionAsset: {fileID: -944628639613478452, guid: 462a9b2de1b64484aa61d3a207013de5,
     type: 3}

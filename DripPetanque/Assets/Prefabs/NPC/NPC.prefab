@@ -68,6 +68,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_messageToShow: Talk
   m_dialogueToLaunch: {fileID: 0}
+  m_transformsToRotate:
+  - {fileID: 7518653823269700488}
+  m_rotationDuration: 1
+  m_changeState: 1
+  m_controlState: {fileID: 3267615184228681451}
+  m_talingState: 0
 --- !u!1 &3053019690526221406
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +271,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7e4dbe54b356aa41b0632bb65c65d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 0
+  m_state: 4
+  m_resetOnDialogueEnd: 1
 --- !u!65 &4775419021234271064
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -285,8 +292,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.374826, y: 1.7168413, z: 0.26231045}
-  m_Center: {x: -0.0013505518, y: 0.8644611, z: -0.0394264}
+  m_Size: {x: 0.374826, y: 20.830444, z: 0.26231045}
+  m_Center: {x: -0.0013505518, y: 10.421263, z: -0.0394264}
 --- !u!4 &5520936769026661936 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 05a29251e6254df4aa66e3f614b78fd5,

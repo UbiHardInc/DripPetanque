@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityUtility.CustomAttributes;
 using UnityUtility.SceneReference;
 using UnityUtility.Utils;
@@ -28,10 +30,15 @@ public class PetanqueSubGameManager : SubGameManager
     [SerializeField] private ScoreDisplay m_scoreDisplayUI;
     [SerializeField] private GameObject m_invertedRulesText;
 
+    [Title("Crowd Reaction")]
     [SerializeField] private float m_crowdReactionProbability = 0.25f;
+    [SerializeField] private float m_reactionSoundDelay = 1.0f;
 
     [Title("Default values")]
     [SerializeField] private PetanqueGameSettings m_defaultGameSettings;
+
+    [Title("Cheats")]
+    [SerializeField] private InputActionReference m_winGameInput;
 
     // Thrown balls
     [NonSerialized] private readonly List<Ball> m_allBalls = new List<Ball>();
@@ -62,6 +69,12 @@ public class PetanqueSubGameManager : SubGameManager
 
         m_petanqueSceneLoader.StartLoadTransition(fadeIn: true, fadeOut: false);
         m_petanqueSceneLoader.OnTransitionEnd += OnSceneLoaded;
+
+    }
+
+    private void OnWinGameInputPerformed(InputAction.CallbackContext context)
+    {
+        UnloadScene();
     }
 
     public void InvertDistances()
@@ -107,6 +120,8 @@ public class PetanqueSubGameManager : SubGameManager
     #region Petanque GameLoop
     private void StartPetanque(PetanqueField field)
     {
+        m_winGameInput.action.performed += OnWinGameInputPerformed;
+
         foreach (BasePetanquePlayer player in m_players)
         {
             player.Init();
@@ -144,7 +159,6 @@ public class PetanqueSubGameManager : SubGameManager
     private void OnPlayerThownBall(Ball ball)
     {
         m_allBalls.Add(ball);
-        ball.OnBallStopped += OnBallStopped;
 
         OnBallLauched?.Invoke(false);
     }
@@ -153,7 +167,7 @@ public class PetanqueSubGameManager : SubGameManager
     {
         if (m_currentPlayer != null)
         {
-            m_currentPlayer.OnShootOver -= NextTurn;
+            m_currentPlayer.OnShootOver -= OnPlayerShootOver;
         }
 
         if (m_players.Sum(player => player.ThownBallsCount) == m_players.Count * m_gameSettings.BallsPerRounds)
@@ -177,8 +191,20 @@ public class PetanqueSubGameManager : SubGameManager
 
     private void OnDisplayTurnOver()
     {
-        m_currentPlayer.OnShootOver += NextTurn;
+        m_currentPlayer.OnShootOver += OnPlayerShootOver;
         m_currentPlayer.StartShoot();
+    }
+
+    private void OnPlayerShootOver(Ball thrownBall)
+    {
+        if (PlayReactionSound(thrownBall))
+        {
+            _ = StartCoroutine(DelayCoroutine(m_reactionSoundDelay, NextTurn));
+        }
+        else
+        {
+            NextTurn();
+        }
     }
 
     private void EndRound()
@@ -275,15 +301,9 @@ public class PetanqueSubGameManager : SubGameManager
         m_petanqueSceneLoader.OnFadeInOver -= EndPetanqueState;
         ReactivateMainScene?.Invoke();
 
+        m_winGameInput.action.performed += OnWinGameInputPerformed;
+
         m_requestedGameState = m_gameSettings.GetNextStateDatas(m_winningPlayerType).ApplyDatas(m_sharedDatas);
-    }
-
-    private void OnBallStopped(Ball ball)
-    {
-        PlayReactionSound(ball);
-
-        ball.OnBallStopped -= OnBallStopped;
-        NextTurn();
     }
 
     private void ResetRound()
@@ -327,16 +347,16 @@ public class PetanqueSubGameManager : SubGameManager
         return nextPlayer;
     }
 
-    private void PlayReactionSound(Ball ball)
+    private bool PlayReactionSound(Ball ball)
     {
         if (m_allBalls.Count <= m_players.Count)
         {
-            return;
+            return false;
         }
 
         if (Random.value > m_crowdReactionProbability)
         {
-            return;
+            return false;
         }
 
         int ballRank = GetBallRank(ball, BallDistanceComparison);
@@ -344,14 +364,15 @@ public class PetanqueSubGameManager : SubGameManager
         if (ballRank == 0)
         {
             SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.good);
-            return;
+            return true;
         }
 
         if (ballRank == m_allBalls.Count - 1)
         {
             SoundManager.Instance.PlayBallSounds(SoundManager.BallSFXType.bad);
-            return;
+            return true;
         }
+        return false;
     }
 
     private int GetBallRank(Ball ball, Comparison<Ball> ballsComparer)
@@ -423,6 +444,12 @@ public class PetanqueSubGameManager : SubGameManager
     private float GetBallSqrDistanceToJack(Ball b0)
     {
         return Vector3Utils.SqrDistance(b0.transform.position, m_jack.position);
+    }
+
+    public static IEnumerator DelayCoroutine(float delay, Action callback)
+    {
+        yield return new WaitForSeconds(delay);
+        callback();
     }
     #endregion
 }

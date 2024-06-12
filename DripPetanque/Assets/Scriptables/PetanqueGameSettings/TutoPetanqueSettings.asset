@@ -17,4 +17,13 @@ MonoBehaviour:
     m_scenePath: Assets/Scenes/TutoPetanque.unity
   m_ballsPerGame: 3
   m_pointsToWin: 3
-  m_exitState: 4
+  m_humanWonNextStateDatas:
+    m_nextGameState: 1
+    m_dialogueToStart: {fileID: 11400000, guid: ca22e20f2ff6f624fb34e81182770fd8,
+      type: 2}
+    m_petanqueGameToStart: {fileID: 0}
+  m_humanLostNextStateDatas:
+    m_nextGameState: 1
+    m_dialogueToStart: {fileID: 11400000, guid: ca22e20f2ff6f624fb34e81182770fd8,
+      type: 2}
+    m_petanqueGameToStart: {fileID: 0}

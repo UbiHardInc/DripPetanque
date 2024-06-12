@@ -311,6 +311,15 @@
                     "processors": "",
                     "interactions": "HoldAndRelease",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "AutoWinGame",
+                    "type": "Button",
+                    "id": "43deec1e-7eb4-48a3-bcaf-5feac0971bc1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -454,6 +463,17 @@
                     "processors": "",
                     "groups": "Xbox",
                     "action": "ZenithalView",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0443a375-e804-4445-a1a1-4a6aa3605e49",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AutoWinGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

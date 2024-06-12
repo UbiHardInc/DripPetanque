@@ -9591,6 +9591,7 @@ MonoBehaviour:
       Value: {fileID: 8474413847900818464}
     - Key: 5
       Value: {fileID: 6471759065335393010}
+  InfoPanel: {fileID: 1714330571735406968}
 --- !u!114 &1919106123056625708
 MonoBehaviour:
   m_ObjectHideFlags: 0

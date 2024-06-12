@@ -2020,6 +2020,21 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 69
       objectReference: {fileID: 0}
+    - target: {fileID: 4742589595379569686, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742589595379569686, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742589595379569686, guid: dac6cde55f52ef64e8ff1984642d5f07,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4921384732683888993, guid: dac6cde55f52ef64e8ff1984642d5f07,
         type: 3}
       propertyPath: m_LocalPosition.y
