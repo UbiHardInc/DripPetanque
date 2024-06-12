@@ -883,6 +883,7 @@ MonoBehaviour:
   m_textureDissolveTime: 6.5
   m_dissolveMaterial: {fileID: 2100000, guid: db4c94adf401b154fb67d8ab1ef7e062, type: 2}
   m_playableDirector: {fileID: 92960863}
+  m_cinematicNeeded: 0
 --- !u!4 &217178860
 Transform:
   m_ObjectHideFlags: 0
@@ -3652,6 +3653,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1655046814}
+    - target: {fileID: 1643950534886627822, guid: 7afd78c4c7f802e4f84c6b069980b466,
+        type: 3}
+      propertyPath: m_velocityMultiplier
+      value: 0.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643950534886627822, guid: 7afd78c4c7f802e4f84c6b069980b466,
+        type: 3}
+      propertyPath: m_angularVelocityMultiplier
+      value: 0.97
+      objectReference: {fileID: 0}
     - target: {fileID: 2881764626303571544, guid: 7afd78c4c7f802e4f84c6b069980b466,
         type: 3}
       propertyPath: m_Mesh
@@ -3801,6 +3812,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9044958042199263075, guid: 7afd78c4c7f802e4f84c6b069980b466,
+        type: 3}
+      propertyPath: m_releaseBallProgress
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 9194037154218144821, guid: 7afd78c4c7f802e4f84c6b069980b466,
         type: 3}
