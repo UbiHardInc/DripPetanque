@@ -15,7 +15,7 @@ MonoBehaviour:
   SoundAudioClips:
     m_keyValuePairsList:
     - Key: move
-      Value: {fileID: 8300000, guid: da406cb6b765ae8419ff028745dda39e, type: 3}
+      Value: {fileID: 8300000, guid: 7299be37bc244ef4a99f3749ab3df5fa, type: 3}
     - Key: submit
       Value: {fileID: 8300000, guid: 4c1e4ec4682df9f46871d76372f5eb1b, type: 3}
     - Key: cancel

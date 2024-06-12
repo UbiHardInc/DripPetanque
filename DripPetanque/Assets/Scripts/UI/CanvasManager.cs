@@ -5,6 +5,7 @@ using UnityUtility.Singletons;
 public class CanvasManager : MonoBehaviourSingleton<CanvasManager>
 {
     [SerializeField] private SerializedDictionary<GameState, RectTransform> m_gameStateSpecificUIs;
+    public RectTransform InfoPanel;
 
     protected override void Start()
     {

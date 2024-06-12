@@ -585,6 +585,7 @@ MonoBehaviour:
   m_textureDissolveTime: 7
   m_dissolveMaterial: {fileID: 2100000, guid: db4c94adf401b154fb67d8ab1ef7e062, type: 2}
   m_playableDirector: {fileID: 92960863}
+  m_cinematicNeeded: 0
 --- !u!4 &217178860
 Transform:
   m_ObjectHideFlags: 0
@@ -1359,6 +1360,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 762988442}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &762988444 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1057733012485710665, guid: fd57de9b2ec6ae646a9db776a85827ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 762988442}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b07817a540317488bc53ee9fe71c61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &937426188
 GameObject:
   m_ObjectHideFlags: 3
@@ -2649,6 +2662,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 230855818707062648, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
+    - target: {fileID: 296447112178879820, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
+    - target: {fileID: 499235373211493133, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 636996392216185849, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
@@ -2659,6 +2687,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1199233723}
+    - target: {fileID: 803191884637012574, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 1001844553905203886, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
@@ -2674,6 +2707,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2029433160}
+    - target: {fileID: 1415675814038556946, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
+    - target: {fileID: 1761042592494016509, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 1819918661246069729, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
@@ -2729,6 +2772,21 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1959979462}
+    - target: {fileID: 2517971764728974434, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
+    - target: {fileID: 2721671573109125329, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
+    - target: {fileID: 2727321383214633576, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 2843208107040231965, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
@@ -2739,6 +2797,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1432039018}
+    - target: {fileID: 2935017944575587986, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
+    - target: {fileID: 3062730639573972712, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 3131245976430038107, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
@@ -2749,6 +2817,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1199233723}
+    - target: {fileID: 3508970132259069606, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 3619479959679689399, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
@@ -2759,6 +2832,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 470099690}
+    - target: {fileID: 4164202848798628345, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 4243196900185386051, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
@@ -2769,11 +2847,26 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1155898191}
+    - target: {fileID: 5226173152769213892, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 5340142366443126632, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2029433160}
+    - target: {fileID: 5955584029912374143, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
+    - target: {fileID: 5957134510078465521, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 6179955863284098876, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
@@ -2834,11 +2927,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7173027731175053046, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 7264981953413321737, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1959979462}
+    - target: {fileID: 7283642969246038557, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 7313170877869895887, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
@@ -2849,16 +2952,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: ===Petanque===
       objectReference: {fileID: 0}
+    - target: {fileID: 7975578387800628539, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 8011468458594012786, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1155898191}
+    - target: {fileID: 8041440805269787395, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 8309338043818574281, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1722832718}
+    - target: {fileID: 8402157569479123558, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
+    - target: {fileID: 8457263226005496335, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
+    - target: {fileID: 8677021960471609734, guid: 2b512a14d9b27de4aa929fd4328df7d1,
+        type: 3}
+      propertyPath: m_spriteRandom
+      value: 
+      objectReference: {fileID: 762988444}
     - target: {fileID: 8946131364463739614, guid: 2b512a14d9b27de4aa929fd4328df7d1,
         type: 3}
       propertyPath: m_Mesh

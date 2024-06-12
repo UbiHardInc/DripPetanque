@@ -6,7 +6,7 @@ public abstract class BasePetanquePlayer : MonoBehaviour
 {
     // Events
     public abstract event Action<Ball> OnBallThrown;
-    public abstract event Action OnShootOver;
+    public abstract event Action<Ball> OnShootOver;
 
     public abstract PetanquePlayerType PlayerType { get; }
     public abstract string PlayerName { get; }
