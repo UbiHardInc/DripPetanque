@@ -1120,7 +1120,7 @@ MonoBehaviour:
   m_forceStep:
     m_data: {fileID: 11400000, guid: 73a30ca34739af24a9d1d162ce7915d7, type: 2}
     m_gauge: {fileID: 0}
-    m_cameraPosition: {fileID: 2916679314852821243}
+    m_cameraPosition: {fileID: 8246516198897435030}
     m_camTransitionTime: 1
     m_validateInput: {fileID: -6589083956231380857, guid: 462a9b2de1b64484aa61d3a207013de5,
       type: 3}
