@@ -7370,6 +7370,12 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1593570809}
+    - target: {fileID: 1984586065756848635, guid: a6c7e0db988677b4ab5b0b17629dd692,
+        type: 3}
+      propertyPath: m_dialogueToLaunch
+      value: 
+      objectReference: {fileID: 11400000, guid: 215538fc9746a3140973935460c291e3,
+        type: 2}
     - target: {fileID: 2066114844391700914, guid: a6c7e0db988677b4ab5b0b17629dd692,
         type: 3}
       propertyPath: m_Mesh
