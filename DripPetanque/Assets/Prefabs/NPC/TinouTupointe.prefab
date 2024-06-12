@@ -68,6 +68,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_messageToShow: Talk to Tinou Tupointe
   m_dialogueToLaunch: {fileID: 0}
+  m_transformsToRotate:
+  - {fileID: 8926199264655569434}
+  m_rotationDuration: 1
+  m_changeState: 1
+  m_controlState: {fileID: 8801655963704712709}
+  m_talingState: 0
 --- !u!1 &5975110779762724570
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,7 +312,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7e4dbe54b356aa41b0632bb65c65d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 0
+  m_state: 4
+  m_resetOnDialogueEnd: 1
 --- !u!65 &2738607671220490838
 BoxCollider:
   m_ObjectHideFlags: 0
