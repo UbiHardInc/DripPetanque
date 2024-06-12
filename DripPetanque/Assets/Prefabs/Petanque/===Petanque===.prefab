@@ -2015,16 +2015,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 27.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4381914950740456973, guid: dac6cde55f52ef64e8ff1984642d5f07,
-        type: 3}
-      propertyPath: m_velocityMultiplier
-      value: 0.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 4381914950740456973, guid: dac6cde55f52ef64e8ff1984642d5f07,
-        type: 3}
-      propertyPath: m_angularVelocityMultiplier
-      value: 0.97
-      objectReference: {fileID: 0}
     - target: {fileID: 4414236652786986527, guid: dac6cde55f52ef64e8ff1984642d5f07,
         type: 3}
       propertyPath: m_VersionIndex

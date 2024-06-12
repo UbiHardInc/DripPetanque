@@ -53,16 +53,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 5.8
       objectReference: {fileID: 0}
-    - target: {fileID: 1643950534886627822, guid: 7afd78c4c7f802e4f84c6b069980b466,
-        type: 3}
-      propertyPath: m_velocityMultiplier
-      value: 0.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 1643950534886627822, guid: 7afd78c4c7f802e4f84c6b069980b466,
-        type: 3}
-      propertyPath: m_angularVelocityMultiplier
-      value: 0.97
-      objectReference: {fileID: 0}
     - target: {fileID: 2240953658759072215, guid: 7afd78c4c7f802e4f84c6b069980b466,
         type: 3}
       propertyPath: m_bonuses.Array.data[0]
