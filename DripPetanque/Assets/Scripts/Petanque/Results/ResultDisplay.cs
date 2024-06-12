@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityUtility.SerializedDictionary;
+using UnityUtility.Utils;
 
 public class ResultDisplay : MonoBehaviour
 {
@@ -14,10 +15,24 @@ public class ResultDisplay : MonoBehaviour
     [SerializeField] private SerializedDictionary<int, GameObject> m_scorePanelPrefabs;
 
     [NonSerialized] private Action m_resultDisplayEndCallback;
+    [NonSerialized] private List<RoundScorePanel> m_scorePanels;
 
     public void Init()
     {
         gameObject.SetActive(false);
+    }
+
+    public void ResetPanel()
+    {
+        if (m_scorePanels != null)
+        {
+            m_scorePanels.ForEach(panel => panel.gameObject.Destroy());
+            m_scorePanels.Clear();
+        }
+        else
+        {
+            m_scorePanels = new List<RoundScorePanel>();
+        }
     }
 
     public void DislayRoundResult(RoundResultDatas result, Action resultDisplayEndCallback)
@@ -70,7 +85,9 @@ public class ResultDisplay : MonoBehaviour
         {
             GameObject scorePanel = Instantiate(scorePanelPrefab, m_scorePanelLayout.transform);
 
-            scorePanel.GetComponent<RoundScorePanel>().InitializeRoundScorePanel(roundIndex, scores, winnerIndex);
+            RoundScorePanel roundScorePanel = scorePanel.GetComponent<RoundScorePanel>();
+            m_scorePanels.Add(roundScorePanel);
+            roundScorePanel.InitializeRoundScorePanel(roundIndex, scores, winnerIndex);
             return;
         }
         Debug.LogError($"No prefab to diplay the score of {playersCount} players", this);

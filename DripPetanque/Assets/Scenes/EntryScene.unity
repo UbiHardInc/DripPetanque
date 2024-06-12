@@ -662,13 +662,8 @@ PrefabInstance:
       objectReference: {fileID: 3864234717316683071}
     - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
-      propertyPath: m_startState
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
-        type: 3}
       propertyPath: m_startScene.m_scenePath
-      value: Assets/Scenes/Proto_Petanque.unity
+      value: Assets/Scenes/PinTanque.unity
       objectReference: {fileID: 0}
     - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}

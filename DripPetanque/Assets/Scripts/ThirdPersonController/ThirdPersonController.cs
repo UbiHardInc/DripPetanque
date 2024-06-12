@@ -46,6 +46,7 @@ public class ThirdPersonController : MonoBehaviour
 
     [Tooltip("The maximum number of time to do a jump in a row.")]
     [SerializeField] private int m_maxJumps = 1;
+    [SerializeField] private float m_minTimeBeforeJumpRefill = 0.5f;
 
     [Header("Player Grounded")]
     [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
@@ -97,6 +98,8 @@ public class ThirdPersonController : MonoBehaviour
     private float m_targetRotation = 0.0f;
     private float m_rotationVelocity;
     private float m_verticalVelocity;
+
+    private float m_timeBeforeJumpRefillTimer;
 
     // timeout deltatime
     private float m_jumpTimeoutDelta;
@@ -289,7 +292,12 @@ public class ThirdPersonController : MonoBehaviour
         {
             // reset the fall timeout timer
             m_fallTimeoutDelta = m_fallTimeout;
-            m_jumps = m_maxJumps;
+
+            if(m_timeBeforeJumpRefillTimer <= 0.0f)
+            {
+                m_jumps = m_maxJumps;
+            }
+
 
             m_animator.SetBool(m_animIDJump, false);
             m_animator.SetBool(m_animIDFreeFall, false);
@@ -301,6 +309,11 @@ public class ThirdPersonController : MonoBehaviour
             }
         }
 
+        if (m_timeBeforeJumpRefillTimer >= 0.0f)
+        {
+            m_timeBeforeJumpRefillTimer -= Time.deltaTime;
+        }
+
         if (m_jumps > 0)
         {
             // Jump
@@ -308,7 +321,6 @@ public class ThirdPersonController : MonoBehaviour
             {
                 m_input.Jump = false;
                 m_jumps--;
-
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 if (m_jumps != m_maxJumps)
                 {
@@ -319,6 +331,7 @@ public class ThirdPersonController : MonoBehaviour
                     m_verticalVelocity = Mathf.Sqrt(m_jumpHeight * -2f * m_gravity);
                 }
 
+                m_timeBeforeJumpRefillTimer = m_minTimeBeforeJumpRefill;
 
                 m_animator.SetBool(m_animIDJump, true);
                 m_dustJump.SendEvent("PlayDustJump");
