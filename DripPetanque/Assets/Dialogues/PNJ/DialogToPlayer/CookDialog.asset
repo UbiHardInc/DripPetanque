@@ -18,10 +18,9 @@ MonoBehaviour:
   typingDelay: 0.02
   sentenceDatas:
   - isSkippable: 0
-    NPCName: 
+    NPCName: The Cook
     NPCSprite: {fileID: 0}
-    sentence: Have you ever been to Bernard's Carpets ? It's such a mix between tradition
-      and modernity
+    sentence: If only I had enough ingredient for a Bouillabaisse.
     showData: 0
     audioClipData:
       audioClip: {fileID: 8300000, guid: 14101bfc541c0994fae8aca9be4e2082, type: 3}
@@ -40,9 +39,53 @@ MonoBehaviour:
     startOfEvent: 0
     eventIDToLaunch:
       m_iD: 
-  nbSentences: 1
+  - isSkippable: 0
+    NPCName: The Cook
+    NPCSprite: {fileID: 0}
+    sentence: With the same ingredients we can create the legendary Boule abaisse
+    showData: 0
+    audioClipData:
+      audioClip: {fileID: 8300000, guid: 14101bfc541c0994fae8aca9be4e2082, type: 3}
+      audioLoop: 0
+      startType: 0
+      fadeInTime: 0
+      delay: 0
+      stopType: 0
+      fadeOutTime: 0
+      maxVolume: 100
+      showaudioClipElements: 0
+    showSfxElements: 0
+    withSFX: 0
+    typingIsComplete: 1
+    withCustomEvent: 0
+    startOfEvent: 0
+    eventIDToLaunch:
+      m_iD: 
+  - isSkippable: 0
+    NPCName: The Cook
+    NPCSprite: {fileID: 0}
+    sentence: But this recipe was lost a long time ago
+    showData: 0
+    audioClipData:
+      audioClip: {fileID: 8300000, guid: 14101bfc541c0994fae8aca9be4e2082, type: 3}
+      audioLoop: 0
+      startType: 0
+      fadeInTime: 0
+      delay: 0
+      stopType: 0
+      fadeOutTime: 0
+      maxVolume: 100
+      showaudioClipElements: 0
+    showSfxElements: 0
+    withSFX: 0
+    typingIsComplete: 1
+    withCustomEvent: 0
+    startOfEvent: 0
+    eventIDToLaunch:
+      m_iD: 
+  nbSentences: 3
   showDialogueElements: 1
-  textType: 0
+  textType: 1
   IsCinematicDialogue: 0
   NextStateDatas:
     m_nextGameState: 4
