@@ -27,3 +27,4 @@ MonoBehaviour:
     m_dialogueToStart: {fileID: 11400000, guid: ca22e20f2ff6f624fb34e81182770fd8,
       type: 2}
     m_petanqueGameToStart: {fileID: 0}
+  m_isTutorial: 1

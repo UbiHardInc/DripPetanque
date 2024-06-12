@@ -131,7 +131,7 @@ public class PetanqueSubGameManager : SubGameManager
         m_jack.position = field.JackPosition.position;
 
         ResetGame();
-        if (!m_bonusTutoHasBeenDisplayed)
+        if (!m_bonusTutoHasBeenDisplayed && !m_gameSettings.IsTutorial)
         {
             DisplayBonusTuto();
         }
