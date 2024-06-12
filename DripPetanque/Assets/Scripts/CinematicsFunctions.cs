@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class CinematicsFunctions : MonoBehaviour
 {
+    private DialogueData m_currentDialoguePlayed;
+
     public void StartDialogue(DialogueData dialogueData)
     {
+        m_currentDialoguePlayed = dialogueData;
         GameManager.Instance.ExplorationSubGameManager.StartDialogue(dialogueData);
     }
 

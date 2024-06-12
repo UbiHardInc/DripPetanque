@@ -812,6 +812,7 @@ MonoBehaviour:
     m_Signals:
     - {fileID: 11400000, guid: af5d0f707a129a4499a6a1d6239ef29c, type: 2}
     - {fileID: 11400000, guid: 71723866b6d873c4aa28f5a3a39872c8, type: 2}
+    - {fileID: 11400000, guid: 9a216d741cd34ef4088e4049865c8eb3, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -845,6 +846,33 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_MethodName: SetActive
           m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 3498092657340047828}
+          m_TargetAssemblyTypeName: CinematicsFunctions, Assembly-CSharp
+          m_MethodName: StartDialogue
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 60c801b7fbdfe484ab737464e893f1d8,
+              type: 2}
+            m_ObjectArgumentAssemblyTypeName: DialogueData, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3498092657340047828}
+          m_TargetAssemblyTypeName: CinematicsFunctions, Assembly-CSharp
+          m_MethodName: DeactivateInput
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
