@@ -201,12 +201,24 @@ public class Ball : MonoBehaviour, IPoolOperationCallbackReciever
     private void StopBall()
     {
         m_ballStopped = true;
+        float delay = 0.0f;
 
         foreach (BonusBase bonus in m_bonuses)
         {
-            bonus.OnBallStop();
+            delay += bonus.OnBallStop();
         }
 
+        if (delay > 0.0f)
+        {
+            _ = StartCoroutine(PetanqueSubGameManager.DelayCoroutine(delay, InvokeOnBallStopped));
+        }
+        else
+        {
+            InvokeOnBallStopped();
+        }
+    }
+    private void InvokeOnBallStopped()
+    {
         OnBallStopped?.Invoke(this);
     }
 

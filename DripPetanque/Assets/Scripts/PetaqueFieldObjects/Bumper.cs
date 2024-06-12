@@ -9,6 +9,7 @@ using System.Collections.Generic;
 
 public class Bumper : MonoBehaviour
 {
+    [SerializeField] private SpriteRandom m_spriteRandom;
     [SerializeField, Layer] private int m_whatIsBall;
     public BumpManager.BumpersStrength bumperForce;
     public Color bumpColor;
@@ -31,7 +32,7 @@ public class Bumper : MonoBehaviour
             m_vfxBump.transform.position = collision.transform.position;
             m_vfxBump.SendEvent("PlayBumpEffect");
             ShakeTransforms();
-            SpriteRandom.Instance.FlashSprite();
+            m_spriteRandom.FlashSprite();
             SoundManager.Instance.PlayUISFX("bumper");
             Debug.Log("Bumped!");
         }
@@ -60,7 +61,7 @@ public class Bumper : MonoBehaviour
     {
         if (m_shakes != null)
         {
-            m_shakes.ForEach(tween => { if (tween != null) { tween.Complete(); } });
+            m_shakes.ForEach(tween => { tween?.Complete(); });
         }
         m_shakes = transformsToShake.Select(transform => transform.DOShakeScale(shakeDuration, shakeStrenght, shakeVibrato, 90f, true)).ToArray();
         

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityUtility.Singletons;
 using Random = UnityEngine.Random;
 
-public class SpriteRandom : MonoBehaviourSingleton<SpriteRandom>
+public class SpriteRandom : MonoBehaviour
 {
     [SerializeField]
     private List<Image> m_spriteList;
@@ -19,17 +19,9 @@ public class SpriteRandom : MonoBehaviourSingleton<SpriteRandom>
 
     // Start is called before the first frame update
 
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
-
         m_spriteNumber = m_spriteList.Count;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        
     }
 
     public void FlashSprite()

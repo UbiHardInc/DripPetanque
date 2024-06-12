@@ -11,9 +11,9 @@ public abstract class BonusBase : MonoBehaviour
 
     }
 
-    public virtual void OnBallStop()
+    public virtual float OnBallStop()
     {
-
+        return 0.0f;
     }
 
     public virtual void ChangeBallScore(ref int score)
