@@ -3044,6 +3044,11 @@ PrefabInstance:
       objectReference: {fileID: 1191470453154843848}
     - target: {fileID: 1717491672983364846, guid: 204b513cedd80ab4dbe91aaf11ab7e2c,
         type: 3}
+      propertyPath: m_embutOverviewCam
+      value: 
+      objectReference: {fileID: 2523447085433988991}
+    - target: {fileID: 1717491672983364846, guid: 204b513cedd80ab4dbe91aaf11ab7e2c,
+        type: 3}
       propertyPath: m_forceStep.m_gauge
       value: 
       objectReference: {fileID: 1191470453154843849}
@@ -3147,6 +3152,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 204b513cedd80ab4dbe91aaf11ab7e2c, type: 3}
+--- !u!114 &2523447085433988991 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5621594624959629071, guid: 204b513cedd80ab4dbe91aaf11ab7e2c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2523447085433988990}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7562657413179686987 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4807913852459380670, guid: 204b513cedd80ab4dbe91aaf11ab7e2c,
