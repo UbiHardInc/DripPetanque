@@ -8,4 +8,9 @@ public class CinematicsFunctions : MonoBehaviour
     {
         GameManager.Instance.ExplorationSubGameManager.StartDialogue(dialogueData);
     }
+
+    public void ActiveInfoPanel(bool value)
+    {
+        CanvasManager.Instance.InfoPanel.gameObject.SetActive(value);
+    }
 }

@@ -3066,8 +3066,8 @@ MonoBehaviour:
     m_cursorInputForLook: 1
   m_animator: {fileID: 5170814121698219113}
   m_animationEventReciever: {fileID: 1370787143871341009}
-  m_dustTrail: {fileID: 0}
-  m_dustJump: {fileID: 0}
+  m_dustTrail: {fileID: 3051611717157077707}
+  m_dustJump: {fileID: 6778211475818136826}
 --- !u!114 &2366014161942513899
 MonoBehaviour:
   m_ObjectHideFlags: 0
