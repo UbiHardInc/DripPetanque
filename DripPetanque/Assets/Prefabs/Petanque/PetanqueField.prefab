@@ -29,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 881599898824799376}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c0535b11d84233944ab321c286eaa301, type: 2}
+  - {fileID: 2100000, guid: e63429308aa317e42b0f61c893fae921, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -552,7 +552,7 @@ Transform:
   m_GameObject: {fileID: 2399149122882943797}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 216.90007, y: -1.13, z: 0}
+  m_LocalPosition: {x: 216.90007, y: -0.52, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -702,8 +702,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_effectDirection: {x: 0, y: -0.09, z: 1}
-  m_effectForce: 4.44
-  m_maxBallSpeed: 5
+  m_effectForce: 7
+  m_maxBallSpeed: 7
   m_ballLayer: 8
 --- !u!1 &3454988221667712740
 GameObject:
