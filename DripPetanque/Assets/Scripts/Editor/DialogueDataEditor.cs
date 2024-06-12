@@ -19,11 +19,13 @@ public class DialogueDataEditor : CustomEditorBase
         ShowTransitionStartTime();
         ShowTransitionEndTime();
         ShowSentenceDisplayStyle();
-        
-        if(EditorGUI.EndChangeCheck())
+
+        if (EditorGUI.EndChangeCheck())
         {
             EditorUtility.SetDirty(serializedObject.targetObject);
         }
+
+        _ = EditorGUILayout.PropertyField(serializedObject.FindProperty("NextStateDatas"));
 
         _ = serializedObject.ApplyModifiedProperties();
     }
@@ -166,7 +168,7 @@ public class DialogueDataEditor : CustomEditorBase
 
         SerializedProperty showSfxElements = sentenceData.FindPropertyRelative("showSfxElements");
         GUILayout.BeginHorizontal();
-        if(withSFX.boolValue)
+        if (withSFX.boolValue)
         {
             GUILayout.Space(75);
             showSfxElements.boolValue = GUILayout.Toggle(showSfxElements.boolValue, "", EditorStyles.foldout, GUILayout.MaxWidth(10), GUILayout.MaxHeight(20));
@@ -192,7 +194,7 @@ public class DialogueDataEditor : CustomEditorBase
 
         ToggleField("With custom event", withCustomEvent, 75, 70, 15);
 
-        if(withCustomEvent.boolValue)
+        if (withCustomEvent.boolValue)
         {
             ShowOnSentenceEvent(sentenceData, i);
         }
@@ -203,7 +205,7 @@ public class DialogueDataEditor : CustomEditorBase
         SerializedProperty startOfEvent = sentenceData.FindPropertyRelative("startOfEvent");
         AddPopup(ref startOfEvent, "When to start event", typeof(StartOfEvent));
         //EnumField("When to start event", ref sentenceData.startOfEvent);
-        
+
         //string eventId = sentenceData.eventIDToLaunch;
 
         SerializedProperty eventIDToLaunch = sentenceData.FindPropertyRelative("eventIDToLaunch");

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4964100112068383796}
   - component: {fileID: 8550587163126154100}
   - component: {fileID: 6083017622128252841}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BumpFace (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3857228917407604085}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BumpThinBloc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 6914500131196107897}
   - component: {fileID: 6872473499328682471}
   - component: {fileID: 5317635965271324392}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bloc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
