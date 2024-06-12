@@ -73,7 +73,7 @@ MonoBehaviour:
   m_rotationDuration: 1
   m_changeState: 1
   m_controlState: {fileID: 8801655963704712709}
-  m_talingState: 0
+  m_talingState: 3
 --- !u!1 &5975110779762724570
 GameObject:
   m_ObjectHideFlags: 0
