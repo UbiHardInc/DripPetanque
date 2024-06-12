@@ -58,10 +58,10 @@ MonoBehaviour:
     showSfxElements: 0
     withSFX: 0
     typingIsComplete: 1
-    withCustomEvent: 0
-    startOfEvent: 0
+    withCustomEvent: 1
+    startOfEvent: 1
     eventIDToLaunch:
-      m_iD: ToJacottin
+      m_iD: DeblockDoubleJump
   nbSentences: 2
   showDialogueElements: 1
   textType: 1
