@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15abe0ae04ab1cc4cae44a8012b8d8d6, type: 3}
   m_Name: PlayerSpawn
   m_EditorClassIdentifier: 
-  sentenceDisplayStyle: 0
+  sentenceDisplayStyle: 1
   transitionStartTime: 0.5
   transitionEndTime: 0.5
   typingDelay: 0.02
@@ -34,7 +34,7 @@ MonoBehaviour:
       showaudioClipElements: 0
     showSfxElements: 0
     withSFX: 0
-    typingIsComplete: 0
+    typingIsComplete: 1
     withCustomEvent: 0
     startOfEvent: 0
     eventIDToLaunch:
@@ -57,7 +57,7 @@ MonoBehaviour:
       showaudioClipElements: 0
     showSfxElements: 0
     withSFX: 0
-    typingIsComplete: 0
+    typingIsComplete: 1
     withCustomEvent: 0
     startOfEvent: 0
     eventIDToLaunch:
@@ -80,7 +80,7 @@ MonoBehaviour:
       showaudioClipElements: 0
     showSfxElements: 0
     withSFX: 0
-    typingIsComplete: 0
+    typingIsComplete: 1
     withCustomEvent: 0
     startOfEvent: 0
     eventIDToLaunch:

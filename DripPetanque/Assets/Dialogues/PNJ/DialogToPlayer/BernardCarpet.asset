@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15abe0ae04ab1cc4cae44a8012b8d8d6, type: 3}
+  m_Name: BernardCarpet
+  m_EditorClassIdentifier: 
+  sentenceDisplayStyle: 1
+  transitionStartTime: 0.5
+  transitionEndTime: 0.5
+  typingDelay: 0.02
+  sentenceDatas:
+  - isSkippable: 0
+    NPCName: 
+    NPCSprite: {fileID: 0}
+    sentence: Have you ever been to Bernard's Carpets ? It's such a mix between tradition
+      and modernity
+    showData: 0
+    audioClipData:
+      audioClip: {fileID: 8300000, guid: 14101bfc541c0994fae8aca9be4e2082, type: 3}
+      audioLoop: 0
+      startType: 0
+      fadeInTime: 0
+      delay: 0
+      stopType: 0
+      fadeOutTime: 0
+      maxVolume: 100
+      showaudioClipElements: 0
+    showSfxElements: 0
+    withSFX: 0
+    typingIsComplete: 1
+    withCustomEvent: 0
+    startOfEvent: 0
+    eventIDToLaunch:
+      m_iD: 
+  nbSentences: 1
+  showDialogueElements: 1
+  textType: 0
+  IsCinematicDialogue: 0
+  NextStateDatas:
+    m_nextGameState: 4
+    m_dialogueToStart: {fileID: 0}
+    m_petanqueGameToStart: {fileID: 0}

@@ -69,5 +69,6 @@ MonoBehaviour:
   IsCinematicDialogue: 0
   NextStateDatas:
     m_nextGameState: 2
-    m_dialogueToStart: {fileID: 11400000}
-    m_petanqueGameToStart: {fileID: 0}
+    m_dialogueToStart: {fileID: 0}
+    m_petanqueGameToStart: {fileID: 11400000, guid: 47082a35e61eaed418b2aeed31efe9dd,
+      type: 2}

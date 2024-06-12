@@ -20,7 +20,7 @@ MonoBehaviour:
   - isSkippable: 0
     NPCName: Tinou Tupointe
     NPCSprite: {fileID: 0}
-    sentence: So, kiddo, you wanna learn petanque huh ? I can teach you of course.
+    sentence: So, kiddo, you wanna learn petanque huh ? I will teach you of course.
       But I'm oldschool, so don't expect me to play in a stupid generated arena like
       those pesky kids !
     showData: 0
@@ -67,4 +67,8 @@ MonoBehaviour:
   showDialogueElements: 1
   textType: 1
   IsCinematicDialogue: 0
-  NextGameState: 2
+  NextStateDatas:
+    m_nextGameState: 2
+    m_dialogueToStart: {fileID: 0}
+    m_petanqueGameToStart: {fileID: 11400000, guid: 39615e0fed9fc4e4a8ac444cfc59d558,
+      type: 2}
