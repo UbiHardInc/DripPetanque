@@ -295,10 +295,6 @@ public class ThirdPersonController : MonoBehaviour
 
             if(m_timeBeforeJumpRefillTimer <= 0.0f)
             {
-                if (m_jumps != m_maxJumps)
-                {
-                    Debug.LogError($"[{Time.frameCount}]Refilling jumps : jumps left : {m_maxJumps}");
-                }
                 m_jumps = m_maxJumps;
             }
 
@@ -325,7 +321,6 @@ public class ThirdPersonController : MonoBehaviour
             {
                 m_input.Jump = false;
                 m_jumps--;
-                Debug.LogError($"[{Time.frameCount}]Jumping : jumps left : {m_jumps}");
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 if (m_jumps != m_maxJumps)
                 {
