@@ -45,7 +45,7 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float m_fallTimeout = 0.15f;
 
     [Tooltip("The maximum number of time to do a jump in a row.")]
-    [SerializeField] private int m_maxJumps = 1;
+    public static int s_maxJumps;
     [SerializeField] private float m_minTimeBeforeJumpRefill = 0.5f;
 
     [Header("Player Grounded")]
@@ -132,6 +132,8 @@ public class ThirdPersonController : MonoBehaviour
         {
             m_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         }
+
+        s_maxJumps = 1;
     }
 
     private void Start()
@@ -295,7 +297,7 @@ public class ThirdPersonController : MonoBehaviour
 
             if(m_timeBeforeJumpRefillTimer <= 0.0f)
             {
-                m_jumps = m_maxJumps;
+                m_jumps = s_maxJumps;
             }
 
 
@@ -322,7 +324,7 @@ public class ThirdPersonController : MonoBehaviour
                 m_input.Jump = false;
                 m_jumps--;
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
-                if (m_jumps != m_maxJumps)
+                if (m_jumps != s_maxJumps)
                 {
                     m_verticalVelocity = Mathf.Sqrt((m_jumpHeight * 2) * -2f * m_gravity);
                 }

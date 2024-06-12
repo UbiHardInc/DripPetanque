@@ -111,7 +111,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7729097872413752208}
   - component: {fileID: 1748400659643176669}
-  - component: {fileID: 146827590555887424}
   - component: {fileID: 7926653835960607561}
   m_Layer: 0
   m_Name: TinouPresentation
@@ -164,37 +163,6 @@ PlayableDirector:
     value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
---- !u!114 &146827590555887424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2993147655819184988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: 9701e904c044fa5408a52dd335ad8699, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7926653835960607561}
-          m_TargetAssemblyTypeName: CinematicsFunctions, Assembly-CSharp
-          m_MethodName: StartDialogue
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 11400000, guid: 37c5e83946bb79a4a8a9761824f42f58,
-              type: 2}
-            m_ObjectArgumentAssemblyTypeName: DialogueData, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &7926653835960607561
 MonoBehaviour:
   m_ObjectHideFlags: 0

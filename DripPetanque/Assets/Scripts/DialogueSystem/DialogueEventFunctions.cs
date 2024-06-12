@@ -6,6 +6,6 @@ public class DialogueEventFunctions : MonoBehaviour
 {
     public void AddDoubleJump()
     {
-        //ThirdPersonController.s_maxJumps++;
+        ThirdPersonController.s_maxJumps = 2;
     }
 }

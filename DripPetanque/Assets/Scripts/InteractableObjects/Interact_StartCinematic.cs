@@ -38,6 +38,11 @@ public class Interact_StartCinematic : InteractableObject
 
         m_cinematicToLaunch.gameObject.SetActive(false);
 
+        foreach(GameObject go in m_objectsToDeactivate)
+        {
+            go.SetActive(false);
+        }
+
         _ = StartCoroutine(Interact_Talk.RotateTowardPlayer(m_playerPosition, m_transformsToRotate, m_rotationDuration));
 
         GameManager.Instance.ExplorationSubGameManager.StartDialogue(m_dialogueToStart);
