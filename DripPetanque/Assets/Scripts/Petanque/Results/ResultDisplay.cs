@@ -24,8 +24,15 @@ public class ResultDisplay : MonoBehaviour
 
     public void ResetPanel()
     {
-        m_scorePanels.ForEach(panel => panel.gameObject.Destroy());
-        m_scorePanels.Clear();
+        if (m_scorePanels != null)
+        {
+            m_scorePanels.ForEach(panel => panel.gameObject.Destroy());
+            m_scorePanels.Clear();
+        }
+        else
+        {
+            m_scorePanels = new List<RoundScorePanel>();
+        }
     }
 
     public void DislayRoundResult(RoundResultDatas result, Action resultDisplayEndCallback)
