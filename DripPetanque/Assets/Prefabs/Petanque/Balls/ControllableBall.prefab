@@ -163,7 +163,7 @@ MonoBehaviour:
   m_jumpInput: {fileID: -1517193691251892182, guid: 462a9b2de1b64484aa61d3a207013de5,
     type: 3}
   m_globalMovementFactor: 1
-  m_lateralMovementFactor: 1
+  m_lateralMovementFactor: 4
   m_forwardMovementFactor: 1
   m_backwardMovementFactor: 1
   m_jumpsCount: 1
