@@ -45,4 +45,7 @@ MonoBehaviour:
   showDialogueElements: 1
   textType: 1
   IsCinematicDialogue: 0
-  NextGameState: 2
+  NextStateDatas:
+    m_nextGameState: 4
+    m_dialogueToStart: {fileID: 0}
+    m_petanqueGameToStart: {fileID: 0}
