@@ -61,6 +61,12 @@ public class PetanqueSubGameManager : SubGameManager
     public override void BeginState(GameState previousState)
     {
         base.BeginState(previousState);
+
+        if (previousState == GameState.MainMenu)
+        {
+            m_bonusTutoHasBeenDisplayed = false;
+        }
+
         m_petanqueSceneDatas.OnDatasFilled += OnPetanqueDatasFilled;
 
         m_gameSettings = GetGameSettings();
