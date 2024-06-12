@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/DissloveMask.unity
     guid: 4c25d6d82d2aedf4c8a040f74e974697
   - enabled: 1
-    path: Assets/Scenes/Proto_Petanque.unity
+    path: Assets/Scenes/PinTanque.unity
     guid: f0b569dc47fb7054c9ac35e969e21225
   - enabled: 1
     path: Assets/Scenes/Proto_Level_Design.unity
@@ -24,8 +24,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Proto_Level_Design_Cinematic.unity
     guid: e4d18d2e95b097440b3d06326cd4929e
   - enabled: 1
-    path: Assets/Scenes/PinTanque.unity
+    path: Assets/Scenes/Proto_Petanque.unity
     guid: cabe2bc0b5afd3d49b6dc8fddc9a4a18
+  - enabled: 1
+    path: Assets/Scenes/ClassicPetanque.unity
+    guid: accedf7b4563ef44d88166d2daffeeeb
+  - enabled: 1
+    path: Assets/Scenes/TutoPetanque.unity
+    guid: 61ff70244328ea94c84a576ad0142533
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7,
       type: 2}

@@ -228,7 +228,6 @@ MonoBehaviour:
   m_roundNumber: {fileID: 9123965165367970703}
   m_scoreTexts:
   - {fileID: 6423864813663182662}
-  - {fileID: 0}
   m_colorWinText: {r: 0.9803922, g: 0.7176471, b: 0, a: 1}
 --- !u!1 &5466421728843253031
 GameObject:
