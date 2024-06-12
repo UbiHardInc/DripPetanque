@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityUtility.CustomAttributes;
@@ -8,6 +9,7 @@ public class Interact_StartCinematic : InteractableObject
     [SerializeField] private string m_messageToShow;
     [SerializeField] private PlayableDirector m_cinematicToLaunch;
     [SerializeField] private DialogueData m_dialogueToStart;
+    [SerializeField] private List<GameObject> m_objectsToDeactivate;
 
     [Title("Transforms rotation")]
     [SerializeField] private Transform[] m_transformsToRotate;
