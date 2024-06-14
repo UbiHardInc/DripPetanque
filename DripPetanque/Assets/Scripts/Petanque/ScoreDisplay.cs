@@ -11,6 +11,12 @@ public class ScoreDisplay : MonoBehaviour
     [SerializeField] private TMP_Text m_playerScore;
     [SerializeField] private TMP_Text m_computerScore;
 
+    public void ResetPanel()
+    {
+        m_playerScore.text = 0.ToString();
+        m_computerScore.text = 0.ToString();
+    }
+
     public void ActivateScoreDisplay(List<BasePetanquePlayer> AllPlayers)
     {
         this.gameObject.SetActive(true);

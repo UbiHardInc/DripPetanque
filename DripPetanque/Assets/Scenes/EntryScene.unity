@@ -650,6 +650,12 @@ PrefabInstance:
       propertyPath: m_turnChangeDisplay
       value: 
       objectReference: {fileID: 360320245}
+    - target: {fileID: 3573455257882393289, guid: 84a690e815500154b91b5af419cd0578,
+        type: 3}
+      propertyPath: m_defaultGameSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 2f6d2638395f8604fbdf3394a02fa860,
+        type: 2}
     - target: {fileID: 3707578762293871561, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_dialogueManager
@@ -660,17 +666,6 @@ PrefabInstance:
       propertyPath: m_mainMenuManager
       value: 
       objectReference: {fileID: 3864234717316683071}
-    - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
-        type: 3}
-      propertyPath: m_startScene.m_scenePath
-      value: Assets/Scenes/PinTanque.unity
-      objectReference: {fileID: 0}
-    - target: {fileID: 7141695721998518174, guid: 84a690e815500154b91b5af419cd0578,
-        type: 3}
-      propertyPath: m_startScene.m_sceneAsset
-      value: 
-      objectReference: {fileID: 102900000, guid: cabe2bc0b5afd3d49b6dc8fddc9a4a18,
-        type: 3}
     - target: {fileID: 7162645624520431926, guid: 84a690e815500154b91b5af419cd0578,
         type: 3}
       propertyPath: m_cache

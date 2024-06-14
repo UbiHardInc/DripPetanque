@@ -154,6 +154,7 @@ public class PetanqueSubGameManager : SubGameManager
         ResetRound();
 
         m_resultDisplay.ResetPanel();
+        m_scoreDisplayUI.ResetPanel();
     }
 
     private void StartRound()

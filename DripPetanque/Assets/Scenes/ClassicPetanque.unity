@@ -3643,6 +3643,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ===ClassicPetanque===
       objectReference: {fileID: 0}
+    - target: {fileID: 756249413160810179, guid: 7afd78c4c7f802e4f84c6b069980b466,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1223726625869729973, guid: 7afd78c4c7f802e4f84c6b069980b466,
         type: 3}
       propertyPath: m_Mesh
@@ -3713,6 +3718,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1618109424}
+    - target: {fileID: 5781507804712528421, guid: 7afd78c4c7f802e4f84c6b069980b466,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5823748216417711106, guid: 7afd78c4c7f802e4f84c6b069980b466,
         type: 3}
       propertyPath: m_Mesh
