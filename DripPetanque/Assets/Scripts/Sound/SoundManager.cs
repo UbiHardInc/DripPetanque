@@ -452,6 +452,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                 m_actualMusicSource = true;
                 m_musicSource2.Stop();
                 m_musicSource1.clip = clip;
+                m_musicSource1.time = 0.0f;
                 m_musicSource1.Play();
                 if (soundName.StartsWith("music"))
                 {
@@ -555,6 +556,18 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     {
         m_SFXLoopSource1.Stop();
         m_SFXLoopSource2.Stop();
+    }
+
+    public void ResetSourceTimeToZero()
+    {
+        m_musicSource1.time = 0;
+        m_musicSource2.time = 0;
+        m_SFXSource1.time = 0;
+        m_SFXSource2.time = 0;
+        m_SFXLoopSource1.time = 0;
+        m_SFXLoopSource2.time = 0;
+        m_ballSfxSource.time = 0;
+        m_cityAmbianceSource.time = 0;
     }
 
     #endregion
