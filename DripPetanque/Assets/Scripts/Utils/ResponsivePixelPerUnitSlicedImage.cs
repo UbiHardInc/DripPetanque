@@ -13,9 +13,9 @@ public class ResponsivePixelPerUnitSlicedImage : MonoBehaviour
     void Start()
     {
         imageToApply = this.GetComponent<Image>();
-        Debug.LogError("Screen width : " + Screen.width);
+        //Debug.LogError("Screen width : " + Screen.width);
         float ppum = (float)resolutionMultPPUFactor / (float)Screen.width;
-        Debug.LogError("ppum = " + ppum);
+        //Debug.LogError("ppum = " + ppum);
         imageToApply.pixelsPerUnitMultiplier = ppum;
     }
 

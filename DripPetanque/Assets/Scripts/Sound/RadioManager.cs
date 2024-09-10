@@ -175,7 +175,11 @@ public class RadioManager : MonoBehaviour
         m_artistNameText.text = splittedMusicName[1].Replace("/", " ");
         m_songNameText.text = splittedMusicName[2].Replace("/", " ");
 
-        Vector3 uiDisplacement = new Vector3(-529.9f, 0f, 0f); // @TODO : If possible, get rid of this hard-coded value
+        float distance = 629.9f;
+        float distanceRatio = distance / 1920;
+        float onScreenDistance = distanceRatio * (float)Screen.width;
+
+        Vector3 uiDisplacement = new Vector3(-onScreenDistance, 0f, 0f); // @TODO : If possible, get rid of this hard-coded value
 
         //Animation to show the radio UI
         _ = m_radioUI.DOLocalMove(m_radioUI.localPosition + uiDisplacement, 2f);
